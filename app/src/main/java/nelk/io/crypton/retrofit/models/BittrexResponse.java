@@ -6,13 +6,13 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Response implements Parcelable {
+public class BittrexResponse implements Parcelable {
 
     String success;
     String message;
     List<Summary> result;
 
-    protected Response(Parcel in) {
+    protected BittrexResponse(Parcel in) {
         success = in.readString();
         message = in.readString();
         if (in.readByte() == 0x01) {
@@ -41,19 +41,19 @@ public class Response implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Response> CREATOR = new Parcelable.Creator<Response>() {
+    public static final Parcelable.Creator<BittrexResponse> CREATOR = new Parcelable.Creator<BittrexResponse>() {
         @Override
-        public Response createFromParcel(Parcel in) {
-            return new Response(in);
+        public BittrexResponse createFromParcel(Parcel in) {
+            return new BittrexResponse(in);
         }
 
         @Override
-        public Response[] newArray(int size) {
-            return new Response[size];
+        public BittrexResponse[] newArray(int size) {
+            return new BittrexResponse[size];
         }
     };
 
-    public List<Summary> getResult() {
+    public List<Summary> getSummariesFromResponse(){
         return result;
     }
 }

@@ -2,28 +2,24 @@ package nelk.io.crypton.retrofit;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.List;
 
-import nelk.io.crypton.MainActivity;
-import nelk.io.crypton.retrofit.models.Response;
+import nelk.io.crypton.retrofit.models.BittrexResponse;
 import nelk.io.crypton.retrofit.models.Summary;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BittrexAPI implements Callback<Response> {
+public class BittrexAPI implements Callback<BittrexResponse> {
+
+    public static String BASE_URL= "https://bittrex.com/api/v1.1/";
     public static final String TAG = BittrexAPI.class.getSimpleName();
 
     public void getSummaries(){
         RetrofitService mRetrofitService = getRetrofitService();
-        Call<Response> call = mRetrofitService.getSummaries();
+        Call<BittrexResponse> call = mRetrofitService.getSummaries();
         call.enqueue(this);
     }
 
@@ -34,16 +30,16 @@ public class BittrexAPI implements Callback<Response> {
 
     private Retrofit getRetrofit(){
         return new Retrofit.Builder()
-                .baseUrl("https://bittrex.com/api/v1.1/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
     @Override
-    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+    public void onResponse(Call<BittrexResponse> call, retrofit2.Response<BittrexResponse> response) {
         if(response.isSuccessful()){
-            Gson gson = new Gson();
-            String summaries = gson.toJson(response.body().getResult());
+            BittrexResponse bittrexResponseModel = response.body();
+            List<Summary> summaryList = bittrexResponseModel.getSummariesFromResponse();
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());
@@ -55,7 +51,7 @@ public class BittrexAPI implements Callback<Response> {
     }
 
     @Override
-    public void onFailure(Call<Response> call, Throwable t) {
+    public void onFailure(Call<BittrexResponse> call, Throwable t) {
         t.printStackTrace();
     }
 }
