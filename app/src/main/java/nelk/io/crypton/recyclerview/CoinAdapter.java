@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +51,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         TextView volume = holder.volume;
         TextView high = holder.high;
         TextView low = holder.low;
+        ImageView logo = holder.logoUrl;
 
         String volumeToday = coin.getVolume();
         String highToday = "High : " + coin.getHigh();
@@ -57,6 +61,9 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         volume.setText(volumeToday);
         high.setText(highToday);
         low.setText(lowToday);
+        Picasso.with(mContext)
+                .load(coin.getLogoUrl())
+                .into(logo);
 
         Log.d(TAG, "Storing " + coin.getMarketName() + ", " +
                 coin.getVolume() + ", " +
@@ -123,6 +130,16 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         TextView bid;
         TextView ask;
         TextView displayMarketName;
+        TextView marketCurrency;
+        TextView baseCurrency;
+        TextView marketCurrencyLong;
+        TextView baseCurrencyLong;
+        TextView minTradeSize;
+        TextView isActive;
+        TextView created;
+        TextView notice;
+        TextView isSponsored;
+        ImageView logoUrl;
 
         public CoinViewHolder(View itemView) {
             super(itemView);
@@ -130,6 +147,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
             this.volume = (TextView) itemView.findViewById(R.id.volume);
             this.high = (TextView) itemView.findViewById(R.id.high);
             this.low = (TextView) itemView.findViewById(R.id.low);
+            this.logoUrl = (ImageView) itemView.findViewById(R.id.logo);
         }
     }
 }
