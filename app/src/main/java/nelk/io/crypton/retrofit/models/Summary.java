@@ -17,8 +17,6 @@ public class Summary implements Parcelable {
     String OpenSellOrders;
     String PrevDay;
     String Created;
-    String DisplayMarketName;
-
 
     protected Summary(Parcel in) {
         MarketName = in.readString();
@@ -34,7 +32,6 @@ public class Summary implements Parcelable {
         OpenSellOrders = in.readString();
         PrevDay = in.readString();
         Created = in.readString();
-        DisplayMarketName = in.readString();
     }
 
     @Override
@@ -57,7 +54,6 @@ public class Summary implements Parcelable {
         dest.writeString(OpenSellOrders);
         dest.writeString(PrevDay);
         dest.writeString(Created);
-        dest.writeString(DisplayMarketName);
     }
 
     @SuppressWarnings("unused")
@@ -72,4 +68,20 @@ public class Summary implements Parcelable {
             return new Summary[size];
         }
     };
+
+    public String getMarketName() {
+        return MarketName;
+    }
+
+    public String getHigh() {
+        return High;
+    }
+
+    public String getLow() {
+        return Low;
+    }
+
+    public String getVolume() {
+        return Volume;
+    }
 }

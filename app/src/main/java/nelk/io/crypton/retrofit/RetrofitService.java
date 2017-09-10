@@ -8,4 +8,8 @@ public interface RetrofitService {
 
     @GET("public/getmarketsummaries")
     Call<BittrexResponse>getSummaries();
+
+
+    @GET("public/getmarketsummary?market=btc-ltc")
+    Call<BittrexResponse>getBTCLTC();
 }

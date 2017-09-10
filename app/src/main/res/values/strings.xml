@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Crypton</string>
+    <string name="HelloWorld">PortfolioView</string>
 </resources>
