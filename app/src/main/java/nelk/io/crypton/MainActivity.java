@@ -8,16 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import nelk.io.crypton.recyclerview.SummaryAdapter;
+import nelk.io.crypton.recyclerview.CoinAdapter;
 import nelk.io.crypton.retrofit.BittrexAPI;
-import nelk.io.crypton.retrofit.models.Summary;
+import nelk.io.crypton.retrofit.models.Coin;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private List<Summary> mSummaryList = new ArrayList<>();
-    private RecyclerView mSummaryRecyclerView;
-    private SummaryAdapter mSummaryAdapter;
+    private List<Coin> mCoinList = new ArrayList<>();
+    private RecyclerView mCoinRecyclerView;
+    private CoinAdapter mCoinAdapter;
     BittrexAPI bittrexAPI = new BittrexAPI();
 
     @Override
@@ -25,15 +25,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSummaryRecyclerView = (RecyclerView) findViewById(R.id.rv_coins_grid);
-        mSummaryAdapter = new SummaryAdapter(this, mSummaryList);
+        mCoinRecyclerView = (RecyclerView) findViewById(R.id.rv_coins_grid);
+        mCoinAdapter = new CoinAdapter(this, mCoinList);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-        mSummaryRecyclerView.setLayoutManager(layoutManager);
-        mSummaryRecyclerView.setAdapter(mSummaryAdapter);
-        mSummaryRecyclerView.setHasFixedSize(true);
+        mCoinRecyclerView.setLayoutManager(layoutManager);
+        mCoinRecyclerView.setAdapter(mCoinAdapter);
+        mCoinRecyclerView.setHasFixedSize(true);
 
-        bittrexAPI.getSummaries(mSummaryAdapter, mSummaryList);
+        bittrexAPI.getSummaries(mCoinAdapter, mCoinList);
+        bittrexAPI.getMarkets(mCoinAdapter, mCoinList);
     }
 }

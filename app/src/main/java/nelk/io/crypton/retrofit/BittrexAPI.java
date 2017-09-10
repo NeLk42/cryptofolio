@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.List;
 
 import nelk.io.crypton.MainActivity;
-import nelk.io.crypton.recyclerview.SummaryAdapter;
+import nelk.io.crypton.recyclerview.CoinAdapter;
 import nelk.io.crypton.retrofit.models.BittrexResponse;
-import nelk.io.crypton.retrofit.models.Summary;
+import nelk.io.crypton.retrofit.models.Coin;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,15 +19,24 @@ public class BittrexAPI implements Callback<BittrexResponse> {
     public static final String TAG = BittrexAPI.class.getSimpleName();
     public static String BASE_URL= "https://bittrex.com/api/v1.1/";
 
-    List<Summary> summaryList;
-    private SummaryAdapter mSummaryAdapter;
+    List<Coin> coinList;
+    private CoinAdapter mCoinAdapter;
 
-    public void getSummaries(SummaryAdapter summaryAdapter, List<Summary> mSummaryList) {
-        mSummaryAdapter = summaryAdapter;
-        summaryList = mSummaryList;
+    public void getSummaries(CoinAdapter coinAdapter, List<Coin> mCoinList) {
+        mCoinAdapter = coinAdapter;
+        coinList = mCoinList;
 
         RetrofitService mRetrofitService = getRetrofitService();
         Call<BittrexResponse> call = mRetrofitService.getSummaries();
+        call.enqueue(this);
+    }
+
+    public void getMarkets(CoinAdapter coinAdapter, List<Coin> mCoinList) {
+        mCoinAdapter = coinAdapter;
+        coinList = mCoinList;
+
+        RetrofitService mRetrofitService = getRetrofitService();
+        Call<BittrexResponse> call = mRetrofitService.getMarkets();
         call.enqueue(this);
     }
 
@@ -35,8 +44,8 @@ public class BittrexAPI implements Callback<BittrexResponse> {
     public void onResponse(Call<BittrexResponse> call, Response<BittrexResponse> response) {
         if(response.isSuccessful()){
             BittrexResponse bittrexResponseModel = response.body();
-            summaryList = bittrexResponseModel.getSummariesFromResponse();
-            mSummaryAdapter.updateSummaryList(mSummaryAdapter, summaryList);
+            coinList = bittrexResponseModel.getSummariesFromResponse();
+            mCoinAdapter.updateCoinList(mCoinAdapter, coinList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());

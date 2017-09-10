@@ -10,14 +10,14 @@ public class BittrexResponse implements Parcelable {
 
     String success;
     String message;
-    List<Summary> result;
+    List<Coin> result;
 
     protected BittrexResponse(Parcel in) {
         success = in.readString();
         message = in.readString();
         if (in.readByte() == 0x01) {
-            result = new ArrayList<Summary>();
-            in.readList(result, Summary.class.getClassLoader());
+            result = new ArrayList<Coin>();
+            in.readList(result, Coin.class.getClassLoader());
         } else {
             result = null;
         }
@@ -53,7 +53,7 @@ public class BittrexResponse implements Parcelable {
         }
     };
 
-    public List<Summary> getSummariesFromResponse(){
+    public List<Coin> getSummariesFromResponse(){
         return result;
     }
 }

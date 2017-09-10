@@ -35,7 +35,7 @@ public class Coin {
         addData(coin);
     }
 
-    public void addData(Coin coin){
+    public Coin addData(Coin coin){
         if(!isBlank(coin.MarketCurrency)){
             this.MarketCurrency = coin.MarketCurrency;
         }
@@ -108,6 +108,8 @@ public class Coin {
         if(!isBlank(coin.Created)){
             this.Created = coin.Created;
         }
+
+        return this;
     }
 
 

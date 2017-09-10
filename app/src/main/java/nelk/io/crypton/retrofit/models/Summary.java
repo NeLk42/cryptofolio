@@ -3,7 +3,7 @@ package nelk.io.crypton.retrofit.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Summary implements Parcelable {
+public class Summary extends Coin implements Parcelable {
     String MarketName;
     String High;
     String Low;
