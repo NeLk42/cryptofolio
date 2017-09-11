@@ -3,6 +3,7 @@ package nelk.io.crypton.retrofit;
 import nelk.io.crypton.retrofit.models.BittrexResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface RetrofitService {
 
@@ -12,7 +13,10 @@ public interface RetrofitService {
     @GET("public/getmarkets")
     Call<BittrexResponse>getMarkets();
 
-    @GET("public/getmarketsummary?market=btc-ltc")
-    Call<BittrexResponse>getBTCLTC();
+    @GET("public/getmarketsummary")
+    Call<BittrexResponse>getBTCLTC(@Query("market") String market);
+
+    @GET("public/getticker")
+    Call<BittrexResponse>getTicker(@Query("market") String market);
 
 }

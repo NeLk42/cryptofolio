@@ -20,12 +20,19 @@ public class BittrexAPI implements Callback<BittrexResponse> {
 
     List<Coin> coinList;
     private CoinAdapter mCoinAdapter;
+    RetrofitService mRetrofitService = getRetrofitService();
+
+    public void getTicker(CoinAdapter coinAdapter, Coin coin) {
+        mCoinAdapter = coinAdapter;
+
+        Call<BittrexResponse> call = mRetrofitService.getTicker(coin.getMarketName());
+        call.enqueue(this);
+    }
 
     public void getSummaries(CoinAdapter coinAdapter, List<Coin> mCoinList) {
         mCoinAdapter = coinAdapter;
         coinList = mCoinList;
 
-        RetrofitService mRetrofitService = getRetrofitService();
         Call<BittrexResponse> call = mRetrofitService.getSummaries();
         call.enqueue(this);
     }
@@ -34,7 +41,6 @@ public class BittrexAPI implements Callback<BittrexResponse> {
         mCoinAdapter = coinAdapter;
         coinList = mCoinList;
 
-        RetrofitService mRetrofitService = getRetrofitService();
         Call<BittrexResponse> call = mRetrofitService.getMarkets();
         call.enqueue(this);
     }
