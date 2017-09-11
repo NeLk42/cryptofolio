@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Crypton</string>
     <string name="HelloWorld">PortfolioView</string>
-    <string name="volume_today">Volume:</string>
+    <string name="coin_name">Coin Name</string>
+    <string name="volume">Volume:</string>
     <string name="high_today">High:</string>
     <string name="low_today">Low:</string>
+    <string name="yesterday">Avg Yesterday:</string>
+    <string name="bid">Bid:</string>
+    <string name="ask">Ask:</string>
 </resources>

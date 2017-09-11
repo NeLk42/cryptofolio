@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="nelk.io.crypton.DetailsActivity"
+    tools:showIn="@layout/activity_details">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_details_backdrop"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:image="@string/backdrop"-->
+            <!--/>-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_details_background"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:image="@string/poster"-->
+            <!--/>-->
+
+        <TextView
+            android:id="@+id/tv_details_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/textColorDetails"
+            android:textSize="20sp"
+            tools:text="@string/volume"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_details_yesterday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorBold"
+            android:textSize="22sp"
+            tools:text="@string/yesterday"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_details_high_today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorDetails"
+                android:textSize="16sp"
+                android:gravity="center"
+                tools:text="@string/high_today"
+                />
+
+            <TextView
+                android:id="@+id/tv_details_low_today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorDetails"
+                android:textSize="16sp"
+                android:gravity="center"
+                tools:text="@string/low_today"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_details_bid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/bid"
+            />
+
+        <TextView
+            android:id="@+id/tv_details_ask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/ask"
+            />
+    </LinearLayout>
+</FrameLayout>

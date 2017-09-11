@@ -1,8 +1,11 @@
 package nelk.io.crypton.retrofit.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-public class Coin {
+public class Coin implements Parcelable {
 
     String MarketCurrency;
     String BaseCurrency;
@@ -27,9 +30,74 @@ public class Coin {
     String PrevDay;
     String Created;
 
-    public Coin (){
-
+    protected Coin(Parcel in) {
+        MarketCurrency = in.readString();
+        BaseCurrency = in.readString();
+        MarketCurrencyLong = in.readString();
+        BaseCurrencyLong = in.readString();
+        MinTradeSize = in.readString();
+        IsActive = in.readString();
+        Notice = in.readString();
+        IsSponsored = in.readString();
+        LogoUrl = in.readString();
+        MarketName = in.readString();
+        High = in.readString();
+        Low = in.readString();
+        Volume = in.readString();
+        Last = in.readString();
+        BaseVolume = in.readString();
+        TimeStamp = in.readString();
+        Bid = in.readString();
+        Ask = in.readString();
+        OpenBuyOrders = in.readString();
+        OpenSellOrders = in.readString();
+        PrevDay = in.readString();
+        Created = in.readString();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(MarketCurrency);
+        dest.writeString(BaseCurrency);
+        dest.writeString(MarketCurrencyLong);
+        dest.writeString(BaseCurrencyLong);
+        dest.writeString(MinTradeSize);
+        dest.writeString(IsActive);
+        dest.writeString(Notice);
+        dest.writeString(IsSponsored);
+        dest.writeString(LogoUrl);
+        dest.writeString(MarketName);
+        dest.writeString(High);
+        dest.writeString(Low);
+        dest.writeString(Volume);
+        dest.writeString(Last);
+        dest.writeString(BaseVolume);
+        dest.writeString(TimeStamp);
+        dest.writeString(Bid);
+        dest.writeString(Ask);
+        dest.writeString(OpenBuyOrders);
+        dest.writeString(OpenSellOrders);
+        dest.writeString(PrevDay);
+        dest.writeString(Created);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Coin> CREATOR = new Parcelable.Creator<Coin>() {
+        @Override
+        public Coin createFromParcel(Parcel in) {
+            return new Coin(in);
+        }
+
+        @Override
+        public Coin[] newArray(int size) {
+            return new Coin[size];
+        }
+    };
 
     public Coin (Coin coin){
         addData(coin);

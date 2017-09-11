@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
 import nelk.io.crypton.retrofit.models.Coin;
 
@@ -62,8 +63,11 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         volume.setText(volumeToday);
         high.setText(highToday);
         low.setText(lowToday);
-        Picasso.with(mContext)
+        Picasso
+                .with(mContext)
                 .load(coin.getLogoUrl())
+                .onlyScaleDown()
+                .resize(50,50)
                 .into(logo);
 
         Log.d(TAG, "Storing " + coin.getMarketName() + ", " +
