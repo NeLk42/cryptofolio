@@ -5,7 +5,6 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 
-import nelk.io.crypton.MainActivity;
 import nelk.io.crypton.recyclerview.CoinAdapter;
 import nelk.io.crypton.retrofit.models.BittrexResponse;
 import nelk.io.crypton.retrofit.models.Coin;
