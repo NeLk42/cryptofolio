@@ -1,5 +1,6 @@
 package nelk.io.crypton;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,5 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
         bittrexAPI.getSummaries(mCoinAdapter, mCoinList);
         bittrexAPI.getMarkets(mCoinAdapter, mCoinList);
+    }
+
+    private void loadDetails(Intent storage){
+
     }
 }

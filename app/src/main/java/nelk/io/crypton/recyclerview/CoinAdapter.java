@@ -1,6 +1,7 @@
 package nelk.io.crypton.recyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -70,14 +71,14 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
                 coin.getHigh() + ", " +
                 coin.getLow() + ".");
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(mContext, DetailsActivity.class);
-//                intent.putExtra(APIConfig.PARAM_MOVIE, movie);
-//                mContext.startActivity(intent);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DetailsActivity.class);
+                intent.putExtra("coin", coin);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
