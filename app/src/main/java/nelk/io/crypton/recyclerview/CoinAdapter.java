@@ -66,8 +66,8 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         Picasso
                 .with(mContext)
                 .load(coin.getLogoUrl())
-                .onlyScaleDown()
                 .resize(50,50)
+                .onlyScaleDown()
                 .into(logo);
 
         Log.d(TAG, "Storing " + coin.getMarketName() + ", " +

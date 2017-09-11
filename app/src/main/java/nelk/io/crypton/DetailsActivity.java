@@ -33,13 +33,15 @@ public class DetailsActivity extends AppCompatActivity {
             Coin coin = (Coin) storage.getExtras().get("coin");
 
             ImageView logo = (ImageView) findViewById(R.id.fab_coin_icon);
-            Picasso.with(this)
+            Picasso
+                    .with(this)
                     .load(coin.getLogoUrl())
                     .resize(80,80)
+                    .onlyScaleDown()
                     .into(logo);
 
             TextView coinName = (TextView) findViewById(R.id.tv_coin_name);
-            coinName.setText(coin.getBaseCurrencyLong());
+            coinName.setText(coin.getMarketCurrencyLong());
 
             TextView volume = (TextView) findViewById(R.id.tv_details_volume);
             volume.setText(getString(R.string.volume) + coin.getVolume());
