@@ -53,7 +53,7 @@ public class BittrexResponse implements Parcelable {
         }
     };
 
-    public List<Coin> getSummariesFromResponse(){
+    public List<Coin> getDataFromResponse(){
         return result;
     }
 }

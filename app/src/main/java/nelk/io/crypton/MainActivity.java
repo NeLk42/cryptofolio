@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         mCoinRecyclerView.setAdapter(mCoinAdapter);
         mCoinRecyclerView.setHasFixedSize(true);
 
+        bittrexAPI.getAccountBalance();
         bittrexAPI.getSummaries(mCoinAdapter, mCoinList);
         bittrexAPI.getMarkets(mCoinAdapter, mCoinList);
     }
