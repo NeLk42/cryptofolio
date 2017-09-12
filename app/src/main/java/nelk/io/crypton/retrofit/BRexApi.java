@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Query;
 
-public interface RetrofitService {
+public interface BRexApi {
 
     @GET("public/getmarketsummaries")
     Call<BittrexResponse>getSummaries();

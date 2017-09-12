@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nelk.io.crypton.recyclerview.CoinAdapter;
-import nelk.io.crypton.retrofit.BittrexAPI;
+import nelk.io.crypton.retrofit.BRexService;
 import nelk.io.crypton.retrofit.models.Coin;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Coin> mCoinList = new ArrayList<>();
     private RecyclerView mCoinRecyclerView;
     private CoinAdapter mCoinAdapter;
-    BittrexAPI bittrexAPI = new BittrexAPI();
+    BRexService bRexService = new BRexService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         mCoinRecyclerView.setAdapter(mCoinAdapter);
         mCoinRecyclerView.setHasFixedSize(true);
 
-        bittrexAPI.getAccountBalance();
-        bittrexAPI.getSummaries(mCoinAdapter, mCoinList);
-        bittrexAPI.getMarkets(mCoinAdapter, mCoinList);
+        bRexService.getAccountBalance();
+        bRexService.getSummaries(mCoinAdapter, mCoinList);
+        bRexService.getMarkets(mCoinAdapter, mCoinList);
     }
 }

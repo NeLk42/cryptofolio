@@ -18,17 +18,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static nelk.io.crypton.utils.SHA512.generateNonce;
 
-public class BittrexAPI implements Callback<BittrexResponse> {
-    static final String TAG = BittrexAPI.class.getSimpleName();
-    static String BASE_URL= "https://bittrex.com/api/v1.1/";
+public class BRexService implements Callback<BittrexResponse> {
+    static final String TAG = BRexService.class.getSimpleName();
+    private final RetrofitConnection retrofitConnection = new RetrofitConnection();
 
     List<Coin> coinList;
     private CoinAdapter mCoinAdapter;
-    RetrofitService mRetrofitService = getRetrofitService();
+    BRexApi mBRexApi = retrofitConnection.getRetrofitService();
 
     public List<Coin> getAccountBalance() {
 
@@ -36,7 +35,7 @@ public class BittrexAPI implements Callback<BittrexResponse> {
         String apiKey = APIConf.API_KEY;
         String secretApiKey = APIConf.API_SECRET_KEY;
         String baseBalancesUrl = "https://bittrex.com/api/v1.1/account/getbalances";
-        String encodeNonce = encodeNonce(nonce);
+        String encodeNonce = SHA512.encodeNonce(nonce);
 
         String data = new StringBuilder(baseBalancesUrl)
                 .append("?")
@@ -61,7 +60,7 @@ public class BittrexAPI implements Callback<BittrexResponse> {
         HttpUrl.Builder url = new HttpUrl.Builder();
         url.encodedQuery(data);
 
-        Call<BittrexResponse> call = mRetrofitService.getEncodedBalances(apiKey, nonce, signedHeader);
+        Call<BittrexResponse> call = mBRexApi.getEncodedBalances(apiKey, nonce, signedHeader);
         try {
             Response<BittrexResponse> response = call.execute();
             BittrexResponse bRexResponse = response.body();
@@ -73,34 +72,23 @@ public class BittrexAPI implements Callback<BittrexResponse> {
         return coinList;
     }
 
-    @Nullable
-    private String encodeNonce(String value) {
-        String encodedValue = null;
-        try {
-            encodedValue = URLEncoder.encode(value, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return encodedValue;
-    }
-
     public void getTicker(CoinAdapter coinAdapter, Coin coin) {
         mCoinAdapter = coinAdapter;
-        Call<BittrexResponse> call = mRetrofitService.getTicker(coin.getMarketName());
+        Call<BittrexResponse> call = mBRexApi.getTicker(coin.getMarketName());
         call.enqueue(this);
     }
 
     public void getSummaries(CoinAdapter coinAdapter, List<Coin> mCoinList) {
         mCoinAdapter = coinAdapter;
         coinList = mCoinList;
-        Call<BittrexResponse> call = mRetrofitService.getSummaries();
+        Call<BittrexResponse> call = mBRexApi.getSummaries();
         call.enqueue(this);
     }
 
     public void getMarkets(CoinAdapter coinAdapter, List<Coin> mCoinList) {
         mCoinAdapter = coinAdapter;
         coinList = mCoinList;
-        Call<BittrexResponse> call = mRetrofitService.getMarkets();
+        Call<BittrexResponse> call = mBRexApi.getMarkets();
         call.enqueue(this);
     }
 
@@ -128,15 +116,4 @@ public class BittrexAPI implements Callback<BittrexResponse> {
         t.printStackTrace();
     }
 
-    private RetrofitService getRetrofitService(){
-        Retrofit retrofit = getRetrofit();
-        return retrofit.create(RetrofitService.class);
-    }
-
-    private Retrofit getRetrofit(){
-        return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-    }
 }

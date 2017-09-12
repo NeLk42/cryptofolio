@@ -1,9 +1,11 @@
 package nelk.io.crypton.utils;
 
 
+import android.support.annotation.Nullable;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -50,5 +52,16 @@ public class SHA512 {
         String dateTimeString = Long.toString(new Date().getTime());
         byte[] nonceByte = dateTimeString.getBytes();
         return  Base64.encodeToString(nonceByte, Base64.NO_WRAP);
+    }
+
+    @Nullable
+    public static String encodeNonce(String value) {
+        String encodedValue = null;
+        try {
+            encodedValue = URLEncoder.encode(value, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return encodedValue;
     }
 }

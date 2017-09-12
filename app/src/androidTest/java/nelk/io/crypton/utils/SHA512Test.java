@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import nelk.io.crypton.retrofit.BittrexAPI;
+import nelk.io.crypton.retrofit.BRexService;
 import nelk.io.crypton.retrofit.models.Coin;
 
 import static junit.framework.Assert.assertNotNull;
@@ -16,7 +16,7 @@ public class SHA512Test {
     @Test
     public void test(){
         // Given
-        BittrexAPI bRex = new BittrexAPI();
+        BRexService bRex = new BRexService();
 
         // When
         List<Coin> result = bRex.getAccountBalance();
