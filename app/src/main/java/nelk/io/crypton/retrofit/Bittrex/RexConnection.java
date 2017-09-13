@@ -1,13 +1,13 @@
-package nelk.io.crypton.retrofit;
+package nelk.io.crypton.retrofit.Bittrex;
 
-import nelk.io.crypton.retrofit.Bittrex.RexApi;
+import nelk.io.crypton.retrofit.RexApi;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitConnection {
+public class RexConnection {
     static String BASE_URL = "https://bittrex.com/api/v1.1/";
 
-    public RetrofitConnection() {
+    public RexConnection() {
     }
 
     public RexApi getRetrofitService() {

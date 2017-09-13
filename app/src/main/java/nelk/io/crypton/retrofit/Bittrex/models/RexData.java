@@ -3,9 +3,11 @@ package nelk.io.crypton.retrofit.Bittrex.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import nelk.io.crypton.models.CoinData;
+
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-public class RexData implements Parcelable {
+public class RexData implements CoinData {
 
     String MarketCurrency;
     String BaseCurrency;
@@ -103,257 +105,168 @@ public class RexData implements Parcelable {
         addData(rexData);
     }
 
-    public RexData addData(RexData rexData){
-        if(!isBlank(rexData.MarketCurrency)){
-            this.MarketCurrency = rexData.MarketCurrency;
+    public RexData addData(CoinData rexData){
+        if(!isBlank(rexData.getMarketCurrency())){
+            this.MarketCurrency = rexData.getMarketCurrency();
         }
-        if(!isBlank(rexData.BaseCurrency)){
-            this.BaseCurrency = rexData.BaseCurrency;
+        if(!isBlank(rexData.getBaseCurrency())){
+            this.BaseCurrency = rexData.getBaseCurrency();
         }
-        if(!isBlank(rexData.MarketCurrencyLong)){
-            this.MarketCurrencyLong = rexData.MarketCurrencyLong;
+        if(!isBlank(rexData.getMarketCurrencyLong())){
+            this.MarketCurrencyLong = rexData.getMarketCurrencyLong();
         }
-        if(!isBlank(rexData.BaseCurrencyLong)){
-            this.BaseCurrencyLong = rexData.BaseCurrencyLong;
+        if(!isBlank(rexData.getBaseCurrencyLong())){
+            this.BaseCurrencyLong = rexData.getBaseCurrencyLong();
         }
-        if(!isBlank(rexData.MinTradeSize)){
-            this.MinTradeSize = rexData.MinTradeSize;
+        if(!isBlank(rexData.getMinTradeSize())){
+            this.MinTradeSize = rexData.getMinTradeSize();
         }
-        if(!isBlank(rexData.MarketName)){
-            this.MarketName = rexData.MarketName;
+        if(!isBlank(rexData.getMarketName())){
+            this.MarketName = rexData.getMarketName();
         }
-        if(!isBlank(rexData.IsActive)){
-            this.IsActive = rexData.IsActive;
+        if(!isBlank(rexData.getIsActive())){
+            this.IsActive = rexData.getIsActive();
         }
-        if(!isBlank(rexData.Created)){
-            this.Created = rexData.Created;
+        if(!isBlank(rexData.getCreated())){
+            this.Created = rexData.getCreated();
         }
-        if(!isBlank(rexData.Notice)){
-            this.Notice = rexData.Notice;
+        if(!isBlank(rexData.getNotice())){
+            this.Notice = rexData.getNotice();
         }
-        if(!isBlank(rexData.IsSponsored)){
-            this.IsSponsored = rexData.IsSponsored;
+        if(!isBlank(rexData.getIsSponsored())){
+            this.IsSponsored = rexData.getIsSponsored();
         }
-        if(!isBlank(rexData.LogoUrl)){
-            this.LogoUrl = rexData.LogoUrl;
+        if(!isBlank(rexData.getLogoUrl())){
+            this.LogoUrl = rexData.getLogoUrl();
         }
-        if(!isBlank(rexData.MarketName)){
-            this.MarketName = rexData.MarketName;
+        if(!isBlank(rexData.getMarketName())){
+            this.MarketName = rexData.getMarketName();
         }
-        if(!isBlank(rexData.High)){
-            this.High = rexData.High;
+        if(!isBlank(rexData.getHigh())){
+            this.High = rexData.getHigh();
         }
-        if(!isBlank(rexData.Low)){
-            this.Low = rexData.Low;
+        if(!isBlank(rexData.getLow())){
+            this.Low = rexData.getLow();
         }
-        if(!isBlank(rexData.Volume)){
-            this.Volume = rexData.Volume;
+        if(!isBlank(rexData.getVolume())){
+            this.Volume = rexData.getVolume();
         }
-        if(!isBlank(rexData.Last)){
-            this.Last = rexData.Last;
+        if(!isBlank(rexData.getLast())){
+            this.Last = rexData.getLast();
         }
-        if(!isBlank(rexData.BaseVolume)){
-            this.BaseVolume = rexData.BaseVolume;
+        if(!isBlank(rexData.getBaseVolume())){
+            this.BaseVolume = rexData.getBaseVolume();
         }
-        if(!isBlank(rexData.TimeStamp)){
-            this.TimeStamp = rexData.TimeStamp;
+        if(!isBlank(rexData.getTimeStamp())){
+            this.TimeStamp = rexData.getTimeStamp();
         }
-        if(!isBlank(rexData.Bid)){
-            this.Bid = rexData.Bid;
+        if(!isBlank(rexData.getBid())){
+            this.Bid = rexData.getBid();
         }
-        if(!isBlank(rexData.Ask)){
-            this.Ask = rexData.Ask;
+        if(!isBlank(rexData.getAsk())){
+            this.Ask = rexData.getAsk();
         }
-        if(!isBlank(rexData.OpenBuyOrders)){
-            this.OpenBuyOrders = rexData.OpenBuyOrders;
+        if(!isBlank(rexData.getOpenBuyOrders())){
+            this.OpenBuyOrders = rexData.getOpenBuyOrders();
         }
-        if(!isBlank(rexData.OpenSellOrders)){
-            this.OpenSellOrders = rexData.OpenSellOrders;
+        if(!isBlank(rexData.getOpenSellOrders())){
+            this.OpenSellOrders = rexData.getOpenSellOrders();
         }
-        if(!isBlank(rexData.PrevDay)){
-            this.PrevDay = rexData.PrevDay;
+        if(!isBlank(rexData.getPrevDay())){
+            this.PrevDay = rexData.getPrevDay();
         }
-        if(!isBlank(rexData.Created)){
-            this.Created = rexData.Created;
+        if(!isBlank(rexData.getCreated())){
+            this.Created = rexData.getCreated();
         }
 
         return this;
     }
 
-
     public String getMarketCurrency() {
         return MarketCurrency;
-    }
-
-    public void setMarketCurrency(String marketCurrency) {
-        MarketCurrency = marketCurrency;
     }
 
     public String getBaseCurrency() {
         return BaseCurrency;
     }
 
-    public void setBaseCurrency(String baseCurrency) {
-        BaseCurrency = baseCurrency;
-    }
-
     public String getMarketCurrencyLong() {
         return MarketCurrencyLong;
-    }
-
-    public void setMarketCurrencyLong(String marketCurrencyLong) {
-        MarketCurrencyLong = marketCurrencyLong;
     }
 
     public String getBaseCurrencyLong() {
         return BaseCurrencyLong;
     }
 
-    public void setBaseCurrencyLong(String baseCurrencyLong) {
-        BaseCurrencyLong = baseCurrencyLong;
-    }
-
     public String getMinTradeSize() {
         return MinTradeSize;
-    }
-
-    public void setMinTradeSize(String minTradeSize) {
-        MinTradeSize = minTradeSize;
     }
 
     public String getIsActive() {
         return IsActive;
     }
 
-    public void setIsActive(String isActive) {
-        IsActive = isActive;
-    }
-
     public String getNotice() {
         return Notice;
-    }
-
-    public void setNotice(String notice) {
-        Notice = notice;
     }
 
     public String getIsSponsored() {
         return IsSponsored;
     }
 
-    public void setIsSponsored(String isSponsored) {
-        IsSponsored = isSponsored;
-    }
-
     public String getLogoUrl() {
         return LogoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        LogoUrl = logoUrl;
     }
 
     public String getMarketName() {
         return MarketName;
     }
 
-    public void setMarketName(String marketName) {
-        MarketName = marketName;
-    }
-
     public String getHigh() {
         return High;
-    }
-
-    public void setHigh(String high) {
-        High = high;
     }
 
     public String getLow() {
         return Low;
     }
 
-    public void setLow(String low) {
-        Low = low;
-    }
-
     public String getVolume() {
         return Volume;
-    }
-
-    public void setVolume(String volume) {
-        Volume = volume;
     }
 
     public String getLast() {
         return Last;
     }
 
-    public void setLast(String last) {
-        Last = last;
-    }
-
     public String getBaseVolume() {
         return BaseVolume;
-    }
-
-    public void setBaseVolume(String baseVolume) {
-        BaseVolume = baseVolume;
     }
 
     public String getTimeStamp() {
         return TimeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
-        TimeStamp = timeStamp;
-    }
-
     public String getBid() {
         return Bid;
-    }
-
-    public void setBid(String bid) {
-        Bid = bid;
     }
 
     public String getAsk() {
         return Ask;
     }
 
-    public void setAsk(String ask) {
-        Ask = ask;
-    }
-
     public String getOpenBuyOrders() {
         return OpenBuyOrders;
-    }
-
-    public void setOpenBuyOrders(String openBuyOrders) {
-        OpenBuyOrders = openBuyOrders;
     }
 
     public String getOpenSellOrders() {
         return OpenSellOrders;
     }
 
-    public void setOpenSellOrders(String openSellOrders) {
-        OpenSellOrders = openSellOrders;
-    }
-
     public String getPrevDay() {
         return PrevDay;
     }
 
-    public void setPrevDay(String prevDay) {
-        PrevDay = prevDay;
-    }
-
     public String getCreated() {
         return Created;
-    }
-
-    public void setCreated(String created) {
-        Created = created;
     }
 }

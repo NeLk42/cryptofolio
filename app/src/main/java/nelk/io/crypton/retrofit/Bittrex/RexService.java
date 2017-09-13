@@ -3,91 +3,57 @@ package nelk.io.crypton.retrofit.Bittrex;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+import nelk.io.crypton.models.CoinData;
 import nelk.io.crypton.recyclerview.CoinAdapter;
 import nelk.io.crypton.retrofit.Bittrex.models.RexData;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
-import nelk.io.crypton.retrofit.RetrofitConnection;
+import nelk.io.crypton.retrofit.RexApi;
 import nelk.io.crypton.utils.NonceUtils;
-import nelk.io.crypton.utils.Sha512Utils;
-import okhttp3.HttpUrl;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RexService implements Callback<RexResponse> {
     static final String TAG = RexService.class.getSimpleName();
-    private final RetrofitConnection retrofitConnection = new RetrofitConnection();
+    private final RexConnection rexConnection = new RexConnection();
+    private final RexUtils rexUtils = new RexUtils();
 
-    List<RexData> rexDataList;
+    List<? extends CoinData> rexDataList;
     private CoinAdapter mCoinAdapter;
-    RexApi mRexApi = retrofitConnection.getRetrofitService();
+    RexApi mRexApi = rexConnection.getRetrofitService();
 
-    public List<RexData> getAccountBalance() {
-
-        String nonce = NonceUtils.generateNonce();
-        String apiKey = RexConf.API_KEY;
-        String secretApiKey = RexConf.API_SECRET_KEY;
-        String baseBalancesUrl = "https://bittrex.com/api/v1.1/account/getbalances";
-        String encodeNonce = NonceUtils.encodeNonce(nonce);
-
-        String data = new StringBuilder(baseBalancesUrl)
-                .append("?")
-                .append("apikey")
-                .append("=")
-                .append(apiKey)
-                .append("&")
-                .append("nonce")
-                .append("=")
-                .append(encodeNonce)
-                .toString();
-
-        String signedHeader = Sha512Utils.calculateHMAC(data, secretApiKey);
-
-        List<String> apiKeyList = new ArrayList<>();
-        apiKeyList.add(apiKey);
-
-        List<String> nonceList = new ArrayList<>();
-        nonceList.add(nonce);
-
-
-        HttpUrl.Builder url = new HttpUrl.Builder();
-        url.encodedQuery(data);
-
-        Call<RexResponse> call = mRexApi.getEncodedBalances(apiKey, nonce, signedHeader);
-        try {
-            Response<RexResponse> response = call.execute();
-            RexResponse rexResponse = response.body();
-            rexDataList = rexResponse.getDataFromResponse();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return rexDataList;
+    public RexService(CoinAdapter coinAdapter){
+        mCoinAdapter = coinAdapter;
     }
 
-    public void getTicker(CoinAdapter coinAdapter, RexData rexData) {
-        Call<RexResponse> call = mRexApi.getTicker(rexData.getMarketName());
-        mCoinAdapter = coinAdapter;
+    public void getDataList(List<CoinData> rexDataList) {
+        // TODO: Generalize all call init below into this method.
+    }
+
+
+    public void getAccountBalance() {
+        String nonce = NonceUtils.generateNonce();
+        String signedHeader = rexUtils.getSignedHeader(RexConf.API_KEY, nonce);
+
+        Call<RexResponse> call = mRexApi.getBalances(RexConf.API_KEY, nonce, signedHeader);
         call.enqueue(this);
     }
 
-    public void getDataList(CoinAdapter coinAdapter, List<RexData> rexDataList) {
-
+    public void getTicker(RexData rexData) {
+        Call<RexResponse> call = mRexApi.getTicker(rexData.getMarketName());
+        call.enqueue(this);
     }
 
-    public void getSummaries(CoinAdapter coinAdapter, List<RexData> mRexDataList) {
+    public void getSummaries(List<CoinData> mRexDataList) {
         Call<RexResponse> call = mRexApi.getSummaries();
-        mCoinAdapter = coinAdapter;
         rexDataList = mRexDataList;
         call.enqueue(this);
     }
 
-    public void getMarkets(CoinAdapter coinAdapter, List<RexData> mRexDataList) {
+    public void getMarkets(List<CoinData> mRexDataList) {
         Call<RexResponse> call = mRexApi.getMarkets();
-        mCoinAdapter = coinAdapter;
         rexDataList = mRexDataList;
         call.enqueue(this);
     }

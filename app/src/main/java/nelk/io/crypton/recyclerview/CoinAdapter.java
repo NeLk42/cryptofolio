@@ -21,19 +21,19 @@ import java.util.Set;
 
 import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
-import nelk.io.crypton.retrofit.Bittrex.models.RexData;
+import nelk.io.crypton.models.CoinData;
 
 public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder> {
     public static final String TAG = CoinAdapter.class.getSimpleName();
 
-    private List<RexData> mRexDataList;
+    private List<CoinData> mCoinDataList;
     private LayoutInflater mInflater;
     private Context mContext;
 
 
-    public CoinAdapter(Context context, List<RexData> rexDataList) {
+    public CoinAdapter(Context context, List<CoinData> rexDataList) {
         mInflater = LayoutInflater.from(context);
-        mRexDataList = rexDataList;
+        mCoinDataList = rexDataList;
         mContext = context;
     }
 
@@ -47,7 +47,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
 
     @Override
     public void onBindViewHolder(CoinViewHolder holder, int position) {
-        final RexData rexData = mRexDataList.get(position);
+        final CoinData coinData = mCoinDataList.get(position);
 
         TextView marketName = holder.marketName;
         TextView volume = holder.volume;
@@ -55,31 +55,31 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         TextView low = holder.low;
         ImageView logo = holder.logoUrl;
 
-        String volumeToday = rexData.getVolume();
-        String highToday = "High : " + rexData.getHigh();
-        String lowToday = "Low : " + rexData.getLow();
+        String volumeToday = coinData.getVolume();
+        String highToday = "High : " + coinData.getHigh();
+        String lowToday = "Low : " + coinData.getLow();
 
-        marketName.setText(rexData.getMarketName());
+        marketName.setText(coinData.getMarketName());
         volume.setText(volumeToday);
         high.setText(highToday);
         low.setText(lowToday);
         Picasso
                 .with(mContext)
-                .load(rexData.getLogoUrl())
+                .load(coinData.getLogoUrl())
                 .resize(50,50)
                 .onlyScaleDown()
                 .into(logo);
 
-        Log.d(TAG, "Storing " + rexData.getMarketName() + ", " +
-                rexData.getVolume() + ", " +
-                rexData.getHigh() + ", " +
-                rexData.getLow() + ".");
+        Log.d(TAG, "Storing " + coinData.getMarketName() + ", " +
+                coinData.getVolume() + ", " +
+                coinData.getHigh() + ", " +
+                coinData.getLow() + ".");
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailsActivity.class);
-                intent.putExtra("rexData", rexData);
+                intent.putExtra("coinData", coinData);
                 mContext.startActivity(intent);
             }
         });
@@ -88,36 +88,36 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     @Override
     public int getItemCount() {
         int numItems = 0;
-        if (mRexDataList != null){
-            numItems = mRexDataList.size();
+        if (mCoinDataList != null){
+            numItems = mCoinDataList.size();
         }
         return numItems;
     }
 
-    public void updateCoinList(CoinAdapter coinAdapter, List<RexData> coinsList){
-        this.mRexDataList = updateList(coinsList);
+    public void updateCoinList(CoinAdapter coinAdapter, List<? extends CoinData> coinsList){
+        this.mCoinDataList = updateList(coinsList);
         coinAdapter.notifyDataSetChanged();
     }
 
     @NonNull
-    private List<RexData> updateList(List<RexData> coinsList) {
-        Map<String, RexData> resultMap = new HashMap<>();
+    private List<CoinData> updateList(List<? extends CoinData> coinsList) {
+        Map<String, CoinData> resultMap = new HashMap<>();
 
-        for (RexData existingRexData : mRexDataList) {
-            resultMap.put(existingRexData.getMarketName(), existingRexData);
+        for (CoinData existingCoinData : mCoinDataList) {
+            resultMap.put(existingCoinData.getMarketName(), existingCoinData);
         }
 
-        for (RexData newRexData : coinsList) {
-            String coinId = newRexData.getMarketName();
+        for (CoinData newCoinData : coinsList) {
+            String coinId = newCoinData.getMarketName();
             if (resultMap.get(coinId) != null) {
-                RexData combinedRexData = resultMap.get(coinId).addData(newRexData);
-                resultMap.put(coinId, combinedRexData);
+                CoinData combinedCoinData = resultMap.get(coinId).addData(newCoinData);
+                resultMap.put(coinId, combinedCoinData);
             } else {
-                resultMap.put(newRexData.getMarketName(), newRexData);
+                resultMap.put(newCoinData.getMarketName(), newCoinData);
             }
         }
 
-        List<RexData> result = new ArrayList<>();
+        List<CoinData> result = new ArrayList<>();
         Set<String> marketsSet = resultMap.keySet();
 
         for (String coinId : marketsSet) {

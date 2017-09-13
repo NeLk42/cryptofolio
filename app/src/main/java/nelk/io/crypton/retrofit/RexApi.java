@@ -1,4 +1,4 @@
-package nelk.io.crypton.retrofit.Bittrex;
+package nelk.io.crypton.retrofit;
 
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
 import retrofit2.Call;
@@ -8,8 +8,8 @@ import retrofit2.http.Query;
 
 public interface RexApi {
 
-    @GET("public/getmarketsummaries")
-    Call<RexResponse>getSummaries();
+    @GET("public/getticker")
+    Call<RexResponse>getTicker(@Query("market") String market);
 
     @GET("public/getmarkets")
     Call<RexResponse>getMarkets();
@@ -17,11 +17,11 @@ public interface RexApi {
     @GET("public/getmarketsummary")
     Call<RexResponse>getBTCLTC(@Query("market") String market);
 
-    @GET("public/getticker")
-    Call<RexResponse>getTicker(@Query("market") String market);
+    @GET("public/getmarketsummaries")
+    Call<RexResponse>getSummaries();
 
     @GET("account/getbalances")
-    Call<RexResponse>getEncodedBalances(
+    Call<RexResponse> getBalances(
             @Query(value = "apikey") String apikey,
             @Query(value = "nonce", encoded = true) String nonce,
             @Header("apisign") String signedHeader);
