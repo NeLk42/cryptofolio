@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import nelk.io.crypton.retrofit.models.Bittrex.RexData;
+import nelk.io.crypton.retrofit.Bittrex.models.RexData;
 
 public class DetailsActivity extends AppCompatActivity {
     public static final String TAG = DetailsActivity.class.getSimpleName();

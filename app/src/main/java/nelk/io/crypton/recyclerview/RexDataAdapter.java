@@ -21,7 +21,7 @@ import java.util.Set;
 
 import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
-import nelk.io.crypton.retrofit.models.Bittrex.RexData;
+import nelk.io.crypton.retrofit.Bittrex.models.RexData;
 
 public class RexDataAdapter extends RecyclerView.Adapter<RexDataAdapter.CoinViewHolder> {
     public static final String TAG = RexDataAdapter.class.getSimpleName();

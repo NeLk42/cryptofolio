@@ -1,6 +1,6 @@
-package nelk.io.crypton.retrofit;
+package nelk.io.crypton.retrofit.Bittrex;
 
-import nelk.io.crypton.retrofit.models.Bittrex.RexResponse;
+import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

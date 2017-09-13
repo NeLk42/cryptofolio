@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nelk.io.crypton.recyclerview.RexDataAdapter;
-import nelk.io.crypton.retrofit.RexService;
-import nelk.io.crypton.retrofit.models.Bittrex.RexData;
+import nelk.io.crypton.retrofit.Bittrex.RexService;
+import nelk.io.crypton.retrofit.Bittrex.models.RexData;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();

@@ -1,4 +1,4 @@
-package nelk.io.crypton.retrofit;
+package nelk.io.crypton.retrofit.Bittrex;
 
 import android.util.Log;
 
@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nelk.io.crypton.recyclerview.RexDataAdapter;
-import nelk.io.crypton.retrofit.models.Bittrex.RexResponse;
-import nelk.io.crypton.retrofit.models.Bittrex.RexData;
+import nelk.io.crypton.retrofit.Bittrex.models.RexData;
+import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
+import nelk.io.crypton.retrofit.RetrofitConnection;
 import nelk.io.crypton.utils.NonceUtils;
 import nelk.io.crypton.utils.Sha512Utils;
 import okhttp3.HttpUrl;
@@ -27,8 +28,8 @@ public class RexService implements Callback<RexResponse> {
     public List<RexData> getAccountBalance() {
 
         String nonce = NonceUtils.generateNonce();
-        String apiKey = APIConf.API_KEY;
-        String secretApiKey = APIConf.API_SECRET_KEY;
+        String apiKey = RexConf.API_KEY;
+        String secretApiKey = RexConf.API_SECRET_KEY;
         String baseBalancesUrl = "https://bittrex.com/api/v1.1/account/getbalances";
         String encodeNonce = NonceUtils.encodeNonce(nonce);
 

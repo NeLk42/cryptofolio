@@ -1,5 +1,6 @@
 package nelk.io.crypton.retrofit;
 
+import nelk.io.crypton.retrofit.Bittrex.RexApi;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -9,7 +10,7 @@ public class RetrofitConnection {
     public RetrofitConnection() {
     }
 
-    RexApi getRetrofitService() {
+    public RexApi getRetrofitService() {
         Retrofit retrofit = getRetrofit();
         return retrofit.create(RexApi.class);
     }
