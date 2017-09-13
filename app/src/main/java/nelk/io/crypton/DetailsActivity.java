@@ -20,8 +20,8 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent storage = getIntent();
 
-        if (storage.hasExtra("coin")){
-            RexData rexData = (RexData) storage.getExtras().get("rexData");
+        if (storage.hasExtra("coinData")){
+            RexData rexData = (RexData) storage.getExtras().get("coinData");
 
             ImageView logo = (ImageView) findViewById(R.id.fab_coin_icon);
             Picasso
