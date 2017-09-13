@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import nelk.io.crypton.recyclerview.RexDataAdapter;
+import nelk.io.crypton.recyclerview.CoinAdapter;
 import nelk.io.crypton.retrofit.Bittrex.models.RexData;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
 import nelk.io.crypton.retrofit.RetrofitConnection;
@@ -22,7 +22,7 @@ public class RexService implements Callback<RexResponse> {
     private final RetrofitConnection retrofitConnection = new RetrofitConnection();
 
     List<RexData> rexDataList;
-    private RexDataAdapter mRexDataAdapter;
+    private CoinAdapter mCoinAdapter;
     RexApi mRexApi = retrofitConnection.getRetrofitService();
 
     public List<RexData> getAccountBalance() {
@@ -68,26 +68,26 @@ public class RexService implements Callback<RexResponse> {
         return rexDataList;
     }
 
-    public void getTicker(RexDataAdapter rexDataAdapter, RexData rexData) {
+    public void getTicker(CoinAdapter coinAdapter, RexData rexData) {
         Call<RexResponse> call = mRexApi.getTicker(rexData.getMarketName());
-        mRexDataAdapter = rexDataAdapter;
+        mCoinAdapter = coinAdapter;
         call.enqueue(this);
     }
 
-    public void getDataList(RexDataAdapter rexDataAdapter, List<RexData> rexDataList) {
+    public void getDataList(CoinAdapter coinAdapter, List<RexData> rexDataList) {
 
     }
 
-    public void getSummaries(RexDataAdapter rexDataAdapter, List<RexData> mRexDataList) {
+    public void getSummaries(CoinAdapter coinAdapter, List<RexData> mRexDataList) {
         Call<RexResponse> call = mRexApi.getSummaries();
-        mRexDataAdapter = rexDataAdapter;
+        mCoinAdapter = coinAdapter;
         rexDataList = mRexDataList;
         call.enqueue(this);
     }
 
-    public void getMarkets(RexDataAdapter rexDataAdapter, List<RexData> mRexDataList) {
+    public void getMarkets(CoinAdapter coinAdapter, List<RexData> mRexDataList) {
         Call<RexResponse> call = mRexApi.getMarkets();
-        mRexDataAdapter = rexDataAdapter;
+        mCoinAdapter = coinAdapter;
         rexDataList = mRexDataList;
         call.enqueue(this);
     }
@@ -96,7 +96,7 @@ public class RexService implements Callback<RexResponse> {
     public void onResponse(Call<RexResponse> call, Response<RexResponse> response) {
         if(response.isSuccessful()){
             rexDataList = getResponseCoins(response);
-            mRexDataAdapter.updateCoinList(mRexDataAdapter, rexDataList);
+            mCoinAdapter.updateCoinList(mCoinAdapter, rexDataList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());

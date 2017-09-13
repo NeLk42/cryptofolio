@@ -23,15 +23,15 @@ import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
 import nelk.io.crypton.retrofit.Bittrex.models.RexData;
 
-public class RexDataAdapter extends RecyclerView.Adapter<RexDataAdapter.CoinViewHolder> {
-    public static final String TAG = RexDataAdapter.class.getSimpleName();
+public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder> {
+    public static final String TAG = CoinAdapter.class.getSimpleName();
 
     private List<RexData> mRexDataList;
     private LayoutInflater mInflater;
     private Context mContext;
 
 
-    public RexDataAdapter(Context context, List<RexData> rexDataList) {
+    public CoinAdapter(Context context, List<RexData> rexDataList) {
         mInflater = LayoutInflater.from(context);
         mRexDataList = rexDataList;
         mContext = context;
@@ -94,9 +94,9 @@ public class RexDataAdapter extends RecyclerView.Adapter<RexDataAdapter.CoinView
         return numItems;
     }
 
-    public void updateCoinList(RexDataAdapter rexDataAdapter, List<RexData> coinsList){
+    public void updateCoinList(CoinAdapter coinAdapter, List<RexData> coinsList){
         this.mRexDataList = updateList(coinsList);
-        rexDataAdapter.notifyDataSetChanged();
+        coinAdapter.notifyDataSetChanged();
     }
 
     @NonNull
