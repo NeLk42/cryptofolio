@@ -4,14 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +18,7 @@ import java.util.Set;
 
 import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
-import nelk.io.crypton.models.CoinData;
+import nelk.io.crypton.retrofit.models.CoinData;
 
 public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder> {
     public static final String TAG = CoinAdapter.class.getSimpleName();
@@ -39,7 +36,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
 
     @Override
     public CoinViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View coinView = mInflater.inflate(R.layout.market_grid_item, parent, false);
+        View coinView = mInflater.inflate(R.layout.balance_grid_item, parent, false);
 
         CoinViewHolder coinViewHolder = new CoinViewHolder(coinView);
         return coinViewHolder;
@@ -49,31 +46,42 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     public void onBindViewHolder(CoinViewHolder holder, int position) {
         final CoinData coinData = mCoinDataList.get(position);
 
-        TextView marketName = holder.marketName;
-        TextView volume = holder.volume;
-        TextView high = holder.high;
-        TextView low = holder.low;
-        ImageView logo = holder.logoUrl;
+//        TextView marketName = holder.marketName;
+//        TextView volume = holder.volume;
+//        TextView high = holder.high;
+//        TextView low = holder.low;
+//        ImageView logo = holder.logoUrl;
+        TextView currency = holder.currency;
+        TextView balance = holder.balance;
+        TextView available = holder.available;
+        TextView pending = holder.pending;
+        TextView cryptoAddress = holder.cryptoAddress;
 
-        String volumeToday = coinData.getVolume();
-        String highToday = "High : " + coinData.getHigh();
-        String lowToday = "Low : " + coinData.getLow();
 
-        marketName.setText(coinData.getMarketName());
-        volume.setText(volumeToday);
-        high.setText(highToday);
-        low.setText(lowToday);
-        Picasso
-                .with(mContext)
-                .load(coinData.getLogoUrl())
-                .resize(50,50)
-                .onlyScaleDown()
-                .into(logo);
+//        String volumeToday = coinData.getVolume();
+//        String highToday = "High : " + coinData.getHigh();
+//        String lowToday = "Low : " + coinData.getLow();
+//        marketName.setText(coinData.getMarketName());
+//        volume.setText(volumeToday);
+//        high.setText(highToday);
+//        low.setText(lowToday);
+//        Picasso
+//                .with(mContext)
+//                .load(coinData.getLogoUrl())
+//                .resize(50,50)
+//                .onlyScaleDown()
+//                .into(logo);
 
-        Log.d(TAG, "Storing " + coinData.getMarketName() + ", " +
-                coinData.getVolume() + ", " +
-                coinData.getHigh() + ", " +
-                coinData.getLow() + ".");
+        currency.setText(coinData.getCurrency());
+        balance.setText(Double.toString(coinData.getBalance()));
+//        available.setText(Double.toString(coinData.getAvailable()));
+//        pending.setText(Double.toString(coinData.getPending()));
+//        cryptoAddress.setText(coinData.getCryptoAddress());
+
+//        Log.d(TAG, "Storing " + coinData.getMarketName() + ", " +
+//                coinData.getVolume() + ", " +
+//                coinData.getHigh() + ", " +
+//                coinData.getLow() + ".");
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -92,6 +100,38 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
             numItems = mCoinDataList.size();
         }
         return numItems;
+    }
+
+    public void updateBalances(CoinAdapter coinAdapter, List<? extends CoinData> coinsList){
+        this.mCoinDataList = updateBalanceList(coinsList);
+        coinAdapter.notifyDataSetChanged();
+    }
+
+    @NonNull
+    private List<CoinData> updateBalanceList(List<? extends CoinData> coinsList) {
+        Map<String, CoinData> resultMap = new HashMap<>();
+
+        for (CoinData existingCoinData : mCoinDataList) {
+            resultMap.put(existingCoinData.getCurrency(), existingCoinData);
+        }
+
+        for (CoinData newCoinData : coinsList) {
+            String coinId = newCoinData.getCurrency();
+            if (resultMap.get(coinId) != null) {
+                CoinData combinedCoinData = resultMap.get(coinId).addData(newCoinData);
+                resultMap.put(coinId, combinedCoinData);
+            } else {
+                resultMap.put(newCoinData.getCurrency(), newCoinData);
+            }
+        }
+
+        List<CoinData> result = new ArrayList<>();
+        Set<String> marketsSet = resultMap.keySet();
+
+        for (String coinId : marketsSet) {
+            result.add(resultMap.get(coinId));
+        }
+        return result;
     }
 
     public void updateCoinList(CoinAdapter coinAdapter, List<? extends CoinData> coinsList){
@@ -145,6 +185,12 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         TextView notice;
         TextView isSponsored;
         ImageView logoUrl;
+        // getBalance
+        TextView currency;
+        TextView balance;
+        TextView available;
+        TextView pending;
+        TextView cryptoAddress;
 
         public CoinViewHolder(View itemView) {
             super(itemView);
@@ -153,6 +199,13 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
             this.high = (TextView) itemView.findViewById(R.id.high);
             this.low = (TextView) itemView.findViewById(R.id.low);
             this.logoUrl = (ImageView) itemView.findViewById(R.id.logo);
+
+            // getBalance
+            this.currency = (TextView) itemView.findViewById(R.id.currency);
+            this.balance = (TextView) itemView.findViewById(R.id.balance);
+//            this.available = (TextView) itemView.findViewById(R.id.available);
+//            this.pending = (TextView) itemView.findViewById(R.id.pending);
+//            this.cryptoAddress = (TextView) itemView.findViewById(R.id.cryptoAddress);
         }
     }
 }

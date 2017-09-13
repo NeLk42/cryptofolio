@@ -3,7 +3,7 @@ package nelk.io.crypton.retrofit.Bittrex.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import nelk.io.crypton.models.CoinData;
+import nelk.io.crypton.retrofit.models.CoinData;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -32,6 +32,13 @@ public class RexData implements CoinData {
     String PrevDay;
     String Created;
 
+    String Currency;
+    Double Balance;
+    Double Available;
+    Double Pending;
+    String CryptoAddress;
+
+
     protected RexData(Parcel in) {
         MarketCurrency = in.readString();
         BaseCurrency = in.readString();
@@ -55,6 +62,11 @@ public class RexData implements CoinData {
         OpenSellOrders = in.readString();
         PrevDay = in.readString();
         Created = in.readString();
+        Currency = in.readString();
+        Balance = in.readByte() == 0x00 ? null : in.readDouble();
+        Available = in.readByte() == 0x00 ? null : in.readDouble();
+        Pending = in.readByte() == 0x00 ? null : in.readDouble();
+        CryptoAddress = in.readString();
     }
 
     @Override
@@ -86,6 +98,26 @@ public class RexData implements CoinData {
         dest.writeString(OpenSellOrders);
         dest.writeString(PrevDay);
         dest.writeString(Created);
+        dest.writeString(Currency);
+        if (Balance == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(Balance);
+        }
+        if (Available == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(Available);
+        }
+        if (Pending == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(Pending);
+        }
+        dest.writeString(CryptoAddress);
     }
 
     @SuppressWarnings("unused")
@@ -178,6 +210,21 @@ public class RexData implements CoinData {
         if(!isBlank(rexData.getCreated())){
             this.Created = rexData.getCreated();
         }
+        if(!isBlank(rexData.getCurrency())){
+            this.Currency = rexData.getCurrency();
+        }
+        if(rexData.getBalance() != null && rexData.getBalance() != 0){
+            this.Balance = rexData.getBalance();
+        }
+        if(rexData.getAvailable() != null && rexData.getAvailable() != 0){
+            this.Available = rexData.getAvailable();
+        }
+        if(rexData.getPending() != null && rexData.getPending() != 0){
+            this.Pending = rexData.getPending();
+        }
+        if(!isBlank(rexData.getCryptoAddress())){
+            this.CryptoAddress = rexData.getCryptoAddress();
+        }
 
         return this;
     }
@@ -268,5 +315,25 @@ public class RexData implements CoinData {
 
     public String getCreated() {
         return Created;
+    }
+
+    public String getCurrency() {
+        return Currency;
+    }
+
+    public Double getBalance() {
+        return Balance;
+    }
+
+    public Double getAvailable() {
+        return Available;
+    }
+
+    public Double getPending() {
+        return Pending;
+    }
+
+    public String getCryptoAddress() {
+        return CryptoAddress;
     }
 }

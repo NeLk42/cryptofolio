@@ -1,4 +1,4 @@
-package nelk.io.crypton.models;
+package nelk.io.crypton.retrofit.models;
 
 
 import android.os.Parcelable;
@@ -29,4 +29,11 @@ public interface CoinData extends Parcelable {
     String getOpenBuyOrders();
     String getOpenSellOrders();
     String getCreated();
+
+    // getBalance
+    String getCurrency();
+    Double getBalance();
+    Double getAvailable();
+    Double getPending();
+    String getCryptoAddress();
 }

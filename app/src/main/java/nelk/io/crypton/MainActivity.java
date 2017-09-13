@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import nelk.io.crypton.models.CoinData;
+import nelk.io.crypton.retrofit.models.CoinData;
 import nelk.io.crypton.recyclerview.CoinAdapter;
 import nelk.io.crypton.retrofit.Bittrex.RexService;
 
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         mDataRecyclerView.setHasFixedSize(true);
 
         RexService rexService = new RexService(mCoinAdapter);
-//        rexService.getAccountBalance();
-        rexService.getSummaries(mRexDataList);
-        rexService.getMarkets(mRexDataList);
+        rexService.getAccountBalance();
+//        rexService.getSummaries(mRexDataList);
+//        rexService.getMarkets(mRexDataList);
     }
 }

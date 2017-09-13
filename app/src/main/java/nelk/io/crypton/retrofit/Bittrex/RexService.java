@@ -5,7 +5,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 
-import nelk.io.crypton.models.CoinData;
+import nelk.io.crypton.retrofit.models.CoinData;
 import nelk.io.crypton.recyclerview.CoinAdapter;
 import nelk.io.crypton.retrofit.Bittrex.models.RexData;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
@@ -62,7 +62,8 @@ public class RexService implements Callback<RexResponse> {
     public void onResponse(Call<RexResponse> call, Response<RexResponse> response) {
         if(response.isSuccessful()){
             rexDataList = getResponseCoins(response);
-            mCoinAdapter.updateCoinList(mCoinAdapter, rexDataList);
+            mCoinAdapter.updateBalances(mCoinAdapter, rexDataList);
+//            mCoinAdapter.updateCoinList(mCoinAdapter, rexDataList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());
