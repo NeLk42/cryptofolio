@@ -103,34 +103,19 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     }
 
     public void updateBalances(CoinAdapter coinAdapter, List<? extends CoinData> coinsList){
-        this.mCoinDataList = updateBalanceList(coinsList);
+        this.mCoinDataList = updateBalance(coinsList);
         coinAdapter.notifyDataSetChanged();
     }
 
     @NonNull
-    private List<CoinData> updateBalanceList(List<? extends CoinData> coinsList) {
-        Map<String, CoinData> resultMap = new HashMap<>();
-
-        for (CoinData existingCoinData : mCoinDataList) {
-            resultMap.put(existingCoinData.getCurrency(), existingCoinData);
-        }
-
-        for (CoinData newCoinData : coinsList) {
-            String coinId = newCoinData.getCurrency();
-            if (resultMap.get(coinId) != null) {
-                CoinData combinedCoinData = resultMap.get(coinId).addData(newCoinData);
-                resultMap.put(coinId, combinedCoinData);
-            } else {
-                resultMap.put(newCoinData.getCurrency(), newCoinData);
-            }
-        }
+    private List<CoinData> updateBalance(List<? extends CoinData> coinsList) {
+        mCoinDataList.clear();
 
         List<CoinData> result = new ArrayList<>();
-        Set<String> marketsSet = resultMap.keySet();
-
-        for (String coinId : marketsSet) {
-            result.add(resultMap.get(coinId));
+        for (CoinData coin: coinsList) {
+            result.add(coin);
         }
+
         return result;
     }
 
