@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         RexService rexService = new RexService(mCoinAdapter);
 //        rexService.getAccountBalance();
-        rexService.getSummaries(mCoinAdapter, mRexDataList);
-        rexService.getMarkets(mCoinAdapter, mRexDataList);
+        rexService.getSummaries(mRexDataList);
+        rexService.getMarkets(mRexDataList);
     }
 }
