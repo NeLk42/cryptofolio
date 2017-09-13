@@ -9,9 +9,9 @@ public class RetrofitConnection {
     public RetrofitConnection() {
     }
 
-    BRexApi getRetrofitService() {
+    RexApi getRetrofitService() {
         Retrofit retrofit = getRetrofit();
-        return retrofit.create(BRexApi.class);
+        return retrofit.create(RexApi.class);
     }
 
     Retrofit getRetrofit() {

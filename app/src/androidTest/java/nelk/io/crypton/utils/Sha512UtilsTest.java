@@ -4,22 +4,22 @@ import org.junit.Test;
 
 import java.util.List;
 
-import nelk.io.crypton.retrofit.BRexService;
-import nelk.io.crypton.retrofit.models.Data;
+import nelk.io.crypton.retrofit.RexService;
+import nelk.io.crypton.retrofit.models.Bittrex.RexData;
 
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
-public class SHA512Test {
+public class Sha512UtilsTest {
 
     @Test
     public void test(){
         // Given
-        BRexService bRex = new BRexService();
+        RexService bRex = new RexService();
 
         // When
-        List<Data> result = bRex.getAccountBalance();
+        List<RexData> result = bRex.getAccountBalance();
 
         // Then
         assertNotNull(result);

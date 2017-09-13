@@ -1,11 +1,11 @@
-package nelk.io.crypton.retrofit.models;
+package nelk.io.crypton.retrofit.models.Bittrex;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-public class Data implements Parcelable {
+public class RexData implements Parcelable {
 
     String MarketCurrency;
     String BaseCurrency;
@@ -30,7 +30,7 @@ public class Data implements Parcelable {
     String PrevDay;
     String Created;
 
-    protected Data(Parcel in) {
+    protected RexData(Parcel in) {
         MarketCurrency = in.readString();
         BaseCurrency = in.readString();
         MarketCurrencyLong = in.readString();
@@ -87,94 +87,94 @@ public class Data implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Data> CREATOR = new Parcelable.Creator<Data>() {
+    public static final Parcelable.Creator<RexData> CREATOR = new Parcelable.Creator<RexData>() {
         @Override
-        public Data createFromParcel(Parcel in) {
-            return new Data(in);
+        public RexData createFromParcel(Parcel in) {
+            return new RexData(in);
         }
 
         @Override
-        public Data[] newArray(int size) {
-            return new Data[size];
+        public RexData[] newArray(int size) {
+            return new RexData[size];
         }
     };
 
-    public Data(Data data){
-        addData(data);
+    public RexData(RexData rexData){
+        addData(rexData);
     }
 
-    public Data addData(Data data){
-        if(!isBlank(data.MarketCurrency)){
-            this.MarketCurrency = data.MarketCurrency;
+    public RexData addData(RexData rexData){
+        if(!isBlank(rexData.MarketCurrency)){
+            this.MarketCurrency = rexData.MarketCurrency;
         }
-        if(!isBlank(data.BaseCurrency)){
-            this.BaseCurrency = data.BaseCurrency;
+        if(!isBlank(rexData.BaseCurrency)){
+            this.BaseCurrency = rexData.BaseCurrency;
         }
-        if(!isBlank(data.MarketCurrencyLong)){
-            this.MarketCurrencyLong = data.MarketCurrencyLong;
+        if(!isBlank(rexData.MarketCurrencyLong)){
+            this.MarketCurrencyLong = rexData.MarketCurrencyLong;
         }
-        if(!isBlank(data.BaseCurrencyLong)){
-            this.BaseCurrencyLong = data.BaseCurrencyLong;
+        if(!isBlank(rexData.BaseCurrencyLong)){
+            this.BaseCurrencyLong = rexData.BaseCurrencyLong;
         }
-        if(!isBlank(data.MinTradeSize)){
-            this.MinTradeSize = data.MinTradeSize;
+        if(!isBlank(rexData.MinTradeSize)){
+            this.MinTradeSize = rexData.MinTradeSize;
         }
-        if(!isBlank(data.MarketName)){
-            this.MarketName = data.MarketName;
+        if(!isBlank(rexData.MarketName)){
+            this.MarketName = rexData.MarketName;
         }
-        if(!isBlank(data.IsActive)){
-            this.IsActive = data.IsActive;
+        if(!isBlank(rexData.IsActive)){
+            this.IsActive = rexData.IsActive;
         }
-        if(!isBlank(data.Created)){
-            this.Created = data.Created;
+        if(!isBlank(rexData.Created)){
+            this.Created = rexData.Created;
         }
-        if(!isBlank(data.Notice)){
-            this.Notice = data.Notice;
+        if(!isBlank(rexData.Notice)){
+            this.Notice = rexData.Notice;
         }
-        if(!isBlank(data.IsSponsored)){
-            this.IsSponsored = data.IsSponsored;
+        if(!isBlank(rexData.IsSponsored)){
+            this.IsSponsored = rexData.IsSponsored;
         }
-        if(!isBlank(data.LogoUrl)){
-            this.LogoUrl = data.LogoUrl;
+        if(!isBlank(rexData.LogoUrl)){
+            this.LogoUrl = rexData.LogoUrl;
         }
-        if(!isBlank(data.MarketName)){
-            this.MarketName = data.MarketName;
+        if(!isBlank(rexData.MarketName)){
+            this.MarketName = rexData.MarketName;
         }
-        if(!isBlank(data.High)){
-            this.High = data.High;
+        if(!isBlank(rexData.High)){
+            this.High = rexData.High;
         }
-        if(!isBlank(data.Low)){
-            this.Low = data.Low;
+        if(!isBlank(rexData.Low)){
+            this.Low = rexData.Low;
         }
-        if(!isBlank(data.Volume)){
-            this.Volume = data.Volume;
+        if(!isBlank(rexData.Volume)){
+            this.Volume = rexData.Volume;
         }
-        if(!isBlank(data.Last)){
-            this.Last = data.Last;
+        if(!isBlank(rexData.Last)){
+            this.Last = rexData.Last;
         }
-        if(!isBlank(data.BaseVolume)){
-            this.BaseVolume = data.BaseVolume;
+        if(!isBlank(rexData.BaseVolume)){
+            this.BaseVolume = rexData.BaseVolume;
         }
-        if(!isBlank(data.TimeStamp)){
-            this.TimeStamp = data.TimeStamp;
+        if(!isBlank(rexData.TimeStamp)){
+            this.TimeStamp = rexData.TimeStamp;
         }
-        if(!isBlank(data.Bid)){
-            this.Bid = data.Bid;
+        if(!isBlank(rexData.Bid)){
+            this.Bid = rexData.Bid;
         }
-        if(!isBlank(data.Ask)){
-            this.Ask = data.Ask;
+        if(!isBlank(rexData.Ask)){
+            this.Ask = rexData.Ask;
         }
-        if(!isBlank(data.OpenBuyOrders)){
-            this.OpenBuyOrders = data.OpenBuyOrders;
+        if(!isBlank(rexData.OpenBuyOrders)){
+            this.OpenBuyOrders = rexData.OpenBuyOrders;
         }
-        if(!isBlank(data.OpenSellOrders)){
-            this.OpenSellOrders = data.OpenSellOrders;
+        if(!isBlank(rexData.OpenSellOrders)){
+            this.OpenSellOrders = rexData.OpenSellOrders;
         }
-        if(!isBlank(data.PrevDay)){
-            this.PrevDay = data.PrevDay;
+        if(!isBlank(rexData.PrevDay)){
+            this.PrevDay = rexData.PrevDay;
         }
-        if(!isBlank(data.Created)){
-            this.Created = data.Created;
+        if(!isBlank(rexData.Created)){
+            this.Created = rexData.Created;
         }
 
         return this;

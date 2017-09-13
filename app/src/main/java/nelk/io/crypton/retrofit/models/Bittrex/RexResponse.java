@@ -1,4 +1,4 @@
-package nelk.io.crypton.retrofit.models;
+package nelk.io.crypton.retrofit.models.Bittrex;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,18 +6,18 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BRexResponse implements Parcelable {
+public class RexResponse implements Parcelable {
 
     String success;
     String message;
-    List<Data> result;
+    List<RexData> result;
 
-    protected BRexResponse(Parcel in) {
+    protected RexResponse(Parcel in) {
         success = in.readString();
         message = in.readString();
         if (in.readByte() == 0x01) {
-            result = new ArrayList<Data>();
-            in.readList(result, Data.class.getClassLoader());
+            result = new ArrayList<RexData>();
+            in.readList(result, RexData.class.getClassLoader());
         } else {
             result = null;
         }
@@ -41,19 +41,19 @@ public class BRexResponse implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<BRexResponse> CREATOR = new Parcelable.Creator<BRexResponse>() {
+    public static final Parcelable.Creator<RexResponse> CREATOR = new Parcelable.Creator<RexResponse>() {
         @Override
-        public BRexResponse createFromParcel(Parcel in) {
-            return new BRexResponse(in);
+        public RexResponse createFromParcel(Parcel in) {
+            return new RexResponse(in);
         }
 
         @Override
-        public BRexResponse[] newArray(int size) {
-            return new BRexResponse[size];
+        public RexResponse[] newArray(int size) {
+            return new RexResponse[size];
         }
     };
 
-    public List<Data> getDataFromResponse(){
+    public List<RexData> getDataFromResponse(){
         return result;
     }
 }
