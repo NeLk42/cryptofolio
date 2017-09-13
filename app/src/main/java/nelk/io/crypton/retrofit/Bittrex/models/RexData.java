@@ -38,7 +38,6 @@ public class RexData implements CoinData {
     Double Pending;
     String CryptoAddress;
 
-
     protected RexData(Parcel in) {
         MarketCurrency = in.readString();
         BaseCurrency = in.readString();
