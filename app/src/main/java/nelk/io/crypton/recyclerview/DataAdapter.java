@@ -21,19 +21,19 @@ import java.util.Set;
 
 import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
-import nelk.io.crypton.retrofit.models.Coin;
+import nelk.io.crypton.retrofit.models.Data;
 
-public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder> {
-    public static final String TAG = CoinAdapter.class.getSimpleName();
+public class DataAdapter extends RecyclerView.Adapter<DataAdapter.CoinViewHolder> {
+    public static final String TAG = DataAdapter.class.getSimpleName();
 
-    private List<Coin> mCoinList;
+    private List<Data> mDataList;
     private LayoutInflater mInflater;
     private Context mContext;
 
 
-    public CoinAdapter(Context context, List<Coin> coinList) {
+    public DataAdapter(Context context, List<Data> dataList) {
         mInflater = LayoutInflater.from(context);
-        mCoinList = coinList;
+        mDataList = dataList;
         mContext = context;
     }
 
@@ -47,7 +47,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
 
     @Override
     public void onBindViewHolder(CoinViewHolder holder, int position) {
-        final Coin coin = mCoinList.get(position);
+        final Data data = mDataList.get(position);
 
         TextView marketName = holder.marketName;
         TextView volume = holder.volume;
@@ -55,31 +55,31 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         TextView low = holder.low;
         ImageView logo = holder.logoUrl;
 
-        String volumeToday = coin.getVolume();
-        String highToday = "High : " + coin.getHigh();
-        String lowToday = "Low : " + coin.getLow();
+        String volumeToday = data.getVolume();
+        String highToday = "High : " + data.getHigh();
+        String lowToday = "Low : " + data.getLow();
 
-        marketName.setText(coin.getMarketName());
+        marketName.setText(data.getMarketName());
         volume.setText(volumeToday);
         high.setText(highToday);
         low.setText(lowToday);
         Picasso
                 .with(mContext)
-                .load(coin.getLogoUrl())
+                .load(data.getLogoUrl())
                 .resize(50,50)
                 .onlyScaleDown()
                 .into(logo);
 
-        Log.d(TAG, "Storing " + coin.getMarketName() + ", " +
-                coin.getVolume() + ", " +
-                coin.getHigh() + ", " +
-                coin.getLow() + ".");
+        Log.d(TAG, "Storing " + data.getMarketName() + ", " +
+                data.getVolume() + ", " +
+                data.getHigh() + ", " +
+                data.getLow() + ".");
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailsActivity.class);
-                intent.putExtra("coin", coin);
+                intent.putExtra("data", data);
                 mContext.startActivity(intent);
             }
         });
@@ -88,36 +88,36 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     @Override
     public int getItemCount() {
         int numItems = 0;
-        if (mCoinList != null){
-            numItems = mCoinList.size();
+        if (mDataList != null){
+            numItems = mDataList.size();
         }
         return numItems;
     }
 
-    public void updateCoinList(CoinAdapter coinAdapter, List<Coin> coinsList){
-        this.mCoinList = updateList(coinsList);
-        coinAdapter.notifyDataSetChanged();
+    public void updateCoinList(DataAdapter dataAdapter, List<Data> coinsList){
+        this.mDataList = updateList(coinsList);
+        dataAdapter.notifyDataSetChanged();
     }
 
     @NonNull
-    private List<Coin> updateList(List<Coin> coinsList) {
-        Map<String, Coin> resultMap = new HashMap<>();
+    private List<Data> updateList(List<Data> coinsList) {
+        Map<String, Data> resultMap = new HashMap<>();
 
-        for (Coin existingCoin : mCoinList) {
-            resultMap.put(existingCoin.getMarketName(), existingCoin);
+        for (Data existingData : mDataList) {
+            resultMap.put(existingData.getMarketName(), existingData);
         }
 
-        for (Coin newCoin : coinsList) {
-            String coinId = newCoin.getMarketName();
+        for (Data newData : coinsList) {
+            String coinId = newData.getMarketName();
             if (resultMap.get(coinId) != null) {
-                Coin combinedCoin = resultMap.get(coinId).addData(newCoin);
-                resultMap.put(coinId, combinedCoin);
+                Data combinedData = resultMap.get(coinId).addData(newData);
+                resultMap.put(coinId, combinedData);
             } else {
-                resultMap.put(newCoin.getMarketName(), newCoin);
+                resultMap.put(newData.getMarketName(), newData);
             }
         }
 
-        List<Coin> result = new ArrayList<>();
+        List<Data> result = new ArrayList<>();
         Set<String> marketsSet = resultMap.keySet();
 
         for (String coinId : marketsSet) {

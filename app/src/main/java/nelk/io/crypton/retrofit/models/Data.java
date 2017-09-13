@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-public class Coin implements Parcelable {
+public class Data implements Parcelable {
 
     String MarketCurrency;
     String BaseCurrency;
@@ -30,7 +30,7 @@ public class Coin implements Parcelable {
     String PrevDay;
     String Created;
 
-    protected Coin(Parcel in) {
+    protected Data(Parcel in) {
         MarketCurrency = in.readString();
         BaseCurrency = in.readString();
         MarketCurrencyLong = in.readString();
@@ -87,94 +87,94 @@ public class Coin implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Coin> CREATOR = new Parcelable.Creator<Coin>() {
+    public static final Parcelable.Creator<Data> CREATOR = new Parcelable.Creator<Data>() {
         @Override
-        public Coin createFromParcel(Parcel in) {
-            return new Coin(in);
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
         }
 
         @Override
-        public Coin[] newArray(int size) {
-            return new Coin[size];
+        public Data[] newArray(int size) {
+            return new Data[size];
         }
     };
 
-    public Coin (Coin coin){
-        addData(coin);
+    public Data(Data data){
+        addData(data);
     }
 
-    public Coin addData(Coin coin){
-        if(!isBlank(coin.MarketCurrency)){
-            this.MarketCurrency = coin.MarketCurrency;
+    public Data addData(Data data){
+        if(!isBlank(data.MarketCurrency)){
+            this.MarketCurrency = data.MarketCurrency;
         }
-        if(!isBlank(coin.BaseCurrency)){
-            this.BaseCurrency = coin.BaseCurrency;
+        if(!isBlank(data.BaseCurrency)){
+            this.BaseCurrency = data.BaseCurrency;
         }
-        if(!isBlank(coin.MarketCurrencyLong)){
-            this.MarketCurrencyLong = coin.MarketCurrencyLong;
+        if(!isBlank(data.MarketCurrencyLong)){
+            this.MarketCurrencyLong = data.MarketCurrencyLong;
         }
-        if(!isBlank(coin.BaseCurrencyLong)){
-            this.BaseCurrencyLong = coin.BaseCurrencyLong;
+        if(!isBlank(data.BaseCurrencyLong)){
+            this.BaseCurrencyLong = data.BaseCurrencyLong;
         }
-        if(!isBlank(coin.MinTradeSize)){
-            this.MinTradeSize = coin.MinTradeSize;
+        if(!isBlank(data.MinTradeSize)){
+            this.MinTradeSize = data.MinTradeSize;
         }
-        if(!isBlank(coin.MarketName)){
-            this.MarketName = coin.MarketName;
+        if(!isBlank(data.MarketName)){
+            this.MarketName = data.MarketName;
         }
-        if(!isBlank(coin.IsActive)){
-            this.IsActive = coin.IsActive;
+        if(!isBlank(data.IsActive)){
+            this.IsActive = data.IsActive;
         }
-        if(!isBlank(coin.Created)){
-            this.Created = coin.Created;
+        if(!isBlank(data.Created)){
+            this.Created = data.Created;
         }
-        if(!isBlank(coin.Notice)){
-            this.Notice = coin.Notice;
+        if(!isBlank(data.Notice)){
+            this.Notice = data.Notice;
         }
-        if(!isBlank(coin.IsSponsored)){
-            this.IsSponsored = coin.IsSponsored;
+        if(!isBlank(data.IsSponsored)){
+            this.IsSponsored = data.IsSponsored;
         }
-        if(!isBlank(coin.LogoUrl)){
-            this.LogoUrl = coin.LogoUrl;
+        if(!isBlank(data.LogoUrl)){
+            this.LogoUrl = data.LogoUrl;
         }
-        if(!isBlank(coin.MarketName)){
-            this.MarketName = coin.MarketName;
+        if(!isBlank(data.MarketName)){
+            this.MarketName = data.MarketName;
         }
-        if(!isBlank(coin.High)){
-            this.High = coin.High;
+        if(!isBlank(data.High)){
+            this.High = data.High;
         }
-        if(!isBlank(coin.Low)){
-            this.Low = coin.Low;
+        if(!isBlank(data.Low)){
+            this.Low = data.Low;
         }
-        if(!isBlank(coin.Volume)){
-            this.Volume = coin.Volume;
+        if(!isBlank(data.Volume)){
+            this.Volume = data.Volume;
         }
-        if(!isBlank(coin.Last)){
-            this.Last = coin.Last;
+        if(!isBlank(data.Last)){
+            this.Last = data.Last;
         }
-        if(!isBlank(coin.BaseVolume)){
-            this.BaseVolume = coin.BaseVolume;
+        if(!isBlank(data.BaseVolume)){
+            this.BaseVolume = data.BaseVolume;
         }
-        if(!isBlank(coin.TimeStamp)){
-            this.TimeStamp = coin.TimeStamp;
+        if(!isBlank(data.TimeStamp)){
+            this.TimeStamp = data.TimeStamp;
         }
-        if(!isBlank(coin.Bid)){
-            this.Bid = coin.Bid;
+        if(!isBlank(data.Bid)){
+            this.Bid = data.Bid;
         }
-        if(!isBlank(coin.Ask)){
-            this.Ask = coin.Ask;
+        if(!isBlank(data.Ask)){
+            this.Ask = data.Ask;
         }
-        if(!isBlank(coin.OpenBuyOrders)){
-            this.OpenBuyOrders = coin.OpenBuyOrders;
+        if(!isBlank(data.OpenBuyOrders)){
+            this.OpenBuyOrders = data.OpenBuyOrders;
         }
-        if(!isBlank(coin.OpenSellOrders)){
-            this.OpenSellOrders = coin.OpenSellOrders;
+        if(!isBlank(data.OpenSellOrders)){
+            this.OpenSellOrders = data.OpenSellOrders;
         }
-        if(!isBlank(coin.PrevDay)){
-            this.PrevDay = coin.PrevDay;
+        if(!isBlank(data.PrevDay)){
+            this.PrevDay = data.PrevDay;
         }
-        if(!isBlank(coin.Created)){
-            this.Created = coin.Created;
+        if(!isBlank(data.Created)){
+            this.Created = data.Created;
         }
 
         return this;

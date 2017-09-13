@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.List;
 
 import nelk.io.crypton.retrofit.BRexService;
-import nelk.io.crypton.retrofit.models.Coin;
+import nelk.io.crypton.retrofit.models.Data;
 
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +19,7 @@ public class SHA512Test {
         BRexService bRex = new BRexService();
 
         // When
-        List<Coin> result = bRex.getAccountBalance();
+        List<Data> result = bRex.getAccountBalance();
 
         // Then
         assertNotNull(result);

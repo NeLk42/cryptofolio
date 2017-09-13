@@ -6,18 +6,18 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BittrexResponse implements Parcelable {
+public class BRexResponse implements Parcelable {
 
     String success;
     String message;
-    List<Coin> result;
+    List<Data> result;
 
-    protected BittrexResponse(Parcel in) {
+    protected BRexResponse(Parcel in) {
         success = in.readString();
         message = in.readString();
         if (in.readByte() == 0x01) {
-            result = new ArrayList<Coin>();
-            in.readList(result, Coin.class.getClassLoader());
+            result = new ArrayList<Data>();
+            in.readList(result, Data.class.getClassLoader());
         } else {
             result = null;
         }
@@ -41,19 +41,19 @@ public class BittrexResponse implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<BittrexResponse> CREATOR = new Parcelable.Creator<BittrexResponse>() {
+    public static final Parcelable.Creator<BRexResponse> CREATOR = new Parcelable.Creator<BRexResponse>() {
         @Override
-        public BittrexResponse createFromParcel(Parcel in) {
-            return new BittrexResponse(in);
+        public BRexResponse createFromParcel(Parcel in) {
+            return new BRexResponse(in);
         }
 
         @Override
-        public BittrexResponse[] newArray(int size) {
-            return new BittrexResponse[size];
+        public BRexResponse[] newArray(int size) {
+            return new BRexResponse[size];
         }
     };
 
-    public List<Coin> getDataFromResponse(){
+    public List<Data> getDataFromResponse(){
         return result;
     }
 }

@@ -8,16 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import nelk.io.crypton.recyclerview.CoinAdapter;
+import nelk.io.crypton.recyclerview.DataAdapter;
 import nelk.io.crypton.retrofit.BRexService;
-import nelk.io.crypton.retrofit.models.Coin;
+import nelk.io.crypton.retrofit.models.Data;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private List<Coin> mCoinList = new ArrayList<>();
-    private RecyclerView mCoinRecyclerView;
-    private CoinAdapter mCoinAdapter;
+    private List<Data> mDataList = new ArrayList<>();
+    private RecyclerView mDataRecyclerView;
+    private DataAdapter mDataAdapter;
     BRexService bRexService = new BRexService();
 
     @Override
@@ -25,17 +25,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mCoinRecyclerView = (RecyclerView) findViewById(R.id.rv_coins_grid);
-        mCoinAdapter = new CoinAdapter(this, mCoinList);
+        mDataRecyclerView = (RecyclerView) findViewById(R.id.rv_coins_grid);
+        mDataAdapter = new DataAdapter(this, mDataList);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-        mCoinRecyclerView.setLayoutManager(layoutManager);
-        mCoinRecyclerView.setAdapter(mCoinAdapter);
-        mCoinRecyclerView.setHasFixedSize(true);
+        mDataRecyclerView.setLayoutManager(layoutManager);
+        mDataRecyclerView.setAdapter(mDataAdapter);
+        mDataRecyclerView.setHasFixedSize(true);
 
         bRexService.getAccountBalance();
-        bRexService.getSummaries(mCoinAdapter, mCoinList);
-        bRexService.getMarkets(mCoinAdapter, mCoinList);
+        bRexService.getSummaries(mDataAdapter, mDataList);
+        bRexService.getMarkets(mDataAdapter, mDataList);
     }
 }

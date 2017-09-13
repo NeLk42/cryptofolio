@@ -1,35 +1,31 @@
 package nelk.io.crypton.retrofit;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import nelk.io.crypton.recyclerview.CoinAdapter;
-import nelk.io.crypton.retrofit.models.BittrexResponse;
-import nelk.io.crypton.retrofit.models.Coin;
+import nelk.io.crypton.recyclerview.DataAdapter;
+import nelk.io.crypton.retrofit.models.BRexResponse;
+import nelk.io.crypton.retrofit.models.Data;
 import nelk.io.crypton.utils.SHA512;
 import okhttp3.HttpUrl;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static nelk.io.crypton.utils.SHA512.generateNonce;
 
-public class BRexService implements Callback<BittrexResponse> {
+public class BRexService implements Callback<BRexResponse> {
     static final String TAG = BRexService.class.getSimpleName();
     private final RetrofitConnection retrofitConnection = new RetrofitConnection();
 
-    List<Coin> coinList;
-    private CoinAdapter mCoinAdapter;
+    List<Data> dataList;
+    private DataAdapter mDataAdapter;
     BRexApi mBRexApi = retrofitConnection.getRetrofitService();
 
-    public List<Coin> getAccountBalance() {
+    public List<Data> getAccountBalance() {
 
         String nonce = generateNonce();
         String apiKey = APIConf.API_KEY;
@@ -60,43 +56,43 @@ public class BRexService implements Callback<BittrexResponse> {
         HttpUrl.Builder url = new HttpUrl.Builder();
         url.encodedQuery(data);
 
-        Call<BittrexResponse> call = mBRexApi.getEncodedBalances(apiKey, nonce, signedHeader);
+        Call<BRexResponse> call = mBRexApi.getEncodedBalances(apiKey, nonce, signedHeader);
         try {
-            Response<BittrexResponse> response = call.execute();
-            BittrexResponse bRexResponse = response.body();
-            coinList = bRexResponse.getDataFromResponse();
+            Response<BRexResponse> response = call.execute();
+            BRexResponse bRexResponse = response.body();
+            dataList = bRexResponse.getDataFromResponse();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return coinList;
+        return dataList;
     }
 
-    public void getTicker(CoinAdapter coinAdapter, Coin coin) {
-        mCoinAdapter = coinAdapter;
-        Call<BittrexResponse> call = mBRexApi.getTicker(coin.getMarketName());
+    public void getTicker(DataAdapter dataAdapter, Data data) {
+        mDataAdapter = dataAdapter;
+        Call<BRexResponse> call = mBRexApi.getTicker(data.getMarketName());
         call.enqueue(this);
     }
 
-    public void getSummaries(CoinAdapter coinAdapter, List<Coin> mCoinList) {
-        mCoinAdapter = coinAdapter;
-        coinList = mCoinList;
-        Call<BittrexResponse> call = mBRexApi.getSummaries();
+    public void getSummaries(DataAdapter dataAdapter, List<Data> mDataList) {
+        mDataAdapter = dataAdapter;
+        dataList = mDataList;
+        Call<BRexResponse> call = mBRexApi.getSummaries();
         call.enqueue(this);
     }
 
-    public void getMarkets(CoinAdapter coinAdapter, List<Coin> mCoinList) {
-        mCoinAdapter = coinAdapter;
-        coinList = mCoinList;
-        Call<BittrexResponse> call = mBRexApi.getMarkets();
+    public void getMarkets(DataAdapter dataAdapter, List<Data> mDataList) {
+        mDataAdapter = dataAdapter;
+        dataList = mDataList;
+        Call<BRexResponse> call = mBRexApi.getMarkets();
         call.enqueue(this);
     }
 
     @Override
-    public void onResponse(Call<BittrexResponse> call, Response<BittrexResponse> response) {
+    public void onResponse(Call<BRexResponse> call, Response<BRexResponse> response) {
         if(response.isSuccessful()){
-            coinList = getResponseCoins(response);
-            mCoinAdapter.updateCoinList(mCoinAdapter, coinList);
+            dataList = getResponseCoins(response);
+            mDataAdapter.updateCoinList(mDataAdapter, dataList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());
@@ -106,13 +102,13 @@ public class BRexService implements Callback<BittrexResponse> {
         }
     }
 
-    private List<Coin> getResponseCoins(Response<BittrexResponse> response) {
-        BittrexResponse bittrexResponseModel = response.body();
-        return bittrexResponseModel.getDataFromResponse();
+    private List<Data> getResponseCoins(Response<BRexResponse> response) {
+        BRexResponse bRexResponseModel = response.body();
+        return bRexResponseModel.getDataFromResponse();
     }
 
     @Override
-    public void onFailure(Call<BittrexResponse> call, Throwable t) {
+    public void onFailure(Call<BRexResponse> call, Throwable t) {
         t.printStackTrace();
     }
 
