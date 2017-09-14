@@ -4,6 +4,8 @@ package nelk.io.crypton.models.rex;
 import java.text.SimpleDateFormat;
 
 import nelk.io.crypton.models.Position;
+import nelk.io.crypton.models.enums.Crypto;
+import nelk.io.crypton.models.enums.Fiat;
 
 public class RexPosition implements Position {
 
@@ -42,5 +44,15 @@ public class RexPosition implements Position {
 
     public void setRate(Double rate) {
         this.rate = rate;
+    }
+
+    @Override
+    public Double getCryptoValue(Crypto crypto) {
+        return null;
+    }
+
+    @Override
+    public Double getFiatValue(Fiat fiat) {
+        return null;
     }
 }

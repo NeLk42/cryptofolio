@@ -1,7 +1,7 @@
 package nelk.io.crypton.models;
 
 
-public interface Coin {
+public interface Coin extends Value {
 
     String getName();
 

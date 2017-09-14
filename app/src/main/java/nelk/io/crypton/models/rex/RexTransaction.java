@@ -104,4 +104,5 @@ class RexTransaction implements Transaction {
     public void setInvalidAddress(String invalidAddress) {
         this.invalidAddress = invalidAddress;
     }
+
 }

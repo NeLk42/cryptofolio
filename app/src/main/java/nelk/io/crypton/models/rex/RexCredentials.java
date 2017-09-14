@@ -22,5 +22,6 @@ public class RexCredentials implements Credentials {
     public void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
     }
+
 }
 

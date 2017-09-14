@@ -4,7 +4,6 @@ import nelk.io.crypton.models.Coin;
 
 class RexCoin implements Coin {
 
-    // Attributes
     String name;
     String longName;
     String logoUrl;
@@ -32,4 +31,5 @@ class RexCoin implements Coin {
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
     }
+
 }

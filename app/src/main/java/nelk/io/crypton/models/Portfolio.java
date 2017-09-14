@@ -2,7 +2,7 @@ package nelk.io.crypton.models;
 
 import java.util.List;
 
-public interface Portfolio extends Currency {
+public interface Portfolio extends Currency, Value {
 
     public String getName();
 
@@ -27,4 +27,5 @@ public interface Portfolio extends Currency {
     public List<? extends Transaction> getWithdrawals();
 
     public void setWithdrawals(List<? extends Transaction> withdrawals);
+
 }

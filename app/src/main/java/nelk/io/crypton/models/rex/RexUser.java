@@ -55,4 +55,5 @@ class RexUser implements User {
     public void setBaseCurrency(String baseCurrency) {
         this.baseCurrency = baseCurrency;
     }
+
 }

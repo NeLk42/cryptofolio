@@ -1,7 +1,7 @@
 package nelk.io.crypton.models;
 
 
-public interface Transaction {
+public interface Transaction extends Value {
 
     String getPaymentUuid();
 

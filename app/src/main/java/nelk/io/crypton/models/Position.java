@@ -3,7 +3,7 @@ package nelk.io.crypton.models;
 
 import java.text.SimpleDateFormat;
 
-public interface Position {
+public interface Position extends Value {
 
     String getMarketName();
 

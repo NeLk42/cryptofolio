@@ -5,8 +5,8 @@ public interface Currency {
 
     // Configure desired currency ($, £, €,...)
 
-    String getDesiredFiatCurrency();
+    String getBaseCurrency();
 
-    void setDesiredFiatCurrency(String desiredFiatCurrency);
+    void setBaseCurrency(String baseCurrency);
 
 }

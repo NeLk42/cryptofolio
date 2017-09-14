@@ -8,10 +8,12 @@ import nelk.io.crypton.models.Credentials;
 import nelk.io.crypton.models.Portfolio;
 import nelk.io.crypton.models.Position;
 import nelk.io.crypton.models.Transaction;
+import nelk.io.crypton.models.enums.Crypto;
+import nelk.io.crypton.models.enums.Fiat;
 
 public class RexPortfolio implements Portfolio {
 
-    // Attributes
+    // Portfolio
     String name;
     Broker broker;
     Credentials credentials;
@@ -19,73 +21,72 @@ public class RexPortfolio implements Portfolio {
     List<? extends Transaction> deposits;
     List<? extends Transaction> withdrawals;
 
-    @Override
+    // Base Currency
+    String baseCurrency;
+
     public String getName() {
         return null;
     }
 
-    @Override
     public void setName(String name) {
 
     }
 
-    @Override
     public Broker getBroker() {
         return null;
     }
 
-    @Override
     public void setBroker(Broker broker) {
 
     }
 
-    @Override
     public Credentials getCredentials() {
         return null;
     }
 
-    @Override
     public void setCredentials(Credentials credentials) {
 
     }
 
-    @Override
     public List<? extends Position> getPositions() {
         return null;
     }
 
-    @Override
     public void setPositions(List<? extends Position> positions) {
 
     }
 
-    @Override
     public List<? extends Transaction> getDeposits() {
         return null;
     }
 
-    @Override
     public void setDeposits(List<? extends Transaction> deposits) {
 
     }
 
-    @Override
     public List<? extends Transaction> getWithdrawals() {
         return null;
     }
 
-    @Override
     public void setWithdrawals(List<? extends Transaction> withdrawals) {
 
     }
 
+    public String getBaseCurrency() {
+        return null;
+    }
+
+    public void setBaseCurrency(String baseCurrency) {
+
+    }
+
     @Override
-    public String getDesiredFiatCurrency() {
+    public Double getCryptoValue(Crypto crypto) {
         return null;
     }
 
     @Override
-    public void setDesiredFiatCurrency(String desiredFiatCurrency) {
-
+    public Double getFiatValue(Fiat fiat) {
+        return null;
     }
 }

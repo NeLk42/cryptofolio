@@ -12,7 +12,6 @@ public class RexMarket implements Market {
     Coin baseCoin;
     Boolean active;
 
-
     // API getsummaries
     String last;
     String prevDay;
@@ -146,4 +145,5 @@ public class RexMarket implements Market {
     public void setOpenSellOrders(String openSellOrders) {
         this.openSellOrders = openSellOrders;
     }
+
 }
