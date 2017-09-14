@@ -1,29 +1,30 @@
 package nelk.io.crypton.models;
 
+import java.util.List;
 
-import java.util.Map;
+public interface Portfolio extends Currency {
 
-public interface Portfolio extends Capital, Currency{
+    public String getName();
 
-    // Attributes
+    public void setName(String name);
 
-    String getName();
+    public Broker getBroker();
 
-    void setName(String name);
+    public void setBroker(Broker broker);
 
-    Map<String, Coin> getAllBalances();
+    public Credentials getCredentials();
 
-    void setAllBalances(Map<String, Coin> coinMap);
+    public void setCredentials(Credentials credentials);
 
-    void setCoinBalance(String coinName, String balance);
+    public List<? extends Position> getPositions();
 
-    void setCoinBalance(Coin coin);
+    public void setPositions(List<? extends Position> positions);
 
-    void addCoin(Coin coin);
+    public List<? extends Transaction> getDeposits();
 
+    public void setDeposits(List<? extends Transaction> deposits);
 
-    // Calculations
+    public List<? extends Transaction> getWithdrawals();
 
-    Coin getCoinBalance(String coinName);
-
+    public void setWithdrawals(List<? extends Transaction> withdrawals);
 }

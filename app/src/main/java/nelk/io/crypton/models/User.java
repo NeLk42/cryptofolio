@@ -2,9 +2,7 @@ package nelk.io.crypton.models;
 
 import java.util.List;
 
-public interface User extends Capital, Currency{
-
-    // Attributes
+public interface User {
 
     String getName();
 
@@ -16,12 +14,14 @@ public interface User extends Capital, Currency{
 
     String getPrivateKey();
 
-    void setPrivateKey(String key);
+    void setPrivateKey(String privateKey);
 
-    List<Portfolio> getPortfolios();
+    List<? extends Portfolio> getPortfolios();
 
-    void setPortfolios(List<Portfolio> portfolios);
+    void setPortfolios(List<? extends Portfolio> portfolios);
 
-    void addPortfolio(Portfolio portfolio);
+    String getBaseCurrency();
+
+    void setBaseCurrency(String baseCurrency);
 
 }

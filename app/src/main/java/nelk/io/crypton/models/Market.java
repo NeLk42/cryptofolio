@@ -6,25 +6,25 @@ public interface Market {
 
     void setMarketName(String marketName);
 
-    String getMarketCurrency();
+    Coin getMarketCoin();
 
-    void setMarketCurrency(String marketCurrency);
+    void setMarketCoin(Coin marketCoin);
 
-    String getBaseCurrency();
+    Coin getBaseCoin();
 
-    void setBaseCurrency(String baseCurrency);
+    void setBaseCoin(Coin baseCoin);
 
-    String getMarketCurrencyLong();
+    Boolean getActive();
 
-    void setMarketCurrencyLong(String marketCurrencyLong);
+    void setActive(Boolean active);
 
-    String getBaseCurrencyLong();
+    String getLast();
 
-    void setBaseCurrencyLong(String baseCurrencyLong);
+    void setLast(String last);
 
-    String getLogoUrl();
+    String getPrevDay();
 
-    void setLogoUrl(String logoUrl);
+    void setPrevDay(String prevDay);
 
     String getHigh();
 
@@ -37,10 +37,6 @@ public interface Market {
     String getVolume();
 
     void setVolume(String volume);
-
-    String getLast();
-
-    void setLast(String last);
 
     String getBaseVolume();
 
@@ -66,7 +62,4 @@ public interface Market {
 
     void setOpenSellOrders(String openSellOrders);
 
-    String getPrevDay();
-
-    void setPrevDay(String prevDay);
 }

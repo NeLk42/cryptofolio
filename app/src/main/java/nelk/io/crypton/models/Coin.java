@@ -1,11 +1,7 @@
 package nelk.io.crypton.models;
 
 
-import java.util.List;
-
-import nelk.io.crypton.models.impl.RexMarket;
-
-public interface Coin extends Capital, Currency{
+public interface Coin {
 
     String getName();
 
@@ -13,24 +9,10 @@ public interface Coin extends Capital, Currency{
 
     String getLongName();
 
-    void setLongName(String name);
+    void setLongName(String longName);
 
     String getLogoUrl();
 
     void setLogoUrl(String logoUrl);
-
-    String getBalance();
-
-    void setBalance(String balance);
-
-    List<RexMarket> getRexMarkets();
-
-    void setRexMarkets(List<RexMarket> rexMarketList);
-
-    List<Order> getOrders();
-
-    void setOrders(List<Order> orderList);
-
-    void addOrder(Order order);
 
 }

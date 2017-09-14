@@ -1,9 +1,9 @@
-package nelk.io.crypton.models.impl;
+package nelk.io.crypton.models.rex;
 
 
-import nelk.io.crypton.models.Deposit;
+import nelk.io.crypton.models.Transaction;
 
-public class RexDeposit implements Deposit {
+class RexTransaction implements Transaction {
 
     String paymentUuid;
     String currency;
