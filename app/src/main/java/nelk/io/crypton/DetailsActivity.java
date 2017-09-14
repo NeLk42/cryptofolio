@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import nelk.io.crypton.retrofit.Bittrex.models.RexData;
+import nelk.io.crypton.retrofit.Bittrex.models.RexResponseData;
 
 public class DetailsActivity extends AppCompatActivity {
     public static final String TAG = DetailsActivity.class.getSimpleName();
@@ -21,36 +21,36 @@ public class DetailsActivity extends AppCompatActivity {
         Intent storage = getIntent();
 
         if (storage.hasExtra("coinData")){
-            RexData rexData = (RexData) storage.getExtras().get("coinData");
+            RexResponseData rexResponseData = (RexResponseData) storage.getExtras().get("coinData");
 
             ImageView logo = (ImageView) findViewById(R.id.fab_coin_icon);
             Picasso
                     .with(this)
-                    .load(rexData.getLogoUrl())
+                    .load(rexResponseData.getLogoUrl())
                     .resize(80,80)
                     .onlyScaleDown()
                     .into(logo);
 
             TextView coinName = (TextView) findViewById(R.id.tv_coin_name);
-            coinName.setText(rexData.getMarketCurrencyLong());
+            coinName.setText(rexResponseData.getMarketCurrencyLong());
 
             TextView volume = (TextView) findViewById(R.id.tv_details_volume);
-            volume.setText(getString(R.string.volume) + rexData.getVolume());
+            volume.setText(getString(R.string.volume) + rexResponseData.getVolume());
 
             TextView yesterday = (TextView) findViewById(R.id.tv_details_yesterday);
-            yesterday.setText(getString(R.string.yesterday) + rexData.getPrevDay());
+            yesterday.setText(getString(R.string.yesterday) + rexResponseData.getPrevDay());
 
             TextView highToday = (TextView) findViewById(R.id.tv_details_high_today);
-            highToday.setText(getString(R.string.high_today) + rexData.getHigh());
+            highToday.setText(getString(R.string.high_today) + rexResponseData.getHigh());
 
             TextView lowToday = (TextView) findViewById(R.id.tv_details_low_today);
-            lowToday.setText(getString(R.string.low_today) + rexData.getLow());
+            lowToday.setText(getString(R.string.low_today) + rexResponseData.getLow());
 
             TextView bid = (TextView) findViewById(R.id.tv_details_bid);
-            bid.setText(getString(R.string.bid) + rexData.getBid());
+            bid.setText(getString(R.string.bid) + rexResponseData.getBid());
 
             TextView ask = (TextView) findViewById(R.id.tv_details_ask);
-            ask.setText(getString(R.string.ask) + rexData.getAsk());
+            ask.setText(getString(R.string.ask) + rexResponseData.getAsk());
 
         } else {
             startActivity(new Intent(this, MainActivity.class));

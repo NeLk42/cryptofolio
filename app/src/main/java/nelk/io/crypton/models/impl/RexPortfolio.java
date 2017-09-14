@@ -3,14 +3,14 @@ package nelk.io.crypton.models.impl;
 
 import java.util.Map;
 
-import nelk.io.crypton.models.ICoin;
-import nelk.io.crypton.models.IPortfolio;
+import nelk.io.crypton.models.Coin;
+import nelk.io.crypton.models.Portfolio;
 
-public class Portfolio implements IPortfolio{
+public class RexPortfolio implements Portfolio {
 
     // Attributes
     String name;
-    Map<String, ICoin> balances;
+    Map<String, Coin> balances;
     String desiredFiatCurrency;
 
     // Investment, Fiat and Earnings
@@ -28,12 +28,12 @@ public class Portfolio implements IPortfolio{
     }
 
     @Override
-    public Map<String, ICoin> getAllBalances() {
+    public Map<String, Coin> getAllBalances() {
         return balances;
     }
 
     @Override
-    public void setAllBalances(Map<String, ICoin> balances) {
+    public void setAllBalances(Map<String, Coin> balances) {
         this.balances = balances;
     }
 
@@ -41,11 +41,11 @@ public class Portfolio implements IPortfolio{
         // TODO
     }
 
-    public void setCoinBalance(ICoin coin){
+    public void setCoinBalance(Coin coin){
         // TODO
     }
 
-    public void addCoin(ICoin coin){
+    public void addCoin(Coin coin){
         // TODO
     }
 
@@ -80,7 +80,7 @@ public class Portfolio implements IPortfolio{
     }
 
     @Override
-    public ICoin getCoinBalance(String coin){
+    public Coin getCoinBalance(String coin){
         // TODO
         return null;
     }

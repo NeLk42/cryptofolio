@@ -1,8 +1,8 @@
 package nelk.io.crypton.models.impl;
 
-import nelk.io.crypton.models.IOrder;
+import nelk.io.crypton.models.Order;
 
-public class Order implements IOrder {
+public class RexOrder implements Order {
 
     // Attributes
     String marketName;

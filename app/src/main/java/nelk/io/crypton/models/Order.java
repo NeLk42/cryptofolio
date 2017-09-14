@@ -1,7 +1,7 @@
 package nelk.io.crypton.models;
 
 
-public interface IOrder {
+public interface Order {
 
     String getMarketName();
 

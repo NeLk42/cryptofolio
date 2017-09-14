@@ -2,19 +2,19 @@ package nelk.io.crypton.models.impl;
 
 import java.util.List;
 
-import nelk.io.crypton.models.IUser;
-import nelk.io.crypton.models.IPortfolio;
+import nelk.io.crypton.models.User;
+import nelk.io.crypton.models.Portfolio;
 
 
-class User implements IUser {
+class RexUser implements User {
 
     // Attributes
     public String name;
     public String key;
     public String privateKey;
-    public List<IPortfolio> portfolios;
+    public List<Portfolio> portfolios;
     public String desiredFiatCurrency;
-    public List<Deposit> deposits;
+    public List<RexDeposit> rexDeposits;
     public String totalInvestedValue;
     public String totalFiatValueNow;
 
@@ -49,17 +49,17 @@ class User implements IUser {
     }
 
     @Override
-    public List<IPortfolio> getPortfolios() {
+    public List<Portfolio> getPortfolios() {
         return portfolios;
     }
 
     @Override
-    public void setPortfolios(List<IPortfolio> portfolios) {
+    public void setPortfolios(List<Portfolio> portfolios) {
         this.portfolios = portfolios;
     }
 
     @Override
-    public void addPortfolio(IPortfolio portfolio) {
+    public void addPortfolio(Portfolio portfolio) {
         // TODO
     }
 
@@ -73,14 +73,12 @@ class User implements IUser {
         this.desiredFiatCurrency = desiredFiatCurrency;
     }
 
-    @Override
-    public List<Deposit> getDeposits() {
-        return deposits;
+    public List<RexDeposit> getRexDeposits() {
+        return rexDeposits;
     }
 
-    @Override
-    public void setDeposits(List<Deposit> deposits) {
-        this.deposits = deposits;
+    public void setRexDeposits(List<RexDeposit> rexDeposits) {
+        this.rexDeposits = rexDeposits;
     }
 
     @Override

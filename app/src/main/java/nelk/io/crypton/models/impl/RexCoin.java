@@ -2,18 +2,18 @@ package nelk.io.crypton.models.impl;
 
 import java.util.List;
 
-import nelk.io.crypton.models.ICoin;
-import nelk.io.crypton.models.IOrder;
+import nelk.io.crypton.models.Coin;
+import nelk.io.crypton.models.Order;
 
-class Coin implements ICoin {
+class RexCoin implements Coin {
 
     // Attributes
     String name;
     String longName;
     String logoUrl;
     String balance;
-    List<Market> markets;
-    List<IOrder> orders;
+    List<RexMarket> rexMarkets;
+    List<Order> orders;
 
     // Investment, Fiat and Earnings
     String investedValue;
@@ -59,28 +59,26 @@ class Coin implements ICoin {
         this.balance = balance;
     }
 
-    @Override
-    public List<Market> getMarkets() {
-        return markets;
+    public List<RexMarket> getRexMarkets() {
+        return rexMarkets;
+    }
+
+    public void setRexMarkets(List<RexMarket> rexMarkets) {
+        this.rexMarkets = rexMarkets;
     }
 
     @Override
-    public void setMarkets(List<Market> markets) {
-        this.markets = markets;
-    }
-
-    @Override
-    public List<IOrder> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
     @Override
-    public void setOrders(List<IOrder> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 
     @Override
-    public void addOrder(IOrder order) {
+    public void addOrder(Order order) {
         // TODO
     }
 

@@ -1,6 +1,6 @@
 package nelk.io.crypton.models;
 
-public interface IMarket {
+public interface Market {
 
     String getMarketName();
 

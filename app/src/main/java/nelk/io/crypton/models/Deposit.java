@@ -1,6 +1,6 @@
 package nelk.io.crypton.models;
 
-public interface IDeposit {
+public interface Deposit {
 
     String getPaymentUuid();
 

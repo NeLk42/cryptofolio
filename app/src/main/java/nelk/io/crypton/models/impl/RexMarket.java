@@ -1,9 +1,9 @@
 package nelk.io.crypton.models.impl;
 
-import nelk.io.crypton.models.IMarket;
+import nelk.io.crypton.models.Market;
 
 
-public class Market implements IMarket {
+public class RexMarket implements Market {
 
     // Attributes
     String marketCurrency;

@@ -5,9 +5,9 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 
+import nelk.io.crypton.retrofit.Bittrex.models.RexResponseData;
 import nelk.io.crypton.retrofit.models.CoinData;
 import nelk.io.crypton.recyclerview.CoinAdapter;
-import nelk.io.crypton.retrofit.Bittrex.models.RexData;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
 import nelk.io.crypton.retrofit.RexApi;
 import nelk.io.crypton.utils.NonceUtils;
@@ -41,8 +41,8 @@ public class RexService implements Callback<RexResponse> {
         call.enqueue(this);
     }
 
-    public void getTicker(RexData rexData) {
-        Call<RexResponse> call = mRexApi.getTicker(rexData.getMarketName());
+    public void getTicker(RexResponseData rexResponseData) {
+        Call<RexResponse> call = mRexApi.getTicker(rexResponseData.getMarketName());
         call.enqueue(this);
     }
 
@@ -73,7 +73,7 @@ public class RexService implements Callback<RexResponse> {
         }
     }
 
-    private List<RexData> getResponseCoins(Response<RexResponse> response) {
+    private List<RexResponseData> getResponseCoins(Response<RexResponse> response) {
         RexResponse rexResponseModel = response.body();
         return rexResponseModel.getDataFromResponse();
     }

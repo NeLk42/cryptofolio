@@ -21,7 +21,7 @@
         <activity
             android:name=".DetailsActivity"
             android:parentActivityName=".MainActivity">
-            <meta-rexData
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
