@@ -2,6 +2,8 @@ package nelk.io.crypton.models.rex;
 
 
 import nelk.io.crypton.models.Transaction;
+import nelk.io.crypton.models.enums.Crypto;
+import nelk.io.crypton.models.enums.Fiat;
 
 class RexTransaction implements Transaction {
 
@@ -105,4 +107,11 @@ class RexTransaction implements Transaction {
         this.invalidAddress = invalidAddress;
     }
 
+    public Double getCryptoValue(Crypto crypto) {
+        return null;
+    }
+
+    public Double getFiatValue(Fiat fiat) {
+        return null;
+    }
 }

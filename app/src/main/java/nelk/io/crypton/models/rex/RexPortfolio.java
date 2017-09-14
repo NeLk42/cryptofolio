@@ -24,6 +24,14 @@ public class RexPortfolio implements Portfolio {
     // Base Currency
     String baseCurrency;
 
+    public String getBaseCurrency() {
+        return null;
+    }
+
+    public void setBaseCurrency(String baseCurrency) {
+
+    }
+
     public String getName() {
         return null;
     }
@@ -72,21 +80,12 @@ public class RexPortfolio implements Portfolio {
 
     }
 
-    public String getBaseCurrency() {
-        return null;
-    }
-
-    public void setBaseCurrency(String baseCurrency) {
-
-    }
-
-    @Override
     public Double getCryptoValue(Crypto crypto) {
         return null;
     }
 
-    @Override
     public Double getFiatValue(Fiat fiat) {
         return null;
     }
+
 }

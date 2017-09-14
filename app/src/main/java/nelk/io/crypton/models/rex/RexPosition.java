@@ -46,12 +46,10 @@ public class RexPosition implements Position {
         this.rate = rate;
     }
 
-    @Override
     public Double getCryptoValue(Crypto crypto) {
         return null;
     }
 
-    @Override
     public Double getFiatValue(Fiat fiat) {
         return null;
     }

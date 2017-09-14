@@ -1,6 +1,8 @@
 package nelk.io.crypton.models.rex;
 
 import nelk.io.crypton.models.Coin;
+import nelk.io.crypton.models.enums.Crypto;
+import nelk.io.crypton.models.enums.Fiat;
 
 class RexCoin implements Coin {
 
@@ -32,4 +34,13 @@ class RexCoin implements Coin {
         this.logoUrl = logoUrl;
     }
 
+    @Override
+    public Double getCryptoValue(Crypto crypto) {
+        return null;
+    }
+
+    @Override
+    public Double getFiatValue(Fiat fiat) {
+        return null;
+    }
 }
