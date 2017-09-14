@@ -2,6 +2,8 @@ package nelk.io.crypton.models;
 
 import java.util.List;
 
+import nelk.io.crypton.models.impl.Deposit;
+
 public interface IUser {
 
     // Attributes
@@ -30,6 +32,10 @@ public interface IUser {
 
 
     // Investment, Fiat and Earnings
+
+    List<Deposit> getDeposits();
+
+    void setDeposits(List<Deposit> deposits);
 
     String getTotalInvestedValue();
 

@@ -14,6 +14,7 @@ class User implements IUser {
     public String privateKey;
     public List<IPortfolio> portfolios;
     public String desiredFiatCurrency;
+    public List<Deposit> deposits;
     public String totalInvestedValue;
     public String totalFiatValueNow;
 
@@ -70,6 +71,16 @@ class User implements IUser {
     @Override
     public void setDesiredFiatCurrency(String desiredFiatCurrency) {
         this.desiredFiatCurrency = desiredFiatCurrency;
+    }
+
+    @Override
+    public List<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    @Override
+    public void setDeposits(List<Deposit> deposits) {
+        this.deposits = deposits;
     }
 
     @Override
