@@ -50,4 +50,10 @@ public class User {
 
     }
 
+    public Portfolio getPortfolio(String portfolioId) {
+
+        return this.portfolios.get(portfolioId);
+
+    }
+
 }

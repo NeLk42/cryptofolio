@@ -57,7 +57,7 @@ public class RexPublicService implements Callback<RexResponse> {
     public void onResponse(Call<RexResponse> call, Response<RexResponse> response) {
         if(response.isSuccessful()){
             rexDataList = getResponseCoins(response);
-            mCoinAdapter.updateCoinList(rexDataList);
+//            mCoinAdapter.updateCoinList(rexDataList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());
