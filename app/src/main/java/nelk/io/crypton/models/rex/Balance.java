@@ -1,7 +1,7 @@
 package nelk.io.crypton.models.rex;
 
 
-class Balance {
+public class Balance {
 
     public String currency;
     public Double balance;

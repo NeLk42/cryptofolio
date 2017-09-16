@@ -5,6 +5,11 @@ public class Credentials {
     String key;
     String privateKey;
 
+    public Credentials(String key, String privateKey){
+        this.key = key;
+        this.privateKey = privateKey;
+    }
+
     public String getKey() {
         return key;
     }
