@@ -1,15 +1,21 @@
 package nelk.io.crypton.models.rex;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
 
     // User
     String name;
-    List<? extends Portfolio> portfolios;
+    Map<String, Portfolio> portfolios;
 
     // Currency
     String baseCurrency;
+
+    public User(String name){
+        this.name = name;
+        this.portfolios = new HashMap<>();
+    }
 
     public String getName() {
         return name;
@@ -19,11 +25,11 @@ public class User {
         this.name = name;
     }
 
-    public List<? extends Portfolio> getPortfolios() {
+    public Map<String, Portfolio> getPortfolios() {
         return portfolios;
     }
 
-    public void setPortfolios(List<? extends Portfolio> portfolios) {
+    public void setPortfolios(Map<String, Portfolio> portfolios) {
         this.portfolios = portfolios;
     }
 
@@ -38,9 +44,9 @@ public class User {
 
     // Methods
 
-    public void addPortfolio(Portfolio portfolio) {
+    public void updatePortfolio(Portfolio portfolio) {
 
-        Portfolio portfolio1 = portfolios.get(1);
+        this.portfolios.put(portfolio.getName(), portfolio);
 
     }
 

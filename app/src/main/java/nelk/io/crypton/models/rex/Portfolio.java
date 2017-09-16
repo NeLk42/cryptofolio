@@ -52,8 +52,7 @@ public class Portfolio implements Currency, Value{
     }
 
     public void setCredentials(Credentials credentials) {
-        this.credentials.setKey(credentials.getKey());
-        this.credentials.setPrivateKey(credentials.getPrivateKey());
+        this.credentials = new Credentials(credentials);
     }
 
     public List<Balance> getBalances() {
