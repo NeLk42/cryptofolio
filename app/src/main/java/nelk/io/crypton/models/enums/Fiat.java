@@ -1,6 +1,5 @@
 package nelk.io.crypton.models.enums;
 
-
 public enum Fiat {
 
     GBP("pound"),

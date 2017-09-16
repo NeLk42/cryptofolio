@@ -2,13 +2,16 @@ package nelk.io.crypton.models.rex;
 
 import java.util.List;
 
-import nelk.io.crypton.models.Broker;
-import nelk.io.crypton.models.Market;
-
-class RexBroker implements Broker {
+public class Broker {
 
     String name;
+    String baseUrl;
     List<Market> markets;
+
+    public Broker(String name, String baseUrl){
+        this.name = name;
+        this.baseUrl = baseUrl;
+    }
 
     public String getName() {
         return name;
@@ -16,6 +19,14 @@ class RexBroker implements Broker {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
     public List<Market> getMarkets() {

@@ -1,4 +1,4 @@
-package nelk.io.crypton.models;
+package nelk.io.crypton.models.utils;
 
 
 import nelk.io.crypton.models.enums.Crypto;
@@ -8,8 +8,8 @@ public interface Value {
 
     // Methods
 
-    Double getCryptoValue(Crypto crypto);
+    abstract Double getCryptoValue(Crypto crypto);
 
-    Double getFiatValue(Fiat fiat);
+    abstract Double getFiatValue(Fiat fiat);
 
 }

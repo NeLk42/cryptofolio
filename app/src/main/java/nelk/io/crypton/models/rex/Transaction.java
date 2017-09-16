@@ -1,11 +1,11 @@
 package nelk.io.crypton.models.rex;
 
 
-import nelk.io.crypton.models.Transaction;
 import nelk.io.crypton.models.enums.Crypto;
 import nelk.io.crypton.models.enums.Fiat;
+import nelk.io.crypton.models.utils.Value;
 
-class RexTransaction implements Transaction {
+public class Transaction implements Value{
 
     String paymentUuid;
     String currency;

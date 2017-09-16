@@ -18,6 +18,7 @@ import java.util.Set;
 
 import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
+import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.retrofit.models.CoinData;
 
 public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder> {
@@ -26,6 +27,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     private List<CoinData> mCoinDataList;
     private LayoutInflater mInflater;
     private Context mContext;
+    private User user;
 
 
     public CoinAdapter(Context context, List<CoinData> rexDataList) {
@@ -102,9 +104,13 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         return numItems;
     }
 
-    public void updateBalances(CoinAdapter coinAdapter, List<? extends CoinData> coinsList){
+
+    // Rex Account Service
+
+    public void updateBalances(User user, List<? extends CoinData> coinsList){
+        this.user = user;
         this.mCoinDataList = updateBalance(coinsList);
-        coinAdapter.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -119,9 +125,12 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
         return result;
     }
 
-    public void updateCoinList(CoinAdapter coinAdapter, List<? extends CoinData> coinsList){
+
+    // Rex Public Service
+
+    public void updateCoinList(List<? extends CoinData> coinsList){
         this.mCoinDataList = updateList(coinsList);
-        coinAdapter.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     @NonNull

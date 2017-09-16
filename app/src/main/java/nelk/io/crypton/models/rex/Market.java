@@ -1,10 +1,7 @@
 package nelk.io.crypton.models.rex;
 
-import nelk.io.crypton.models.Coin;
-import nelk.io.crypton.models.Market;
 
-
-public class RexMarket implements Market {
+public class Market {
 
     // API getMarkets
     String marketName;

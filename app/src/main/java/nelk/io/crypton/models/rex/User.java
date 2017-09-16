@@ -2,15 +2,10 @@ package nelk.io.crypton.models.rex;
 
 import java.util.List;
 
-import nelk.io.crypton.models.Portfolio;
-import nelk.io.crypton.models.User;
-
-class RexUser implements User {
+public class User {
 
     // User
     String name;
-    String key;
-    String privateKey;
     List<? extends Portfolio> portfolios;
 
     // Currency
@@ -22,22 +17,6 @@ class RexUser implements User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getPrivateKey() {
-        return privateKey;
-    }
-
-    public void setPrivateKey(String privateKey) {
-        this.privateKey = privateKey;
     }
 
     public List<? extends Portfolio> getPortfolios() {
@@ -54,6 +33,15 @@ class RexUser implements User {
 
     public void setBaseCurrency(String baseCurrency) {
         this.baseCurrency = baseCurrency;
+    }
+
+
+    // Methods
+
+    public void addPortfolio(Portfolio portfolio) {
+
+        Portfolio portfolio1 = portfolios.get(1);
+
     }
 
 }

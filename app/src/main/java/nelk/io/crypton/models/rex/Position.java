@@ -3,11 +3,11 @@ package nelk.io.crypton.models.rex;
 
 import java.text.SimpleDateFormat;
 
-import nelk.io.crypton.models.Position;
 import nelk.io.crypton.models.enums.Crypto;
 import nelk.io.crypton.models.enums.Fiat;
+import nelk.io.crypton.models.utils.Value;
 
-public class RexPosition implements Position {
+public class Position implements Value{
 
     String marketName;
     SimpleDateFormat date;

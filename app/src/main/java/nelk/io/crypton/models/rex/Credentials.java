@@ -1,8 +1,6 @@
 package nelk.io.crypton.models.rex;
 
-import nelk.io.crypton.models.Credentials;
-
-public class RexCredentials implements Credentials {
+public class Credentials {
 
     String key;
     String privateKey;
