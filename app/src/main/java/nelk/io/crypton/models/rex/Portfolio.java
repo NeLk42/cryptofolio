@@ -2,7 +2,6 @@ package nelk.io.crypton.models.rex;
 
 
 import java.util.List;
-import java.util.Map;
 
 import nelk.io.crypton.models.enums.Crypto;
 import nelk.io.crypton.models.enums.Fiat;
@@ -15,7 +14,7 @@ public class Portfolio implements Currency, Value{
     String name;
     Broker broker;
     Credentials credentials;
-    Map<Coin, Balance> balances;
+    List<Balance> balances;
     List<? extends Position> positions;
     List<? extends Transaction> deposits;
     List<? extends Transaction> withdrawals;
@@ -55,6 +54,14 @@ public class Portfolio implements Currency, Value{
     public void setCredentials(Credentials credentials) {
         this.credentials.setKey(credentials.getKey());
         this.credentials.setPrivateKey(credentials.getPrivateKey());
+    }
+
+    public List<Balance> getBalances() {
+        return balances;
+    }
+
+    public void setBalances(List<Balance> balances) {
+        this.balances = balances;
     }
 
     public List<? extends Position> getPositions() {
