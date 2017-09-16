@@ -20,18 +20,23 @@ public class RexAccountService implements Callback<RexResponse> {
     static final String TAG = RexAccountService.class.getSimpleName();
     private final RexConnection rexConnection = new RexConnection();
     private final RexUtils rexUtils = new RexUtils();
-    private final User user;
 
     List<? extends CoinData> rexDataList;
     private CoinAdapter mCoinAdapter;
     RexApi mRexApi = rexConnection.getRetrofitService();
+
+
+    private User user;
+    private String portfolioId;
 
     public RexAccountService(User user, CoinAdapter coinAdapter){
         this.user = user;
         this.mCoinAdapter = coinAdapter;
     }
 
-    public void getAccountBalance() {
+    public void updateAccountBalance(String portfolioId, CoinAdapter coinAdapter) {
+        this.mCoinAdapter = coinAdapter;
+        this.portfolioId = portfolioId;
         String nonce = NonceUtils.generateNonce();
         String signedHeader = rexUtils.getSignedHeader(RexConf.API_KEY, nonce);
 
@@ -43,7 +48,7 @@ public class RexAccountService implements Callback<RexResponse> {
     public void onResponse(Call<RexResponse> call, Response<RexResponse> response) {
         if(response.isSuccessful()){
             rexDataList = getResponseCoins(response);
-            mCoinAdapter.updateBalances(user, rexDataList);
+            mCoinAdapter.updateBalances(this.user, this.portfolioId, rexDataList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());

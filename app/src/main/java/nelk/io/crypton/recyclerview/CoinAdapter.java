@@ -18,6 +18,8 @@ import java.util.Set;
 
 import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
+import nelk.io.crypton.models.rex.Balance;
+import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.retrofit.models.CoinData;
 
@@ -28,12 +30,13 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     private LayoutInflater mInflater;
     private Context mContext;
     private User user;
+    private String portfolioId;
 
 
-    public CoinAdapter(Context context, List<CoinData> rexDataList) {
+    public CoinAdapter(Context context, User user) {
         mInflater = LayoutInflater.from(context);
-        mCoinDataList = rexDataList;
         mContext = context;
+        this.user = user;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
 
     @Override
     public void onBindViewHolder(CoinViewHolder holder, int position) {
-        final CoinData coinData = mCoinDataList.get(position);
+        final Balance coinBalance = user.getPortfolios().get(this.portfolioId).getBalances().get(position);
 
 //        TextView marketName = holder.marketName;
 //        TextView volume = holder.volume;
@@ -74,8 +77,8 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
 //                .onlyScaleDown()
 //                .into(logo);
 
-        currency.setText(coinData.getCurrency());
-        balance.setText(Double.toString(coinData.getBalance()));
+        currency.setText(coinBalance.getCurrency());
+        balance.setText(Double.toString(coinBalance.getBalance()));
 //        available.setText(Double.toString(coinData.getAvailable()));
 //        pending.setText(Double.toString(coinData.getPending()));
 //        cryptoAddress.setText(coinData.getCryptoAddress());
@@ -89,7 +92,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailsActivity.class);
-                intent.putExtra("coinData", coinData);
+                intent.putExtra("coinData", coinBalance);
                 mContext.startActivity(intent);
             }
         });
@@ -98,8 +101,15 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     @Override
     public int getItemCount() {
         int numItems = 0;
-        if (mCoinDataList != null){
-            numItems = mCoinDataList.size();
+
+        Portfolio portfolio = user.getPortfolios().get(this.portfolioId);
+        if (portfolio == null) {
+            return numItems;
+        } else {
+            List<Balance> balances = portfolio.getBalances();
+            if (balances != null){
+                numItems = balances.size();
+            }
         }
         return numItems;
     }
@@ -107,22 +117,22 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
 
     // Rex Account Service
 
-    public void updateBalances(User user, List<? extends CoinData> coinsList){
-        this.user = user;
-        this.mCoinDataList = updateBalance(coinsList);
-        notifyDataSetChanged();
-    }
+    public void updateBalances(User user, String portfolioId, List<? extends CoinData> balanceList){
+        User result = user;
+        this.portfolioId = portfolioId;
+        Portfolio rexPortfolio = result.getPortfolios().get(portfolioId);
+        List<Balance> updatedBalance = new ArrayList<>();
 
-    @NonNull
-    private List<CoinData> updateBalance(List<? extends CoinData> coinsList) {
-        mCoinDataList.clear();
-
-        List<CoinData> result = new ArrayList<>();
-        for (CoinData coin: coinsList) {
-            result.add(coin);
+        for (CoinData balanceData : balanceList) {
+            if (balanceData.getBalance() > 0){
+                updatedBalance.add(new Balance(balanceData));
+            }
         }
 
-        return result;
+        rexPortfolio.setBalances(updatedBalance);
+        result.updatePortfolio(rexPortfolio);
+        this.user = result;
+        notifyDataSetChanged();
     }
 
 
