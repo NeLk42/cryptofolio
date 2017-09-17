@@ -10,7 +10,7 @@ import static nelk.io.crypton.utils.NonceUtils.encodeNonce;
 
 public class RexUtils {
 
-    public static String getSignedHeader(String brokerUrl, Credentials credentials, String nonce) {
+    public static String generateSignedHeader(String brokerUrl, Credentials credentials, String nonce) {
 
         Uri data = Uri.parse(brokerUrl)
                 .buildUpon()

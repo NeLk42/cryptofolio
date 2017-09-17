@@ -17,15 +17,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static nelk.io.crypton.retrofit.Bittrex.RexUtils.getSignedHeader;
+import static nelk.io.crypton.retrofit.Bittrex.RexUtils.generateSignedHeader;
 import static nelk.io.crypton.utils.NonceUtils.generateNonce;
 
 public class RexAccountService implements Callback<RexResponse> {
     private static final String TAG = RexAccountService.class.getSimpleName();
     private final RetrofitConnection retrofitConnection = new RetrofitConnection();
 
-    private BalanceAdapter mBalanceAdapter;
     private RexApi mRexApi;
+    private BalanceAdapter mBalanceAdapter;
     private Portfolio portfolio;
 
     public RexAccountService(Portfolio portfolio, BalanceAdapter balanceAdapter){
@@ -35,16 +35,7 @@ public class RexAccountService implements Callback<RexResponse> {
     }
 
     public void updateAccountBalance() {
-        String nonce = generateNonce();
-        Credentials credentials = portfolio.getCredentials();
-        String brokerBalancesUrl = Uri.parse(portfolio.getBroker().getBaseUrl())
-                .buildUpon()
-                .appendEncodedPath(portfolio.getBroker().getBalancesUrl())
-                .build().toString();
-
-        String signedHeader = getSignedHeader(brokerBalancesUrl, credentials, nonce);
-
-        Call<RexResponse> call = mRexApi.getBalances(credentials.getKey(), nonce, signedHeader);
+        Call<RexResponse> call = generateBalanceCall();
         call.enqueue(this);
     }
 
@@ -62,14 +53,30 @@ public class RexAccountService implements Callback<RexResponse> {
         }
     }
 
-    private List<RexResponseData> getResponseCoins(Response<RexResponse> response) {
-        RexResponse rexResponseModel = response.body();
-        return rexResponseModel.getDataFromResponse();
-    }
-
     @Override
     public void onFailure(Call<RexResponse> call, Throwable t) {
         t.printStackTrace();
+    }
+
+
+    // Auxiliary methods
+
+    private Call<RexResponse> generateBalanceCall() {
+        String nonce = generateNonce();
+        Credentials credentials = portfolio.getCredentials();
+        String brokerBalancesUrl = Uri.parse(portfolio.getBroker().getBaseUrl())
+                .buildUpon()
+                .appendEncodedPath(portfolio.getBroker().getBalancesUrl())
+                .build().toString();
+
+        String signedHeader = generateSignedHeader(brokerBalancesUrl, credentials, nonce);
+
+        return mRexApi.getBalances(credentials.getKey(), nonce, signedHeader);
+    }
+
+    private List<RexResponseData> getResponseCoins(Response<RexResponse> response) {
+        RexResponse rexResponseModel = response.body();
+        return rexResponseModel.getDataFromResponse();
     }
 
 }
