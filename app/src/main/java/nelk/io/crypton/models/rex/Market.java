@@ -16,7 +16,7 @@ public class Market {
     String baseCoinLong;
 
     // API getsummaries
-    String last;
+    Double last;
     String prevDay;
 
     String high;
@@ -56,7 +56,7 @@ public class Market {
             this.volume = rexData.getVolume();
         }
         if(!isBlank(rexData.getLast())){
-            this.last = rexData.getLast();
+            this.last = Double.valueOf(rexData.getLast());
         }
         if(!isBlank(rexData.getTimeStamp())){
             this.timeStamp = rexData.getTimeStamp();
@@ -113,11 +113,11 @@ public class Market {
         this.active = active;
     }
 
-    public String getLast() {
+    public Double getLast() {
         return last;
     }
 
-    public void setLast(String last) {
+    public void setLast(Double last) {
         this.last = last;
     }
 
@@ -228,7 +228,7 @@ public class Market {
             this.volume = rexData.getVolume();
         }
         if(!isBlank(rexData.getLast())){
-            this.last = rexData.getLast();
+            this.last = Double.valueOf(rexData.getLast());
         }
         if(!isBlank(rexData.getTimeStamp())){
             this.timeStamp = rexData.getTimeStamp();

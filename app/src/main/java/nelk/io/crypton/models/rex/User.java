@@ -12,8 +12,9 @@ public class User {
     // Currency
     String baseCurrency;
 
-    public User(String name){
+    public User(String name, String baseCurrency){
         this.name = name;
+        this.baseCurrency = baseCurrency;
         this.portfolios = new HashMap<>();
     }
 

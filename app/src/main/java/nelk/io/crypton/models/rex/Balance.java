@@ -8,26 +8,26 @@ import nelk.io.crypton.retrofit.models.CoinData;
 
 public class Balance implements Parcelable {
 
-    public String currency;
-    public Double balance;
-    public Double available;
-    public Double pending;
-    public String cryptoAddress;
+    String currencyName;
+    Double balance;
+    Double available;
+    Double pending;
+    String cryptoAddress;
 
     public Balance(CoinData coinData){
-        this.currency = coinData.getCurrency();
+        this.currencyName = coinData.getCurrency();
         this.balance = coinData.getBalance();
         this.available = coinData.getAvailable();
         this.pending = coinData.getPending();
         this.cryptoAddress = coinData.getCryptoAddress();
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCurrencyName() {
+        return currencyName;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurrencyName(String currencyName) {
+        this.currencyName = currencyName;
     }
 
     public Double getBalance() {
@@ -64,7 +64,7 @@ public class Balance implements Parcelable {
 
 
     protected Balance(Parcel in) {
-        currency = in.readString();
+        currencyName = in.readString();
         balance = in.readByte() == 0x00 ? null : in.readDouble();
         available = in.readByte() == 0x00 ? null : in.readDouble();
         pending = in.readByte() == 0x00 ? null : in.readDouble();
@@ -78,7 +78,7 @@ public class Balance implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(currency);
+        dest.writeString(currencyName);
         if (balance == null) {
             dest.writeByte((byte) (0x00));
         } else {

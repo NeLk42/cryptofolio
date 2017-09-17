@@ -1,7 +1,7 @@
 package nelk.io.crypton.recyclerview;
 
 import android.content.Context;
-import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,13 +12,14 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
+import nelk.io.crypton.models.enums.Fiat;
 import nelk.io.crypton.models.rex.Balance;
 import nelk.io.crypton.models.rex.Broker;
 import nelk.io.crypton.models.rex.Market;
@@ -30,13 +31,14 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
     public static final String TAG = BalanceAdapter.class.getSimpleName();
+    public static final String BTC = "BTC";
 
     // Android OS
     private LayoutInflater mInflater;
     private Context mContext;
 
     // Data
-    private String portfolioId;
+    private String mPortfolioId;
     private User mUser;
 
     public BalanceAdapter(Context context, User user) {
@@ -54,61 +56,55 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
     @Override
     public void onBindViewHolder(CoinViewHolder holder, int position) {
         List<Balance> balances = getUserPortfolio().getBalances();
-        final Balance coinBalance = balances.get(position);
+        final Balance coin = balances.get(position);
+        String coinName = coin.getCurrencyName();
 
         // Balance
-        TextView name = holder.coinName;
-        TextView amount = holder.coinAmount;
-
-        String coinName = coinBalance.getCurrency();
-        name.setText(coinName);
-
-        String coinAmount = Double.toString(coinBalance.getBalance());
-        amount.setText(coinAmount);
+        setGridItemText(holder.coinName, coinName);
+        setGridItemText(holder.coinAmount, Double.toString(coin.getBalance()));
 
         // Markets
-        ImageView logo = holder.coinLogo;
-        TextView value = holder.coinValue;
-        TextView nameLong = holder.coinLongName;
-
         Broker broker = getUserPortfolio().getBroker();
-
         if (broker != null){
-            Map<String, Market> markets = broker.getMarkets();
-            Market market = markets.get(coinName);
+
+            Market market = broker.getMarkets().get(coinName);
 
             if (market != null){
-                String coinLongName = market.getMarketCoin().getLongName();
-                nameLong.setText(coinLongName);
-
-                Double multiply = Double.valueOf(coinAmount);
-                if (!"BTC".equals(coinName)){
-                    multiply = multiply*Double.valueOf(market.getLast());
-                }
-                multiply = multiply*Double.valueOf(markets.get("BTC").getLast());
-                String coinValue = Double.toString(multiply);
-                value.setText(coinValue);
-
-                String balanceCoinLogoUrl = market
-                            .getMarketCoin()
-                            .getLogoUrl();
-
-                Picasso.with(mContext)
-                    .load(balanceCoinLogoUrl)
-                    .resize(50,50)
-                    .onlyScaleDown()
-                    .into(logo);
+                setGridItemText(holder.coinLongName, market.getMarketCoin().getLongName());
+                setGridItemLogo(holder.coinLogo, market.getMarketCoin().getLogoUrl());
+                setGridItemText(holder.coinValue, getFiatValue(coin, market, mUser.getBaseCurrency()));
             }
         }
+    }
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(mContext, DetailsActivity.class);
-//                intent.putExtra("coinData", coinBalance);
-//                mContext.startActivity(intent);
-//            }
-//        });
+    private void setGridItemText(TextView textView, String coinParam) {
+        textView.setText(coinParam);
+    }
+
+    private void setGridItemLogo(ImageView imageView, String coinParam) {
+        Picasso.with(mContext)
+                .load(coinParam)
+                .resize(50,50)
+                .onlyScaleDown()
+                .into(imageView);
+    }
+
+    @NonNull
+    private String getFiatValue(Balance coin, Market market, String baseCurrency) {
+        Double result = coin.getBalance();
+        boolean isBTC = BTC.equals(coin.getCurrencyName());
+
+        if (!isBTC){
+            result = result * Double.valueOf(market.getLast());
+        }
+        result = result * getPortfolioMarkets().get(BTC).getLast();
+
+        DecimalFormat formatter = new DecimalFormat("####0.00");
+
+        return new StringBuilder()
+                .append(baseCurrency)
+                .append(formatter.format(result))
+                .toString();
     }
 
     @Override
@@ -161,11 +157,15 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
     // Auxiliary methods
 
     private void setWorkingPortfolio(Portfolio portfolio) {
-        this.portfolioId = portfolio.getName();
+        this.mPortfolioId = portfolio.getName();
     }
 
     private Portfolio getUserPortfolio() {
-        return mUser.getPortfolio(portfolioId);
+        return mUser.getPortfolio(mPortfolioId);
+    }
+
+    private Map<String, Market> getPortfolioMarkets() {
+        return getUserPortfolio().getBroker().getMarkets();
     }
 
 
@@ -210,7 +210,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         for (RexCoinData coinData : brokerMarketsList) {
             String coinId = coinData.getMarketName();
 
-            if (coinData.getMarketName().contains("BTC")){
+            if (coinData.getMarketName().contains(BTC)){
                 if (marketsMap.get(coinId) == null) {
                     marketsMap.put(coinData.getMarketName(), new Market(coinData));
                 } else {

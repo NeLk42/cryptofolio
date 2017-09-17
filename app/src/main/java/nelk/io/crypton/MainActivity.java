@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import nelk.io.crypton.models.enums.Fiat;
 import nelk.io.crypton.models.rex.Broker;
 import nelk.io.crypton.models.rex.Credentials;
 import nelk.io.crypton.models.rex.Portfolio;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Data
     RexAccountService rexAccountService;
-    private User user = new User("user1");
+    private User user = new User("user1", Fiat.USD.getFiat());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

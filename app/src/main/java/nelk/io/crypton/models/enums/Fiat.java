@@ -2,9 +2,9 @@ package nelk.io.crypton.models.enums;
 
 public enum Fiat {
 
-    GBP("pound"),
-    USD("dollar"),
-    EUR("euro");
+    GBP("£"),
+    USD("$"),
+    EUR("€");
 
     private String fiat;
 
