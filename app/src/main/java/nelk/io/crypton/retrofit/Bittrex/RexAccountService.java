@@ -9,10 +9,9 @@ import java.util.List;
 import nelk.io.crypton.models.rex.Credentials;
 import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
+import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
-import nelk.io.crypton.retrofit.Bittrex.models.RexResponseData;
 import nelk.io.crypton.retrofit.RexApi;
-import nelk.io.crypton.retrofit.models.CoinData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +41,7 @@ public class RexAccountService implements Callback<RexResponse> {
     @Override
     public void onResponse(Call<RexResponse> call, Response<RexResponse> response) {
         if(response.isSuccessful()){
-            List<? extends CoinData> rexDataList = getResponseCoins(response);
+            List<RexCoinData> rexDataList = getResponseCoins(response);
             mBalanceAdapter.updateBalances(this.portfolio, rexDataList);
         } else {
             try {
@@ -74,7 +73,7 @@ public class RexAccountService implements Callback<RexResponse> {
         return mRexApi.getBalances(credentials.getKey(), nonce, signedHeader);
     }
 
-    private List<RexResponseData> getResponseCoins(Response<RexResponse> response) {
+    private List<RexCoinData> getResponseCoins(Response<RexResponse> response) {
         RexResponse rexResponseModel = response.body();
         return rexResponseModel.getDataFromResponse();
     }

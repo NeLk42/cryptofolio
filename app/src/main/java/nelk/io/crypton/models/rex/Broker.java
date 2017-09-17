@@ -1,18 +1,20 @@
 package nelk.io.crypton.models.rex;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Broker {
 
     String name;
     String baseUrl;
     String balancesUrl;
-    List<Market> markets;
+    Map<String, Market> markets;
 
     public Broker(String name, String baseUrl, String balancesUrl){
         this.name = name;
         this.baseUrl = baseUrl;
         this.balancesUrl = balancesUrl;
+        markets = new HashMap<>();
     }
 
     public String getName() {
@@ -39,11 +41,11 @@ public class Broker {
         this.baseUrl = baseUrl;
     }
 
-    public List<Market> getMarkets() {
+    public Map<String, Market> getMarkets() {
         return markets;
     }
 
-    public void setMarkets(List<Market> markets) {
+    public void setMarkets(Map<String, Market> markets) {
         this.markets = markets;
     }
 

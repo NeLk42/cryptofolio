@@ -6,12 +6,10 @@ import java.io.IOException;
 import java.util.List;
 
 import nelk.io.crypton.models.rex.Portfolio;
-import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
-import nelk.io.crypton.retrofit.Bittrex.models.RexResponseData;
+import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 import nelk.io.crypton.retrofit.RexApi;
-import nelk.io.crypton.retrofit.models.CoinData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,10 +20,8 @@ public class RexPublicService implements Callback<RexResponse> {
     private final RetrofitConnection retrofitConnection = new RetrofitConnection();
     private final Portfolio portfolio;
 
-    List<? extends CoinData> rexDataList;
     private BalanceAdapter mBalanceAdapter;
     RexApi mRexApi;
-    private String portfolioId;
 
     public RexPublicService(Portfolio portfolio, BalanceAdapter balanceAdapter){
         this.mRexApi = retrofitConnection.getRetrofitService(portfolio.getBroker().getBaseUrl());
@@ -33,19 +29,12 @@ public class RexPublicService implements Callback<RexResponse> {
         this.portfolio = portfolio;
     }
 
-//    public void getTicker(RexResponseData rexResponseData) {
-//        Call<RexResponse> call = mRexApi.getTicker(rexResponseData.getMarketName());
-//        call.enqueue(this);
-//    }
-
-    public void getSummaries(String portfolioId) {
-        this.portfolioId = portfolioId;
+    public void pullSummariesData() {
         Call<RexResponse> call = mRexApi.getSummaries();
         call.enqueue(this);
     }
 
-    public void getMarkets(String portfolioId) {
-        this.portfolioId = portfolioId;
+    public void pullMarketsData() {
         Call<RexResponse> call = mRexApi.getMarkets();
         call.enqueue(this);
     }
@@ -53,8 +42,8 @@ public class RexPublicService implements Callback<RexResponse> {
     @Override
     public void onResponse(Call<RexResponse> call, Response<RexResponse> response) {
         if(response.isSuccessful()){
-            rexDataList = getResponseCoins(response);
-//            mBalanceAdapter.updateCoinList(rexDataList);
+            List<RexCoinData> rexDataList = getResponseCoins(response);
+            mBalanceAdapter.updateBrokerMarkets(portfolio, rexDataList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());
@@ -64,14 +53,16 @@ public class RexPublicService implements Callback<RexResponse> {
         }
     }
 
-    private List<RexResponseData> getResponseCoins(Response<RexResponse> response) {
-        RexResponse rexResponseModel = response.body();
-        return rexResponseModel.getDataFromResponse();
-    }
-
     @Override
     public void onFailure(Call<RexResponse> call, Throwable t) {
         t.printStackTrace();
     }
 
+
+    // Auxiliary methods
+
+    private List<RexCoinData> getResponseCoins(Response<RexResponse> response) {
+        RexResponse rexResponseModel = response.body();
+        return rexResponseModel.getDataFromResponse();
+    }
 }

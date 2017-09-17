@@ -7,7 +7,7 @@ import nelk.io.crypton.retrofit.models.CoinData;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-public class RexResponseData implements CoinData {
+public class RexCoinData implements CoinData {
 
     String MarketCurrency;
     String BaseCurrency;
@@ -38,7 +38,7 @@ public class RexResponseData implements CoinData {
     Double Pending;
     String CryptoAddress;
 
-    protected RexResponseData(Parcel in) {
+    protected RexCoinData(Parcel in) {
         MarketCurrency = in.readString();
         BaseCurrency = in.readString();
         MarketCurrencyLong = in.readString();
@@ -120,23 +120,23 @@ public class RexResponseData implements CoinData {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<RexResponseData> CREATOR = new Parcelable.Creator<RexResponseData>() {
+    public static final Parcelable.Creator<RexCoinData> CREATOR = new Parcelable.Creator<RexCoinData>() {
         @Override
-        public RexResponseData createFromParcel(Parcel in) {
-            return new RexResponseData(in);
+        public RexCoinData createFromParcel(Parcel in) {
+            return new RexCoinData(in);
         }
 
         @Override
-        public RexResponseData[] newArray(int size) {
-            return new RexResponseData[size];
+        public RexCoinData[] newArray(int size) {
+            return new RexCoinData[size];
         }
     };
 
-    public RexResponseData(RexResponseData rexResponseData){
-        addData(rexResponseData);
+    public RexCoinData(RexCoinData rexCoinData){
+        addData(rexCoinData);
     }
 
-    public RexResponseData addData(CoinData rexData){
+    public RexCoinData addData(CoinData rexData){
         if(!isBlank(rexData.getMarketCurrency())){
             this.MarketCurrency = rexData.getMarketCurrency();
         }

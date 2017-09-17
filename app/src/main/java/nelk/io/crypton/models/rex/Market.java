@@ -1,13 +1,19 @@
 package nelk.io.crypton.models.rex;
 
 
+import nelk.io.crypton.retrofit.models.CoinData;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNoneBlank;
+
 public class Market {
 
-    // API getMarkets
-    String marketName;
+    // API pullMarketsData
     Coin marketCoin;
-    Coin baseCoin;
     Boolean active;
+    String marketName;
+    String baseCoin;
+    String baseCoinLong;
 
     // API getsummaries
     String last;
@@ -22,6 +28,50 @@ public class Market {
     String ask;
     String openBuyOrders;
     String openSellOrders;
+
+    public Market(CoinData rexData){
+
+        if(!isNoneBlank(rexData.getMarketCurrency(), rexData.getMarketCurrencyLong(), rexData.getLogoUrl())){
+            this.marketCoin = new Coin(rexData.getMarketCurrency(),
+                    rexData.getMarketCurrencyLong(),
+                    rexData.getLogoUrl()
+            );
+        }
+        if(!isBlank(rexData.getBaseCurrency())){
+            this.baseCoin = rexData.getBaseCurrency();
+        }
+        if(!isBlank(rexData.getBaseCurrencyLong())){
+            this.baseCoinLong = rexData.getBaseCurrencyLong();
+        }
+        if(!isBlank(rexData.getMarketName())){
+            this.marketName = rexData.getMarketName();
+        }
+        if(!isBlank(rexData.getHigh())){
+            this.high = rexData.getHigh();
+        }
+        if(!isBlank(rexData.getLow())){
+            this.low = rexData.getLow();
+        }
+        if(!isBlank(rexData.getVolume())){
+            this.volume = rexData.getVolume();
+        }
+        if(!isBlank(rexData.getLast())){
+            this.last = rexData.getLast();
+        }
+        if(!isBlank(rexData.getTimeStamp())){
+            this.timeStamp = rexData.getTimeStamp();
+        }
+        if(!isBlank(rexData.getBid())){
+            this.bid = rexData.getBid();
+        }
+        if(!isBlank(rexData.getAsk())){
+            this.ask = rexData.getAsk();
+        }
+        if(!isBlank(rexData.getPrevDay())){
+            this.prevDay = rexData.getPrevDay();
+        }
+
+    }
 
     public String getMarketName() {
         return marketName;
@@ -39,12 +89,20 @@ public class Market {
         this.marketCoin = marketCoin;
     }
 
-    public Coin getBaseCoin() {
+    public String getBaseCoin() {
         return baseCoin;
     }
 
-    public void setBaseCoin(Coin baseCoin) {
+    public void setBaseCoin(String baseCoin) {
         this.baseCoin = baseCoin;
+    }
+
+    public String getBaseCoinLong() {
+        return baseCoinLong;
+    }
+
+    public void setBaseCoinLong(String baseCoinLong) {
+        this.baseCoinLong = baseCoinLong;
     }
 
     public Boolean getActive() {
@@ -141,6 +199,52 @@ public class Market {
 
     public void setOpenSellOrders(String openSellOrders) {
         this.openSellOrders = openSellOrders;
+    }
+
+    public Market addData(CoinData rexData){
+
+        if(isNoneBlank(rexData.getMarketCurrency(), rexData.getMarketCurrencyLong(), rexData.getLogoUrl())){
+            this.marketCoin = new Coin(rexData.getMarketCurrency(),
+                                        rexData.getMarketCurrencyLong(),
+                                        rexData.getLogoUrl()
+            );
+        }
+        if(!isBlank(rexData.getBaseCurrency())){
+            this.baseCoin = rexData.getBaseCurrency();
+        }
+        if(!isBlank(rexData.getBaseCurrencyLong())){
+            this.baseCoinLong = rexData.getBaseCurrencyLong();
+        }
+        if(!isBlank(rexData.getMarketName())){
+            this.marketName = rexData.getMarketName();
+        }
+        if(!isBlank(rexData.getHigh())){
+            this.high = rexData.getHigh();
+        }
+        if(!isBlank(rexData.getLow())){
+            this.low = rexData.getLow();
+        }
+        if(!isBlank(rexData.getVolume())){
+            this.volume = rexData.getVolume();
+        }
+        if(!isBlank(rexData.getLast())){
+            this.last = rexData.getLast();
+        }
+        if(!isBlank(rexData.getTimeStamp())){
+            this.timeStamp = rexData.getTimeStamp();
+        }
+        if(!isBlank(rexData.getBid())){
+            this.bid = rexData.getBid();
+        }
+        if(!isBlank(rexData.getAsk())){
+            this.ask = rexData.getAsk();
+        }
+        if(!isBlank(rexData.getPrevDay())){
+            this.prevDay = rexData.getPrevDay();
+        }
+
+        return this;
+
     }
 
 }

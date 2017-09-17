@@ -10,6 +10,12 @@ public class Coin implements Value{
     String longName;
     String logoUrl;
 
+    public Coin(String name, String longName, String logoUrl){
+        this.name = name;
+        this.longName = longName;
+        this.logoUrl = logoUrl;
+    }
+
     public String getName() {
         return name;
     }

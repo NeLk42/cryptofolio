@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBalanceRecyclerView = (RecyclerView) findViewById(R.id.rv_balance_grid);
+        mBalanceRecyclerView = (RecyclerView) findViewById(R.id.rv_balances_grid);
         mBalanceAdapter = new BalanceAdapter(this, user);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
         // Once portfolio has been assigned against the user, a connection has to be made to
         // pull information, first we load all the markets info.
         RexPublicService rexPublicService = new RexPublicService(rexPortfolio, mBalanceAdapter);
-//        rexPublicService.getSummaries(portfolioName);
-//        rexPublicService.getMarkets(portfolioName);
+        rexPublicService.pullSummariesData();
+        rexPublicService.pullMarketsData();
     }
 
     private void initializeBrokerUserBalance(Portfolio rexPortfolio) {

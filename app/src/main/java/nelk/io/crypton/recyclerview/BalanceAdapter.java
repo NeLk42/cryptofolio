@@ -9,15 +9,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nelk.io.crypton.DetailsActivity;
 import nelk.io.crypton.R;
 import nelk.io.crypton.models.rex.Balance;
+import nelk.io.crypton.models.rex.Broker;
+import nelk.io.crypton.models.rex.Market;
 import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
-import nelk.io.crypton.retrofit.models.CoinData;
+import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
     public static final String TAG = BalanceAdapter.class.getSimpleName();
@@ -44,15 +50,40 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
     @Override
     public void onBindViewHolder(CoinViewHolder holder, int position) {
-        Portfolio portfolio = mUser.getPortfolio(portfolioId);
-        List<Balance> balances = portfolio.getBalances();
+        List<Balance> balances = getUserPortfolio().getBalances();
         final Balance coinBalance = balances.get(position);
 
         TextView currency = holder.currency;
         TextView balance = holder.balance;
+        ImageView logo = holder.logoUrl;
 
-        currency.setText(coinBalance.getCurrency());
-        balance.setText(Double.toString(coinBalance.getBalance()));
+        String balanceCoinCurrency = coinBalance.getCurrency();
+        currency.setText(balanceCoinCurrency);
+
+        String balanceCoinBalance = Double.toString(coinBalance.getBalance());
+        balance.setText(balanceCoinBalance);
+
+        Broker broker = getUserPortfolio().getBroker();
+        if (broker != null){
+            Map<String, Market> markets = broker.getMarkets();
+            Market market = markets.get(balanceCoinCurrency);
+            if (market != null){
+                String balanceCoinLogoUrl = market
+                            .getMarketCoin()
+                            .getLogoUrl();
+
+                Picasso
+                        .with(mContext)
+                        .load(balanceCoinLogoUrl)
+                        .resize(50,50)
+                        .onlyScaleDown()
+                        .into(logo);
+
+            }
+        }
+
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -71,7 +102,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
     private int getNumberOfPortfolioItems() {
         int numItems = 0;
-        Portfolio portfolio = mUser.getPortfolio(portfolioId);
+        Portfolio portfolio = getUserPortfolio();
         if (portfolio == null) {
             return numItems;
         } else {
@@ -83,29 +114,8 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         return numItems;
     }
 
-    // Rex Account Service
-    public void updateBalances(Portfolio portfolio, List<? extends CoinData> balanceList){
-        updateUserPortfolio(portfolio, balanceList);
-        notifyDataSetChanged();
-    }
-
-    private void updateUserPortfolio(Portfolio portfolio, List<? extends CoinData> balanceList) {
-        this.portfolioId = portfolio.getName();
-        List<Balance> updatedBalance = new ArrayList<>();
-
-        for (CoinData balanceData : balanceList) {
-            if (balanceData.getBalance() > 0){
-                updatedBalance.add(new Balance(balanceData));
-            }
-        }
-
-        portfolio.setBalances(updatedBalance);
-        mUser.updatePortfolio(portfolio);
-    }
-
-
-    public class CoinViewHolder extends RecyclerView.ViewHolder{
-        // getMarkets
+    class CoinViewHolder extends RecyclerView.ViewHolder{
+        // pullMarketsData
         TextView marketName;
         ImageView logoUrl;
 
@@ -113,10 +123,10 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         TextView currency;
         TextView balance;
 
-        public CoinViewHolder(View itemView) {
+        CoinViewHolder(View itemView) {
             super(itemView);
 
-            // getMarkets
+            // pullMarketsData
             this.marketName = (TextView) itemView.findViewById(R.id.marketName);
             this.logoUrl = (ImageView) itemView.findViewById(R.id.logo);
 
@@ -126,4 +136,86 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
         }
     }
+
+
+    // Auxiliary methods
+
+    private void setWorkingPortfolio(Portfolio portfolio) {
+        this.portfolioId = portfolio.getName();
+    }
+
+    private Portfolio getUserPortfolio() {
+        return mUser.getPortfolio(portfolioId);
+    }
+
+
+    // Rex Account Service - Balance Data
+
+    public void updateBalances(Portfolio portfolio, List<RexCoinData> balanceList){
+        setWorkingPortfolio(portfolio);
+        Portfolio userPortfolio = getUserPortfolio();
+        userPortfolio.setBalances(getUserBalance(portfolio, balanceList));
+        mUser.updatePortfolio(userPortfolio);
+        notifyDataSetChanged();
+    }
+
+    private List<Balance> getUserBalance(Portfolio portfolio, List<RexCoinData> balanceList) {
+        List<Balance> updatedBalance = new ArrayList<>();
+
+        for (RexCoinData balanceData : balanceList) {
+            if (balanceData.getBalance() > 0){
+                updatedBalance.add(new Balance(balanceData));
+            }
+        }
+
+        return updatedBalance;
+    }
+
+
+    // Rex Markets Service - Coin Markets Data
+
+    public void updateBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerData){
+        setWorkingPortfolio(portfolio);
+        Portfolio userPortfolio = getUserPortfolio();
+        Broker broker = userPortfolio.getBroker();
+        broker.setMarkets(getBrokerMarkets(portfolio, brokerData));
+
+//        Broker broker =
+//        if (broker != null) {
+//            broker.setMarkets(getBrokerMarkets(portfolio, brokerData));
+//        } else {
+//            new Broker()
+//        }
+        notifyDataSetChanged();
+    }
+
+    private Map<String, Market> getBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerMarketsList) {
+        Map<String, Market> marketsMap = portfolio.getBroker().getMarkets();
+        Map<String, Market> resultMap = new HashMap<>();
+
+        boolean mapAll = false;
+
+        for (RexCoinData coinData : brokerMarketsList) {
+            String coinId = coinData.getMarketName();
+            if (marketsMap.get(coinId) == null) {
+                marketsMap.put(coinData.getMarketName(), new Market(coinData));
+            } else {
+                mapAll = true;
+                Market existingMarket = marketsMap.get(coinId);
+                marketsMap.put(coinId, existingMarket.addData(coinData));
+            }
+        }
+
+        List<Market> combinedQuery = new ArrayList<>(marketsMap.values());
+
+        if (mapAll){
+            for (Market combinedMarket : combinedQuery) {
+                resultMap.put(combinedMarket.getMarketCoin().getName(), combinedMarket);
+            }
+            marketsMap = resultMap;
+        }
+
+        return marketsMap;
+    }
+
 }

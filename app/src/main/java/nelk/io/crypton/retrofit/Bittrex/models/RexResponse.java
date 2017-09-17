@@ -10,14 +10,14 @@ public class RexResponse implements Parcelable {
 
     String success;
     String message;
-    List<RexResponseData> result;
+    List<RexCoinData> result;
 
     protected RexResponse(Parcel in) {
         success = in.readString();
         message = in.readString();
         if (in.readByte() == 0x01) {
-            result = new ArrayList<RexResponseData>();
-            in.readList(result, RexResponseData.class.getClassLoader());
+            result = new ArrayList<RexCoinData>();
+            in.readList(result, RexCoinData.class.getClassLoader());
         } else {
             result = null;
         }
@@ -53,7 +53,7 @@ public class RexResponse implements Parcelable {
         }
     };
 
-    public List<RexResponseData> getDataFromResponse(){
+    public List<RexCoinData> getDataFromResponse(){
         return result;
     }
 }
