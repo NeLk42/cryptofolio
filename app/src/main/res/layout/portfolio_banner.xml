@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:weightSum="3"
+    >
+
+    <TextView
+        android:id="@+id/tv_portfolio_percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorDetails"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="+50%" />
 
     <TextView
         android:id="@+id/tv_portfolio_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/textColorBold"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="NeLk's Portfolio" />
+        android:text="NeLk" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_portfolio_fiat"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/textColorDetails"
+        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:text="$2500" />
 
-        <TextView
-            android:id="@+id/tv_portfolio_percentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="+50%" />
-
-        <TextView
-            android:id="@+id/tv_portfolio_fiat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="$2500" />
-    </LinearLayout>
 </LinearLayout>
