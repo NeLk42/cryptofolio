@@ -12,6 +12,7 @@ import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.retrofit.Bittrex.RexConf;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.RexAccountService;
+import nelk.io.crypton.retrofit.Bittrex.RexPublicService;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -69,23 +70,23 @@ public class MainActivity extends AppCompatActivity {
         user.updatePortfolio(rexPortfolio);
 
         // Pull markets Information from Broker
-        initializeBrokerMarketsData();
+        initializeBrokerMarketsData(rexPortfolio);
 
         // Pull user balance from Broker
         initializeBrokerUserBalance(rexPortfolio);
     }
 
-    private void initializeBrokerMarketsData() {
+    private void initializeBrokerMarketsData(Portfolio rexPortfolio) {
         // Once portfolio has been assigned against the user, a connection has to be made to
         // pull information, first we load all the markets info.
-//        RexPublicService rexPublicService = new RexPublicService(user, mBalanceAdapter);
+        RexPublicService rexPublicService = new RexPublicService(rexPortfolio, mBalanceAdapter);
 //        rexPublicService.getSummaries(portfolioName);
 //        rexPublicService.getMarkets(portfolioName);
     }
 
     private void initializeBrokerUserBalance(Portfolio rexPortfolio) {
         rexAccountService = new RexAccountService(rexPortfolio, mBalanceAdapter);
-        rexAccountService.updateAccountBalance(mBalanceAdapter);
+        rexAccountService.updateAccountBalance();
     }
 
 }

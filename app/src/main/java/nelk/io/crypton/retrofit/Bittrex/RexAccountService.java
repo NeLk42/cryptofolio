@@ -21,22 +21,20 @@ import static nelk.io.crypton.retrofit.Bittrex.RexUtils.getSignedHeader;
 import static nelk.io.crypton.utils.NonceUtils.generateNonce;
 
 public class RexAccountService implements Callback<RexResponse> {
-    static final String TAG = RexAccountService.class.getSimpleName();
+    private static final String TAG = RexAccountService.class.getSimpleName();
     private final RetrofitConnection retrofitConnection = new RetrofitConnection();
 
     private BalanceAdapter mBalanceAdapter;
-    RexApi mRexApi;
-
+    private RexApi mRexApi;
     private Portfolio portfolio;
 
     public RexAccountService(Portfolio portfolio, BalanceAdapter balanceAdapter){
-        this.portfolio = portfolio;
-        this.mBalanceAdapter = balanceAdapter;
         this.mRexApi = retrofitConnection.getRetrofitService(portfolio.getBroker().getBaseUrl());
+        this.mBalanceAdapter = balanceAdapter;
+        this.portfolio = portfolio;
     }
 
-    public void updateAccountBalance(BalanceAdapter balanceAdapter) {
-        this.mBalanceAdapter = balanceAdapter;
+    public void updateAccountBalance() {
         String nonce = generateNonce();
         Credentials credentials = portfolio.getCredentials();
         String brokerBalancesUrl = Uri.parse(portfolio.getBroker().getBaseUrl())

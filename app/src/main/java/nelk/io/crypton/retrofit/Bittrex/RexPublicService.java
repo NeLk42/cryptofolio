@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 
+import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
@@ -19,25 +20,23 @@ public class RexPublicService implements Callback<RexResponse> {
 
     static final String TAG = RexPublicService.class.getSimpleName();
     private final RetrofitConnection retrofitConnection = new RetrofitConnection();
-    private final RexUtils rexUtils = new RexUtils();
-
-
-    private User user;
-    private String portfolioId;
+    private final Portfolio portfolio;
 
     List<? extends CoinData> rexDataList;
     private BalanceAdapter mBalanceAdapter;
-    RexApi mRexApi = retrofitConnection.getRetrofitService("asdf");
+    RexApi mRexApi;
+    private String portfolioId;
 
-    public RexPublicService(User user, BalanceAdapter balanceAdapter){
-        this.user = user;
+    public RexPublicService(Portfolio portfolio, BalanceAdapter balanceAdapter){
+        this.mRexApi = retrofitConnection.getRetrofitService(portfolio.getBroker().getBaseUrl());
         this.mBalanceAdapter = balanceAdapter;
+        this.portfolio = portfolio;
     }
 
-    public void getTicker(RexResponseData rexResponseData) {
-        Call<RexResponse> call = mRexApi.getTicker(rexResponseData.getMarketName());
-        call.enqueue(this);
-    }
+//    public void getTicker(RexResponseData rexResponseData) {
+//        Call<RexResponse> call = mRexApi.getTicker(rexResponseData.getMarketName());
+//        call.enqueue(this);
+//    }
 
     public void getSummaries(String portfolioId) {
         this.portfolioId = portfolioId;
