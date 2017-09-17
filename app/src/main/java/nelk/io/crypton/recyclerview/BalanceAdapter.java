@@ -56,37 +56,50 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         List<Balance> balances = getUserPortfolio().getBalances();
         final Balance coinBalance = balances.get(position);
 
-        TextView currency = holder.currency;
-        TextView balance = holder.balance;
-        ImageView logo = holder.logoUrl;
+        // Balance
+        TextView name = holder.coinName;
+        TextView amount = holder.coinAmount;
 
-        String balanceCoinCurrency = coinBalance.getCurrency();
-        currency.setText(balanceCoinCurrency);
+        String coinName = coinBalance.getCurrency();
+        name.setText(coinName);
 
-        String balanceCoinBalance = Double.toString(coinBalance.getBalance());
-        balance.setText(balanceCoinBalance);
+        String coinAmount = Double.toString(coinBalance.getBalance());
+        amount.setText(coinAmount);
+
+        // Markets
+        ImageView logo = holder.coinLogo;
+        TextView value = holder.coinValue;
+        TextView nameLong = holder.coinLongName;
 
         Broker broker = getUserPortfolio().getBroker();
+
         if (broker != null){
             Map<String, Market> markets = broker.getMarkets();
-            Market market = markets.get(balanceCoinCurrency);
+            Market market = markets.get(coinName);
+
             if (market != null){
+                String coinLongName = market.getMarketCoin().getLongName();
+                nameLong.setText(coinLongName);
+
+                Double multiply = Double.valueOf(coinAmount);
+                if (!"BTC".equals(coinName)){
+                    multiply = multiply*Double.valueOf(market.getLast());
+                }
+                multiply = multiply*Double.valueOf(markets.get("BTC").getLast());
+                String coinValue = Double.toString(multiply);
+                value.setText(coinValue);
+
                 String balanceCoinLogoUrl = market
                             .getMarketCoin()
                             .getLogoUrl();
 
-                Picasso
-                        .with(mContext)
-                        .load(balanceCoinLogoUrl)
-                        .resize(50,50)
-                        .onlyScaleDown()
-                        .into(logo);
-
+                Picasso.with(mContext)
+                    .load(balanceCoinLogoUrl)
+                    .resize(50,50)
+                    .onlyScaleDown()
+                    .into(logo);
             }
         }
-
-
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -119,23 +132,27 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
     class CoinViewHolder extends RecyclerView.ViewHolder{
         // pullMarketsData
-        TextView marketName;
-        ImageView logoUrl;
+        ImageView coinLogo;
+        TextView coinAmount;
+        TextView coinValue;
+        TextView coin;
 
         // getBalance
-        TextView currency;
-        TextView balance;
+        TextView coinName;
+        TextView coinLongName;
 
         CoinViewHolder(View itemView) {
             super(itemView);
 
             // pullMarketsData
-            this.marketName = (TextView) itemView.findViewById(R.id.marketName);
-            this.logoUrl = (ImageView) itemView.findViewById(R.id.logo);
+            this.coinLogo = (ImageView) itemView.findViewById(R.id.logo);
+            this.coinValue = (TextView) itemView.findViewById(R.id.value);
+            this.coin = (TextView) itemView.findViewById(R.id.coin);
+            this.coinLongName = (TextView) itemView.findViewById(R.id.coinLongName);
 
             // getBalance
-            this.currency = (TextView) itemView.findViewById(R.id.currency);
-            this.balance = (TextView) itemView.findViewById(R.id.balance);
+            this.coinName = (TextView) itemView.findViewById(R.id.coinName);
+            this.coinAmount = (TextView) itemView.findViewById(R.id.amount);
 
         }
     }
@@ -188,25 +205,28 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
     private Map<String, Market> getBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerMarketsList) {
         Map<String, Market> marketsMap = portfolio.getBroker().getMarkets();
-        Map<String, Market> resultMap = new HashMap<>();
-
-        boolean mapAll = false;
+        boolean returnCombinedMap = false;
 
         for (RexCoinData coinData : brokerMarketsList) {
             String coinId = coinData.getMarketName();
             if (marketsMap.get(coinId) == null) {
                 marketsMap.put(coinData.getMarketName(), new Market(coinData));
             } else {
-                mapAll = true;
+                returnCombinedMap = true;
                 Market existingMarket = marketsMap.get(coinId);
                 marketsMap.put(coinId, existingMarket.addData(coinData));
             }
         }
 
-        List<Market> combinedQuery = new ArrayList<>(marketsMap.values());
+        return getFinalMap(returnCombinedMap, marketsMap);
+    }
 
-        if (mapAll){
-            for (Market combinedMarket : combinedQuery) {
+    private Map<String, Market> getFinalMap(boolean process, Map<String, Market> marketsMap) {
+        Map<String, Market> resultMap = new HashMap<>();
+        List<Market> combinedMap = new ArrayList<>(marketsMap.values());
+
+        if (process){
+            for (Market combinedMarket : combinedMap) {
                 String coinName = combinedMarket.getMarketCoin().getName();
                 if (!isBlank(coinName)){
                     Log.d(TAG, "Added to Broker markets:" + coinName);
