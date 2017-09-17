@@ -39,35 +39,51 @@ public class MainActivity extends AppCompatActivity {
         mBalanceRecyclerView.setHasFixedSize(true);
 
         initializeBalanceView();
-
     }
 
     private void initializeBalanceView() {
-        Broker poloniex = new Broker("Poloniex", "http://dummy", "balance");
+        // In theory options for user should be
+        Broker poloniex = new Broker("Poloniex", "http://dummy/", "dummyBalance");
         Broker bittrex = new Broker("Bittrex", "https://bittrex.com/api/v1.1/", "account/getbalances");
-        // (Internally Broker should go to RexService.getRexConnection.setBaseURL)
 
-        // Profiles will be able to use one of those Brokers. Let's assume that the User presses
-        // a button to add a new Portfolio and Selects Bittrex
+        // User decides to go for bittrex
         Portfolio rexPortfolio = new Portfolio(bittrex);
 
-        // He will then be prompted for a portfolio 'name' and 'Credentials' that we capture
+        // User is prompted for a portfolio 'name'
         String portfolioName = "My Portfolio";
+
+        // User is prompted for bittrex api keys
         Credentials portfolioCredentials = new Credentials(RexConf.API_KEY, RexConf.API_SECRET_KEY);
 
-        // And store inside that portfolio.
+        // New portfolio is created and populated with data from Bittrex
+        createPortfolio(rexPortfolio, portfolioName, portfolioCredentials);
+
+    }
+
+    private void createPortfolio(Portfolio rexPortfolio, String portfolioName, Credentials portfolioCredentials) {
+        // New portfolio is assigned previously captured name and credentials
         rexPortfolio.setName(portfolioName);
         rexPortfolio.setCredentials(portfolioCredentials);
 
-        // We then add the portfolio to this user's account.
+        // New portfolio is added to user object.
         user.updatePortfolio(rexPortfolio);
 
+        // Pull markets Information from Broker
+        initializeBrokerMarketsData();
+
+        // Pull user balance from Broker
+        initializeBrokerUserBalance(rexPortfolio);
+    }
+
+    private void initializeBrokerMarketsData() {
         // Once portfolio has been assigned against the user, a connection has to be made to
         // pull information, first we load all the markets info.
 //        RexPublicService rexPublicService = new RexPublicService(user, mBalanceAdapter);
 //        rexPublicService.getSummaries(portfolioName);
 //        rexPublicService.getMarkets(portfolioName);
+    }
 
+    private void initializeBrokerUserBalance(Portfolio rexPortfolio) {
         rexAccountService = new RexAccountService(rexPortfolio, mBalanceAdapter);
         rexAccountService.updateAccountBalance(mBalanceAdapter);
     }
