@@ -1,54 +1,60 @@
 package nelk.io.crypton.retrofit.Bittrex;
 
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.IOException;
 import java.util.List;
 
-import nelk.io.crypton.models.rex.User;
-import nelk.io.crypton.retrofit.Bittrex.models.RexResponseData;
-import nelk.io.crypton.retrofit.models.CoinData;
-import nelk.io.crypton.recyclerview.CoinAdapter;
+import nelk.io.crypton.models.rex.Credentials;
+import nelk.io.crypton.models.rex.Portfolio;
+import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
+import nelk.io.crypton.retrofit.Bittrex.models.RexResponseData;
 import nelk.io.crypton.retrofit.RexApi;
-import nelk.io.crypton.utils.NonceUtils;
+import nelk.io.crypton.retrofit.models.CoinData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static nelk.io.crypton.retrofit.Bittrex.RexUtils.getSignedHeader;
+import static nelk.io.crypton.utils.NonceUtils.generateNonce;
+
 public class RexAccountService implements Callback<RexResponse> {
     static final String TAG = RexAccountService.class.getSimpleName();
-    private final RexConnection rexConnection = new RexConnection();
-    private final RexUtils rexUtils = new RexUtils();
+    private final RetrofitConnection retrofitConnection = new RetrofitConnection();
 
-    List<? extends CoinData> rexDataList;
-    private CoinAdapter mCoinAdapter;
-    RexApi mRexApi = rexConnection.getRetrofitService();
+    private BalanceAdapter mBalanceAdapter;
+    RexApi mRexApi;
 
+    private Portfolio portfolio;
 
-    private User user;
-    private String portfolioId;
-
-    public RexAccountService(User user, CoinAdapter coinAdapter){
-        this.user = user;
-        this.mCoinAdapter = coinAdapter;
+    public RexAccountService(Portfolio portfolio, BalanceAdapter balanceAdapter){
+        this.portfolio = portfolio;
+        this.mBalanceAdapter = balanceAdapter;
+        this.mRexApi = retrofitConnection.getRetrofitService(portfolio.getBroker().getBaseUrl());
     }
 
-    public void updateAccountBalance(String portfolioId, CoinAdapter coinAdapter) {
-        this.mCoinAdapter = coinAdapter;
-        this.portfolioId = portfolioId;
-        String nonce = NonceUtils.generateNonce();
-        String signedHeader = rexUtils.getSignedHeader(RexConf.API_KEY, nonce);
+    public void updateAccountBalance(BalanceAdapter balanceAdapter) {
+        this.mBalanceAdapter = balanceAdapter;
+        String nonce = generateNonce();
+        Credentials credentials = portfolio.getCredentials();
+        String brokerBalancesUrl = Uri.parse(portfolio.getBroker().getBaseUrl())
+                .buildUpon()
+                .appendEncodedPath(portfolio.getBroker().getBalancesUrl())
+                .build().toString();
 
-        Call<RexResponse> call = mRexApi.getBalances(RexConf.API_KEY, nonce, signedHeader);
+        String signedHeader = getSignedHeader(brokerBalancesUrl, credentials, nonce);
+
+        Call<RexResponse> call = mRexApi.getBalances(credentials.getKey(), nonce, signedHeader);
         call.enqueue(this);
     }
 
     @Override
     public void onResponse(Call<RexResponse> call, Response<RexResponse> response) {
         if(response.isSuccessful()){
-            rexDataList = getResponseCoins(response);
-            mCoinAdapter.updateBalances(this.user, this.portfolioId, rexDataList);
+            List<? extends CoinData> rexDataList = getResponseCoins(response);
+            mBalanceAdapter.updateBalances(this.portfolio, rexDataList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());

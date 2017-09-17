@@ -5,14 +5,12 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 
-import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
-import nelk.io.crypton.recyclerview.CoinAdapter;
+import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponseData;
 import nelk.io.crypton.retrofit.RexApi;
 import nelk.io.crypton.retrofit.models.CoinData;
-import nelk.io.crypton.utils.NonceUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,7 +18,7 @@ import retrofit2.Response;
 public class RexPublicService implements Callback<RexResponse> {
 
     static final String TAG = RexPublicService.class.getSimpleName();
-    private final RexConnection rexConnection = new RexConnection();
+    private final RetrofitConnection retrofitConnection = new RetrofitConnection();
     private final RexUtils rexUtils = new RexUtils();
 
 
@@ -28,12 +26,12 @@ public class RexPublicService implements Callback<RexResponse> {
     private String portfolioId;
 
     List<? extends CoinData> rexDataList;
-    private CoinAdapter mCoinAdapter;
-    RexApi mRexApi = rexConnection.getRetrofitService();
+    private BalanceAdapter mBalanceAdapter;
+    RexApi mRexApi = retrofitConnection.getRetrofitService("asdf");
 
-    public RexPublicService(User user, CoinAdapter coinAdapter){
+    public RexPublicService(User user, BalanceAdapter balanceAdapter){
         this.user = user;
-        this.mCoinAdapter = coinAdapter;
+        this.mBalanceAdapter = balanceAdapter;
     }
 
     public void getTicker(RexResponseData rexResponseData) {
@@ -57,7 +55,7 @@ public class RexPublicService implements Callback<RexResponse> {
     public void onResponse(Call<RexResponse> call, Response<RexResponse> response) {
         if(response.isSuccessful()){
             rexDataList = getResponseCoins(response);
-//            mCoinAdapter.updateCoinList(rexDataList);
+//            mBalanceAdapter.updateCoinList(rexDataList);
         } else {
             try {
                 Log.d(TAG, response.errorBody().string());

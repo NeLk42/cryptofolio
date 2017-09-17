@@ -1,28 +1,23 @@
 package nelk.io.crypton.retrofit.Bittrex;
 
+import android.net.Uri;
+
+import nelk.io.crypton.models.rex.Credentials;
 import nelk.io.crypton.utils.NonceUtils;
 import nelk.io.crypton.utils.Sha512Utils;
 
+import static nelk.io.crypton.utils.NonceUtils.encodeNonce;
+
 public class RexUtils {
-    public RexUtils() {
-    }
 
-    String getSignedHeader(String apiKey, String nonce) {
-        String secretApiKey = RexConf.API_SECRET_KEY;
-        String baseBalancesUrl = "https://bittrex.com/api/v1.1/account/getbalances";
-        String encodeNonce = NonceUtils.encodeNonce(nonce);
+    public static String getSignedHeader(String brokerUrl, Credentials credentials, String nonce) {
 
-        String data = new StringBuilder(baseBalancesUrl)
-                .append("?")
-                .append("apikey")
-                .append("=")
-                .append(apiKey)
-                .append("&")
-                .append("nonce")
-                .append("=")
-                .append(encodeNonce)
-                .toString();
+        Uri data = Uri.parse(brokerUrl)
+                .buildUpon()
+                .appendQueryParameter("apikey", credentials.getKey())
+                .appendQueryParameter("nonce", nonce)
+                .build();
 
-        return Sha512Utils.calculateHMAC(data, secretApiKey);
+        return Sha512Utils.calculateHMAC(data.toString(), credentials.getPrivateKey());
     }
 }

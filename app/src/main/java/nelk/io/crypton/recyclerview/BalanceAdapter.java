@@ -19,8 +19,8 @@ import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.retrofit.models.CoinData;
 
-public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder> {
-    public static final String TAG = CoinAdapter.class.getSimpleName();
+public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
+    public static final String TAG = BalanceAdapter.class.getSimpleName();
 
     // Android OS
     private LayoutInflater mInflater;
@@ -30,7 +30,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     private String portfolioId;
     private User mUser;
 
-    public CoinAdapter(Context context, User user) {
+    public BalanceAdapter(Context context, User user) {
         mInflater = LayoutInflater.from(context);
         mContext = context;
         mUser = user;
@@ -84,15 +84,13 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.CoinViewHolder
     }
 
     // Rex Account Service
-    public void updateBalances(User user, String portfolioId, List<? extends CoinData> balanceList){
-        this.mUser = user;
-        updateUserPortfolio(portfolioId, balanceList);
+    public void updateBalances(Portfolio portfolio, List<? extends CoinData> balanceList){
+        updateUserPortfolio(portfolio, balanceList);
         notifyDataSetChanged();
     }
 
-    private void updateUserPortfolio(String portfolioId, List<? extends CoinData> balanceList) {
-        this.portfolioId = portfolioId;
-        Portfolio portfolio = mUser.getPortfolio(portfolioId);
+    private void updateUserPortfolio(Portfolio portfolio, List<? extends CoinData> balanceList) {
+        this.portfolioId = portfolio.getName();
         List<Balance> updatedBalance = new ArrayList<>();
 
         for (CoinData balanceData : balanceList) {

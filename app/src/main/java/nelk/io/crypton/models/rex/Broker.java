@@ -6,11 +6,13 @@ public class Broker {
 
     String name;
     String baseUrl;
+    String balancesUrl;
     List<Market> markets;
 
-    public Broker(String name, String baseUrl){
+    public Broker(String name, String baseUrl, String balancesUrl){
         this.name = name;
         this.baseUrl = baseUrl;
+        this.balancesUrl = balancesUrl;
     }
 
     public String getName() {
@@ -23,6 +25,14 @@ public class Broker {
 
     public String getBaseUrl() {
         return baseUrl;
+    }
+
+    public String getBalancesUrl() {
+        return balancesUrl;
+    }
+
+    public void setBalancesUrl(String balancesUrl) {
+        this.balancesUrl = balancesUrl;
     }
 
     public void setBaseUrl(String baseUrl) {

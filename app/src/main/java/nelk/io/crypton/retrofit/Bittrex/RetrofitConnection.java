@@ -4,20 +4,16 @@ import nelk.io.crypton.retrofit.RexApi;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RexConnection {
-    static String BASE_URL = "https://bittrex.com/api/v1.1/";
+public class RetrofitConnection {
 
-    public RexConnection() {
-    }
-
-    public RexApi getRetrofitService() {
-        Retrofit retrofit = getRetrofit();
+    public RexApi getRetrofitService(String baseUrl) {
+        Retrofit retrofit = getRetrofit(baseUrl);
         return retrofit.create(RexApi.class);
     }
 
-    Retrofit getRetrofit() {
+    Retrofit getRetrofit(String baseUrl) {
         return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
