@@ -31,7 +31,7 @@ public class Market {
 
     public Market(CoinData rexData){
 
-        if(!isNoneBlank(rexData.getMarketCurrency(), rexData.getMarketCurrencyLong(), rexData.getLogoUrl())){
+        if(isNoneBlank(rexData.getMarketCurrency(), rexData.getMarketCurrencyLong())){
             this.marketCoin = new Coin(rexData.getMarketCurrency(),
                     rexData.getMarketCurrencyLong(),
                     rexData.getLogoUrl()
@@ -203,7 +203,7 @@ public class Market {
 
     public Market addData(CoinData rexData){
 
-        if(isNoneBlank(rexData.getMarketCurrency(), rexData.getMarketCurrencyLong(), rexData.getLogoUrl())){
+        if(isNoneBlank(rexData.getMarketCurrency(), rexData.getMarketCurrencyLong())){
             this.marketCoin = new Coin(rexData.getMarketCurrency(),
                                         rexData.getMarketCurrencyLong(),
                                         rexData.getLogoUrl()

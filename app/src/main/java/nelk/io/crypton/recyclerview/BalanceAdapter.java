@@ -3,6 +3,7 @@ package nelk.io.crypton.recyclerview;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import nelk.io.crypton.models.rex.Market;
 import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
     public static final String TAG = BalanceAdapter.class.getSimpleName();
@@ -180,12 +183,6 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         Broker broker = userPortfolio.getBroker();
         broker.setMarkets(getBrokerMarkets(portfolio, brokerData));
 
-//        Broker broker =
-//        if (broker != null) {
-//            broker.setMarkets(getBrokerMarkets(portfolio, brokerData));
-//        } else {
-//            new Broker()
-//        }
         notifyDataSetChanged();
     }
 
@@ -210,7 +207,11 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
         if (mapAll){
             for (Market combinedMarket : combinedQuery) {
-                resultMap.put(combinedMarket.getMarketCoin().getName(), combinedMarket);
+                String coinName = combinedMarket.getMarketCoin().getName();
+                if (!isBlank(coinName)){
+                    Log.d(TAG, "Added to Broker markets:" + coinName);
+                    resultMap.put(coinName, combinedMarket);
+                }
             }
             marketsMap = resultMap;
         }
