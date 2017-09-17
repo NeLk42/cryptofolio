@@ -101,14 +101,14 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
             }
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, DetailsActivity.class);
-                intent.putExtra("coinData", coinBalance);
-                mContext.startActivity(intent);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(mContext, DetailsActivity.class);
+//                intent.putExtra("coinData", coinBalance);
+//                mContext.startActivity(intent);
+//            }
+//        });
     }
 
     @Override
@@ -209,12 +209,15 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
         for (RexCoinData coinData : brokerMarketsList) {
             String coinId = coinData.getMarketName();
-            if (marketsMap.get(coinId) == null) {
-                marketsMap.put(coinData.getMarketName(), new Market(coinData));
-            } else {
-                returnCombinedMap = true;
-                Market existingMarket = marketsMap.get(coinId);
-                marketsMap.put(coinId, existingMarket.addData(coinData));
+
+            if (coinData.getMarketName().contains("BTC")){
+                if (marketsMap.get(coinId) == null) {
+                    marketsMap.put(coinData.getMarketName(), new Market(coinData));
+                } else {
+                    returnCombinedMap = true;
+                    Market existingMarket = marketsMap.get(coinId);
+                    marketsMap.put(coinId, existingMarket.addData(coinData));
+                }
             }
         }
 
