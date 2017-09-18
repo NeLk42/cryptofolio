@@ -8,14 +8,17 @@ import nelk.io.crypton.utils.Sha512Utils;
 
 import static nelk.io.crypton.utils.NonceUtils.encodeNonce;
 
-public class RexUtils {
+class RexUtils {
 
-    public static String generateSignedHeader(String brokerUrl, Credentials credentials, String nonce) {
+    private static final String APIKEY = "apikey";
+    private static final String NONCE = "nonce";
+
+    static String generateSignedHeader(String brokerUrl, Credentials credentials, String nonce) {
 
         Uri data = Uri.parse(brokerUrl)
                 .buildUpon()
-                .appendQueryParameter("apikey", credentials.getKey())
-                .appendQueryParameter("nonce", nonce)
+                .appendQueryParameter(APIKEY, credentials.getKey())
+                .appendQueryParameter(NONCE, nonce)
                 .build();
 
         return Sha512Utils.calculateHMAC(data.toString(), credentials.getPrivateKey());

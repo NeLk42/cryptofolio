@@ -9,7 +9,7 @@ import nelk.io.crypton.models.rex.Balance;
 import nelk.io.crypton.models.rex.Market;
 import nelk.io.crypton.models.rex.User;
 
-public abstract class Value {
+public class ValueUtils {
 
     public static String getCoinInBTCs(Balance coin, User mUser, String mPortfolioId){
         return new StringBuilder()
@@ -25,7 +25,7 @@ public abstract class Value {
         boolean isBTC = Crypto.BTC.getCryptoName().equals(coin.getCurrencyName());
 
         if (!isBTC){
-            result = result * Double.valueOf(market.getLast());
+            result = result * market.getLast();
         }
 
         return result;
@@ -50,7 +50,7 @@ public abstract class Value {
         return result * markets.get(Crypto.BTC.getCryptoName()).getLast();
     }
 
-    public abstract String getCryptoValue();
+//    public abstract String getCryptoValue();
 
 
     // Auxiliary methods

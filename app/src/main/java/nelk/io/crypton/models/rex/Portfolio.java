@@ -3,28 +3,25 @@ package nelk.io.crypton.models.rex;
 
 import java.util.List;
 
-import nelk.io.crypton.models.enums.Crypto;
-import nelk.io.crypton.models.enums.Fiat;
 import nelk.io.crypton.models.utils.Currency;
-import nelk.io.crypton.models.utils.Value;
 
 public class Portfolio implements Currency{
 
     // Portfolio
-    String name;
-    Broker broker;
-    Credentials credentials;
-    List<Balance> balances;
-    List<? extends Position> positions;
-    List<? extends Transaction> deposits;
-    List<? extends Transaction> withdrawals;
+    private String name;
+    private Broker broker;
+    private Credentials credentials;
+    private List<Balance> balances;
+    private List<? extends Position> positions;
+    private List<? extends Transaction> deposits;
+    private List<? extends Transaction> withdrawals;
 
     public Portfolio(Broker broker){
         this.broker = broker;
     }
 
     // Base Currency
-    String baseCurrency;
+    private String baseCurrency;
 
     public String getName() {
         return name;

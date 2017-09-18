@@ -2,10 +2,10 @@ package nelk.io.crypton.models.rex;
 
 public class Credentials {
 
-    String key;
-    String privateKey;
+    private String key;
+    private String privateKey;
 
-    public Credentials(Credentials credentials){
+    Credentials(Credentials credentials){
         this.key = credentials.getKey();
         this.privateKey = credentials.getPrivateKey();
     }
@@ -19,7 +19,7 @@ public class Credentials {
         return key;
     }
 
-    public void setKey(String key) {
+    void setKey(String key) {
         this.key = key;
     }
 
@@ -27,7 +27,7 @@ public class Credentials {
         return privateKey;
     }
 
-    public void setPrivateKey(String privateKey) {
+    void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
     }
 

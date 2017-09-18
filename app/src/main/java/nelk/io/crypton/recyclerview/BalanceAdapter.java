@@ -25,12 +25,11 @@ import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 
-import static nelk.io.crypton.models.utils.Value.getCoinInFiat;
-import static nelk.io.crypton.models.utils.Value.getFiatValue;
+import static nelk.io.crypton.models.utils.ValueUtils.getCoinInFiat;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
-    public static final String TAG = BalanceAdapter.class.getSimpleName();
+    private static final String TAG = BalanceAdapter.class.getSimpleName();
 
     // Android OS
     private LayoutInflater mInflater;
@@ -149,7 +148,6 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
                 .into(imageView);
     }
 
-
     // Rex Account Service - Balance Data
 
     public void updateBalances(Portfolio portfolio, List<RexCoinData> balanceList){
@@ -172,7 +170,6 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         return updatedBalance;
     }
 
-
     // Rex Markets Service - Coin Markets Data
 
     public void updateBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerData){
@@ -186,7 +183,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
     private Map<String, Market> getBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerMarketsList) {
         Map<String, Market> marketsMap = portfolio.getBroker().getMarkets();
-        boolean returnCombinedMap = false;
+        boolean isCombinedMap = false;
 
         for (RexCoinData coinData : brokerMarketsList) {
             String coinId = coinData.getMarketName();
@@ -195,17 +192,17 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
                 if (marketsMap.get(coinId) == null) {
                     marketsMap.put(coinData.getMarketName(), new Market(coinData));
                 } else {
-                    returnCombinedMap = true;
+                    isCombinedMap = true;
                     Market existingMarket = marketsMap.get(coinId);
                     marketsMap.put(coinId, existingMarket.addData(coinData));
                 }
             }
         }
 
-        return getFinalMap(returnCombinedMap, marketsMap);
+        return combineMapResults(isCombinedMap, marketsMap);
     }
 
-    private Map<String, Market> getFinalMap(boolean process, Map<String, Market> marketsMap) {
+    private Map<String, Market> combineMapResults(boolean process, Map<String, Market> marketsMap) {
         Map<String, Market> resultMap = new HashMap<>();
         List<Market> combinedMap = new ArrayList<>(marketsMap.values());
 

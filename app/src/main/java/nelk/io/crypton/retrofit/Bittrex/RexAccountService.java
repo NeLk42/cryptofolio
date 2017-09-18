@@ -20,6 +20,7 @@ import static nelk.io.crypton.retrofit.Bittrex.RexUtils.generateSignedHeader;
 import static nelk.io.crypton.utils.NonceUtils.generateNonce;
 
 public class RexAccountService implements Callback<RexResponse> {
+
     private static final String TAG = RexAccountService.class.getSimpleName();
     private final RetrofitConnection retrofitConnection = new RetrofitConnection();
 

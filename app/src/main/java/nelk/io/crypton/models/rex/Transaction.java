@@ -1,23 +1,19 @@
 package nelk.io.crypton.models.rex;
 
 
-import nelk.io.crypton.models.enums.Crypto;
-import nelk.io.crypton.models.enums.Fiat;
-import nelk.io.crypton.models.utils.Value;
-
 public class Transaction{
 
-    String paymentUuid;
-    String currency;
-    String amount;
-    String address;
-    String opened;
-    String authorized;
-    String pendingPayment;
-    String txCost;
-    String txId;
-    String canceled;
-    String invalidAddress;
+    private String paymentUuid;
+    private String currency;
+    private String amount;
+    private String address;
+    private String opened;
+    private String authorized;
+    private String pendingPayment;
+    private String txCost;
+    private String txId;
+    private String canceled;
+    private String invalidAddress;
 
     public String getPaymentUuid() {
         return paymentUuid;

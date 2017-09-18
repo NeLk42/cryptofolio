@@ -1,14 +1,10 @@
 package nelk.io.crypton.models.rex;
 
-import nelk.io.crypton.models.enums.Crypto;
-import nelk.io.crypton.models.enums.Fiat;
-import nelk.io.crypton.models.utils.Value;
-
 public class Coin {
 
-    String name;
-    String longName;
-    String logoUrl;
+    private String name;
+    private String longName;
+    private String logoUrl;
 
     public Coin(String name, String longName, String logoUrl){
         this.name = name;

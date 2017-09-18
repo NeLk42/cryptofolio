@@ -8,11 +8,11 @@ import nelk.io.crypton.retrofit.models.CoinData;
 
 public class Balance implements Parcelable {
 
-    String currencyName;
-    Double balance;
-    Double available;
-    Double pending;
-    String cryptoAddress;
+    private String currencyName;
+    private Double balance;
+    private Double available;
+    private Double pending;
+    private String cryptoAddress;
 
     public Balance(CoinData coinData){
         this.currencyName = coinData.getCurrency();

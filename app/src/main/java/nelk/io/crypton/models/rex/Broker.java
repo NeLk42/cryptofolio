@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class Broker {
 
-    String name;
-    String baseUrl;
-    String balancesUrl;
-    Map<String, Market> markets;
+    private String name;
+    private String baseUrl;
+    private String balancesUrl;
+    private Map<String, Market> markets;
 
     public Broker(String name, String baseUrl, String balancesUrl){
         this.name = name;

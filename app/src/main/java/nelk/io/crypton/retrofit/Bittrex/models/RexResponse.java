@@ -8,11 +8,11 @@ import java.util.List;
 
 public class RexResponse implements Parcelable {
 
-    String success;
-    String message;
-    List<RexCoinData> result;
+    private String success;
+    private String message;
+    private List<RexCoinData> result;
 
-    protected RexResponse(Parcel in) {
+    private RexResponse(Parcel in) {
         success = in.readString();
         message = in.readString();
         if (in.readByte() == 0x01) {

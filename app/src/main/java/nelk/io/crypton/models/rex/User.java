@@ -6,11 +6,11 @@ import java.util.Map;
 public class User {
 
     // User
-    String name;
-    Map<String, Portfolio> portfolios;
+    private String name;
+    private Map<String, Portfolio> portfolios;
 
     // Currency
-    String baseCurrency;
+    private String baseCurrency;
 
     public User(String name, String baseCurrency){
         this.name = name;

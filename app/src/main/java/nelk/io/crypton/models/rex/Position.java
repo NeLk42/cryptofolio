@@ -3,16 +3,12 @@ package nelk.io.crypton.models.rex;
 
 import java.text.SimpleDateFormat;
 
-import nelk.io.crypton.models.enums.Crypto;
-import nelk.io.crypton.models.enums.Fiat;
-import nelk.io.crypton.models.utils.Value;
+class Position{
 
-public class Position{
-
-    String marketName;
-    SimpleDateFormat date;
-    Double quantity;
-    Double rate;
+    private String marketName;
+    private SimpleDateFormat date;
+    private Double quantity;
+    private Double rate;
 
     public String getMarketName() {
         return marketName;

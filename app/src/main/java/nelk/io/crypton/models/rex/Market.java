@@ -9,25 +9,25 @@ import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 public class Market {
 
     // API pullMarketsData
-    Coin marketCoin;
-    Boolean active;
-    String marketName;
-    String baseCoin;
-    String baseCoinLong;
+    private Coin marketCoin;
+    private Boolean active;
+    private String marketName;
+    private String baseCoin;
+    private String baseCoinLong;
 
     // API getsummaries
-    Double last;
-    String prevDay;
+    private Double last;
+    private String prevDay;
 
-    String high;
-    String low;
-    String volume;
-    String baseVolume;
-    String timeStamp;
-    String bid;
-    String ask;
-    String openBuyOrders;
-    String openSellOrders;
+    private String high;
+    private String low;
+    private String volume;
+    private String baseVolume;
+    private String timeStamp;
+    private String bid;
+    private String ask;
+    private String openBuyOrders;
+    private String openSellOrders;
 
     public Market(CoinData rexData){
 

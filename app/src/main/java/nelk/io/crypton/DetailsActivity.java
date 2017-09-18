@@ -24,6 +24,8 @@ public class DetailsActivity extends AppCompatActivity {
             RexCoinData rexCoinData = (RexCoinData) storage.getExtras().get("coinData");
 
             ImageView logo = (ImageView) findViewById(R.id.fab_coin_icon);
+
+            assert rexCoinData != null;
             Picasso
                     .with(this)
                     .load(rexCoinData.getLogoUrl())

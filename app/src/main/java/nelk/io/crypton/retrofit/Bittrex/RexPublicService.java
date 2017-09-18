@@ -16,12 +16,12 @@ import retrofit2.Response;
 
 public class RexPublicService implements Callback<RexResponse> {
 
-    static final String TAG = RexPublicService.class.getSimpleName();
+    private static final String TAG = RexPublicService.class.getSimpleName();
     private final RetrofitConnection retrofitConnection = new RetrofitConnection();
     private final Portfolio portfolio;
 
     private BalanceAdapter mBalanceAdapter;
-    RexApi mRexApi;
+    private RexApi mRexApi;
 
     public RexPublicService(Portfolio portfolio, BalanceAdapter balanceAdapter){
         this.mRexApi = retrofitConnection.getRetrofitService(portfolio.getBroker().getBaseUrl());
