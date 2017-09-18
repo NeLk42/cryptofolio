@@ -25,7 +25,10 @@ import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 
-import static nelk.io.crypton.models.utils.ValueUtils.getCoinInFiat;
+import static nelk.io.crypton.models.utils.Increase.percentageChange;
+import static nelk.io.crypton.models.utils.Increase.valueChange;
+import static nelk.io.crypton.models.utils.ValueUtils.getBTCValue;
+import static nelk.io.crypton.models.utils.ValueUtils.getCoinInSATs;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
@@ -56,6 +59,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         List<Balance> balances = getUserPortfolio().getBalances();
         final Balance coin = balances.get(position);
         String coinName = coin.getCurrencyName();
+        Double coinBalance = coin.getBalance();
 
         // Balance
         setGridItemText(holder.coinName, coinName);
@@ -69,8 +73,15 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
             if (market != null){
                 setGridItemText(holder.coinLongName, market.getMarketCoin().getLongName());
+                String coinParam = valueChange(
+                        coinBalance * market.getPrevDay(),
+                        getBTCValue(coinName, coinBalance, mUser, mPortfolioId),
+                        mUser.getBaseCurrency());
+                setGridItemText(holder.coinBaseCurrencyIncrease, coinParam);
+                String coinParam1 = percentageChange(market.getPrevDay(), market.getLast());
+                setGridItemText(holder.coinPercentageIncrease, coinParam1);
                 setGridItemLogo(holder.coinLogo, market.getMarketCoin().getLogoUrl());
-                setGridItemText(holder.coinValue, getCoinInFiat(coin, mUser, mPortfolioId));
+                setGridItemText(holder.coinValue, getCoinInSATs(coinName, coinBalance, mUser, mPortfolioId));
             }
         }
     }
@@ -97,26 +108,28 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
     class CoinViewHolder extends RecyclerView.ViewHolder{
         // pullMarketsData
         ImageView coinLogo;
-        TextView coinAmount;
+        TextView coinLongName;
+        TextView coinBaseCurrencyIncrease;
+        TextView coinPercentageIncrease;
         TextView coinValue;
-        TextView coin;
 
         // getBalance
         TextView coinName;
-        TextView coinLongName;
+        TextView coinAmount;
 
         CoinViewHolder(View itemView) {
             super(itemView);
 
             // pullMarketsData
-            this.coinLogo = (ImageView) itemView.findViewById(R.id.logo);
-            this.coinValue = (TextView) itemView.findViewById(R.id.value);
-            this.coin = (TextView) itemView.findViewById(R.id.coin);
-            this.coinLongName = (TextView) itemView.findViewById(R.id.coinLongName);
+            this.coinLogo = (ImageView) itemView.findViewById(R.id.coin_logo);
+            this.coinLongName = (TextView) itemView.findViewById(R.id.coin_name_long);
+            this.coinBaseCurrencyIncrease = (TextView) itemView.findViewById(R.id.coin_base_currency_increase);
+            this.coinPercentageIncrease = (TextView) itemView.findViewById(R.id.coin_percentage_increase);
+            this.coinValue = (TextView) itemView.findViewById(R.id.coin_value);
 
             // getBalance
-            this.coinName = (TextView) itemView.findViewById(R.id.coinName);
-            this.coinAmount = (TextView) itemView.findViewById(R.id.amount);
+            this.coinName = (TextView) itemView.findViewById(R.id.coin_name);
+            this.coinAmount = (TextView) itemView.findViewById(R.id.coin_amount);
 
         }
     }
@@ -132,10 +145,6 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         return mUser.getPortfolio(mPortfolioId);
     }
 
-    private Map<String, Market> getPortfolioMarkets() {
-        return getUserPortfolio().getBroker().getMarkets();
-    }
-
     private void setGridItemText(TextView textView, String coinParam) {
         textView.setText(coinParam);
     }
@@ -143,7 +152,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
     private void setGridItemLogo(ImageView imageView, String coinParam) {
         Picasso.with(mContext)
                 .load(coinParam)
-                .resize(50,50)
+                .resize(128,128)
                 .onlyScaleDown()
                 .into(imageView);
     }

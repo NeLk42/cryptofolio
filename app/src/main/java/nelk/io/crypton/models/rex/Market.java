@@ -17,7 +17,7 @@ public class Market {
 
     // API getsummaries
     private Double last;
-    private String prevDay;
+    private Double prevDay;
 
     private String high;
     private String low;
@@ -68,7 +68,7 @@ public class Market {
             this.ask = rexData.getAsk();
         }
         if(!isBlank(rexData.getPrevDay())){
-            this.prevDay = rexData.getPrevDay();
+            this.prevDay = Double.valueOf(rexData.getPrevDay());
         }
 
     }
@@ -121,11 +121,11 @@ public class Market {
         this.last = last;
     }
 
-    public String getPrevDay() {
+    public Double getPrevDay() {
         return prevDay;
     }
 
-    public void setPrevDay(String prevDay) {
+    public void setPrevDay(Double prevDay) {
         this.prevDay = prevDay;
     }
 
@@ -240,7 +240,7 @@ public class Market {
             this.ask = rexData.getAsk();
         }
         if(!isBlank(rexData.getPrevDay())){
-            this.prevDay = rexData.getPrevDay();
+            this.prevDay = Double.valueOf(rexData.getPrevDay());
         }
 
         return this;

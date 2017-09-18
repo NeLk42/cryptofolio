@@ -2,6 +2,7 @@ package nelk.io.crypton.models.enums;
 
 public enum Crypto {
 
+    SAT("SAT", "Satoshis"),
     BTC("BTC", "bitcoin"),
     LTC("LTC", "litecoin"),
     ETH("ETH", "ethereum");

@@ -11,18 +11,36 @@ import nelk.io.crypton.models.rex.User;
 
 public class ValueUtils {
 
-    public static String getCoinInBTCs(Balance coin, User mUser, String mPortfolioId){
+    public static String getCoinInSATs(String coin, Double amount, User mUser, String mPortfolioId){
+        DecimalFormat formatter = new DecimalFormat("####0.00");
+        Double result = getBTCValue(coin, amount, mUser, mPortfolioId);
+
+        result = result * 100 * 1000;
+
         return new StringBuilder()
-                .append(getBTCValue(coin, mUser, mPortfolioId))
+                .append(formatter.format(result))
+                .append("k")
+                .append(" ")
+                .append(Crypto.SAT.getCryptoName())
+                .toString();
+    }
+
+    public static String getCoinInBTCs(String coin, Double amount, User mUser, String mPortfolioId){
+        DecimalFormat formatter = new DecimalFormat("####0.00000000");
+        Double result = getBTCValue(coin, amount, mUser, mPortfolioId);
+
+        return new StringBuilder()
+                .append(formatter.format(result))
+                .append(" ")
                 .append(Crypto.BTC.getCryptoName())
                 .toString();
     }
 
-    public static Double getBTCValue(Balance coin, User mUser, String mPortfolioId){
+    public static Double getBTCValue(String coin, Double amount, User mUser, String mPortfolioId){
         Market market = getMarket(coin, mUser, mPortfolioId);
 
-        Double result = coin.getBalance();
-        boolean isBTC = Crypto.BTC.getCryptoName().equals(coin.getCurrencyName());
+        Double result = amount;
+        boolean isBTC = Crypto.BTC.getCryptoName().equals(coin);
 
         if (!isBTC){
             result = result * market.getLast();
@@ -31,9 +49,9 @@ public class ValueUtils {
         return result;
     }
 
-    public static String getCoinInFiat(Balance coin, User mUser, String mPortfolioId){
+    public static String getCoinInFiat(String coin, Double amount, User mUser, String mPortfolioId){
         DecimalFormat formatter = new DecimalFormat("####0.00");
-        Double result = getFiatValue(coin, mUser, mPortfolioId);
+        Double result = getFiatValue(coin, amount, mUser, mPortfolioId);
 
         return new StringBuilder()
                 .append(mUser.getBaseCurrency())
@@ -42,10 +60,10 @@ public class ValueUtils {
     }
 
 
-    public static Double getFiatValue(Balance coin, User mUser, String mPortfolioId) {
+    public static Double getFiatValue(String coin, Double amount, User mUser, String mPortfolioId) {
         Map<String, Market> markets = getMarkets(mUser, mPortfolioId);
 
-        Double result = getBTCValue(coin, mUser, mPortfolioId);
+        Double result = getBTCValue(coin, amount, mUser, mPortfolioId);
 
         return result * markets.get(Crypto.BTC.getCryptoName()).getLast();
     }
@@ -59,8 +77,8 @@ public class ValueUtils {
         return mUser.getPortfolio(mPortfolioId).getBroker().getMarkets();
     }
 
-    private static Market getMarket(Balance coin, User mUser, String mPortfolioId) {
-        return getMarkets(mUser, mPortfolioId).get(coin.getCurrencyName());
+    private static Market getMarket(String coin, User mUser, String mPortfolioId) {
+        return getMarkets(mUser, mPortfolioId).get(coin);
     }
 
 }
