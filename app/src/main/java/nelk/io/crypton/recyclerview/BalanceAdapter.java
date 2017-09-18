@@ -1,7 +1,6 @@
 package nelk.io.crypton.recyclerview;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,14 +11,13 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import nelk.io.crypton.R;
-import nelk.io.crypton.models.enums.Fiat;
+import nelk.io.crypton.models.enums.Crypto;
 import nelk.io.crypton.models.rex.Balance;
 import nelk.io.crypton.models.rex.Broker;
 import nelk.io.crypton.models.rex.Market;
@@ -27,11 +25,12 @@ import nelk.io.crypton.models.rex.Portfolio;
 import nelk.io.crypton.models.rex.User;
 import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 
+import static nelk.io.crypton.models.utils.Value.getCoinInFiat;
+import static nelk.io.crypton.models.utils.Value.getFiatValue;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
     public static final String TAG = BalanceAdapter.class.getSimpleName();
-    public static final String BTC = "BTC";
 
     // Android OS
     private LayoutInflater mInflater;
@@ -72,39 +71,9 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
             if (market != null){
                 setGridItemText(holder.coinLongName, market.getMarketCoin().getLongName());
                 setGridItemLogo(holder.coinLogo, market.getMarketCoin().getLogoUrl());
-                setGridItemText(holder.coinValue, getFiatValue(coin, market, mUser.getBaseCurrency()));
+                setGridItemText(holder.coinValue, getCoinInFiat(coin, mUser, mPortfolioId));
             }
         }
-    }
-
-    private void setGridItemText(TextView textView, String coinParam) {
-        textView.setText(coinParam);
-    }
-
-    private void setGridItemLogo(ImageView imageView, String coinParam) {
-        Picasso.with(mContext)
-                .load(coinParam)
-                .resize(50,50)
-                .onlyScaleDown()
-                .into(imageView);
-    }
-
-    @NonNull
-    private String getFiatValue(Balance coin, Market market, String baseCurrency) {
-        Double result = coin.getBalance();
-        boolean isBTC = BTC.equals(coin.getCurrencyName());
-
-        if (!isBTC){
-            result = result * Double.valueOf(market.getLast());
-        }
-        result = result * getPortfolioMarkets().get(BTC).getLast();
-
-        DecimalFormat formatter = new DecimalFormat("####0.00");
-
-        return new StringBuilder()
-                .append(baseCurrency)
-                .append(formatter.format(result))
-                .toString();
     }
 
     @Override
@@ -168,6 +137,18 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         return getUserPortfolio().getBroker().getMarkets();
     }
 
+    private void setGridItemText(TextView textView, String coinParam) {
+        textView.setText(coinParam);
+    }
+
+    private void setGridItemLogo(ImageView imageView, String coinParam) {
+        Picasso.with(mContext)
+                .load(coinParam)
+                .resize(50,50)
+                .onlyScaleDown()
+                .into(imageView);
+    }
+
 
     // Rex Account Service - Balance Data
 
@@ -210,7 +191,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         for (RexCoinData coinData : brokerMarketsList) {
             String coinId = coinData.getMarketName();
 
-            if (coinData.getMarketName().contains(BTC)){
+            if (coinData.getMarketName().contains(Crypto.BTC.getCryptoName())){
                 if (marketsMap.get(coinId) == null) {
                     marketsMap.put(coinData.getMarketName(), new Market(coinData));
                 } else {

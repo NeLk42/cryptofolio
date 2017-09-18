@@ -8,7 +8,7 @@ import nelk.io.crypton.models.enums.Fiat;
 import nelk.io.crypton.models.utils.Currency;
 import nelk.io.crypton.models.utils.Value;
 
-public class Portfolio implements Currency, Value{
+public class Portfolio implements Currency{
 
     // Portfolio
     String name;
@@ -93,13 +93,5 @@ public class Portfolio implements Currency, Value{
 
     public void setBaseCurrency(String baseCurrency) {
         this.baseCurrency = baseCurrency;
-    }
-
-    public Double getCryptoValue(Crypto crypto) {
-        return null;
-    }
-
-    public Double getFiatValue(Fiat fiat) {
-        return null;
     }
 }

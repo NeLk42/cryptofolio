@@ -7,7 +7,7 @@ import nelk.io.crypton.models.enums.Crypto;
 import nelk.io.crypton.models.enums.Fiat;
 import nelk.io.crypton.models.utils.Value;
 
-public class Position implements Value{
+public class Position{
 
     String marketName;
     SimpleDateFormat date;
@@ -46,11 +46,4 @@ public class Position implements Value{
         this.rate = rate;
     }
 
-    public Double getCryptoValue(Crypto crypto) {
-        return null;
-    }
-
-    public Double getFiatValue(Fiat fiat) {
-        return null;
-    }
 }

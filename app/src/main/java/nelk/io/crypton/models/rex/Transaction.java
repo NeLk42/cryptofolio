@@ -5,7 +5,7 @@ import nelk.io.crypton.models.enums.Crypto;
 import nelk.io.crypton.models.enums.Fiat;
 import nelk.io.crypton.models.utils.Value;
 
-public class Transaction implements Value{
+public class Transaction{
 
     String paymentUuid;
     String currency;
@@ -107,11 +107,4 @@ public class Transaction implements Value{
         this.invalidAddress = invalidAddress;
     }
 
-    public Double getCryptoValue(Crypto crypto) {
-        return null;
-    }
-
-    public Double getFiatValue(Fiat fiat) {
-        return null;
-    }
 }

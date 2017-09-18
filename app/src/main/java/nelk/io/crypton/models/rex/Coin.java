@@ -4,7 +4,7 @@ import nelk.io.crypton.models.enums.Crypto;
 import nelk.io.crypton.models.enums.Fiat;
 import nelk.io.crypton.models.utils.Value;
 
-public class Coin implements Value{
+public class Coin {
 
     String name;
     String longName;
@@ -38,14 +38,6 @@ public class Coin implements Value{
 
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
-    }
-
-    public Double getCryptoValue(Crypto crypto) {
-        return null;
-    }
-
-    public Double getFiatValue(Fiat fiat) {
-        return null;
     }
 
 }
