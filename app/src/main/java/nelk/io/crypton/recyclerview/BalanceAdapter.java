@@ -27,8 +27,8 @@ import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 
 import static nelk.io.crypton.models.utils.Increase.percentageChange;
 import static nelk.io.crypton.models.utils.Increase.valueChange;
-import static nelk.io.crypton.models.utils.ValueUtils.getBTCValue;
-import static nelk.io.crypton.models.utils.ValueUtils.getCoinInSATs;
+import static nelk.io.crypton.models.utils.ValueUtils.getCoinInFiat;
+import static nelk.io.crypton.models.utils.ValueUtils.getFiatValue;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
@@ -73,15 +73,18 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
 
             if (market != null){
                 setGridItemText(holder.coinLongName, market.getMarketCoin().getLongName());
-                String coinParam = valueChange(
-                        coinBalance * market.getPrevDay(),
-                        getBTCValue(coinName, coinBalance, mUser, mPortfolioId),
-                        mUser.getBaseCurrency());
-                setGridItemText(holder.coinBaseCurrencyIncrease, coinParam);
-                String coinParam1 = percentageChange(market.getPrevDay(), market.getLast());
-                setGridItemText(holder.coinPercentageIncrease, coinParam1);
                 setGridItemLogo(holder.coinLogo, market.getMarketCoin().getLogoUrl());
-                setGridItemText(holder.coinValue, getCoinInSATs(coinName, coinBalance, mUser, mPortfolioId));
+                setGridItemText(holder.coinValue,
+                        getCoinInFiat(
+                                coinBalance, coinName, mUser, mPortfolioId));
+                setGridItemText(holder.coinBaseCurrencyIncrease,
+                        valueChange(
+                                market.getPrevDay(), market.getLast(),
+                                getFiatValue(coinBalance, coinName, mUser, mPortfolioId),
+                                mUser.getBaseCurrency()));
+                setGridItemText(holder.coinPercentageIncrease,
+                        percentageChange(
+                                market.getPrevDay(), market.getLast()));
             }
         }
     }
@@ -145,6 +148,12 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         return mUser.getPortfolio(mPortfolioId);
     }
 
+    private Map<String, Market> getUserMarkets() { return getUserPortfolio().getBroker().getMarkets(); }
+
+    private Double getBTCNow() {
+        return getUserMarkets().get(Crypto.BTC.getCryptoName()).getLast();
+    }
+
     private void setGridItemText(TextView textView, String coinParam) {
         textView.setText(coinParam);
     }
@@ -162,12 +171,12 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
     public void updateBalances(Portfolio portfolio, List<RexCoinData> balanceList){
         setWorkingPortfolio(portfolio);
         Portfolio userPortfolio = getUserPortfolio();
-        userPortfolio.setBalances(getUserBalance(portfolio, balanceList));
+        userPortfolio.setBalances(adaptCoinDataToBalance(balanceList));
         mUser.updatePortfolio(userPortfolio);
         notifyDataSetChanged();
     }
 
-    private List<Balance> getUserBalance(Portfolio portfolio, List<RexCoinData> balanceList) {
+    private List<Balance> adaptCoinDataToBalance(List<RexCoinData> balanceList) {
         List<Balance> updatedBalance = new ArrayList<>();
 
         for (RexCoinData balanceData : balanceList) {

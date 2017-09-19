@@ -11,9 +11,9 @@ import nelk.io.crypton.models.rex.User;
 
 public class ValueUtils {
 
-    public static String getCoinInSATs(String coin, Double amount, User mUser, String mPortfolioId){
+    public static String getCoinInSATs(Double amount, String coin, User mUser, String mPortfolioId){
         DecimalFormat formatter = new DecimalFormat("####0.00");
-        Double result = getBTCValue(coin, amount, mUser, mPortfolioId);
+        Double result = getBTCValue(amount, coin, mUser, mPortfolioId);
 
         result = result * 100 * 1000;
 
@@ -25,9 +25,9 @@ public class ValueUtils {
                 .toString();
     }
 
-    public static String getCoinInBTCs(String coin, Double amount, User mUser, String mPortfolioId){
+    public static String getCoinInBTCs(Double amount, String coin, User mUser, String mPortfolioId){
         DecimalFormat formatter = new DecimalFormat("####0.00000000");
-        Double result = getBTCValue(coin, amount, mUser, mPortfolioId);
+        Double result = getBTCValue(amount, coin, mUser, mPortfolioId);
 
         return new StringBuilder()
                 .append(formatter.format(result))
@@ -36,7 +36,7 @@ public class ValueUtils {
                 .toString();
     }
 
-    public static Double getBTCValue(String coin, Double amount, User mUser, String mPortfolioId){
+    public static Double getBTCValue(Double amount, String coin, User mUser, String mPortfolioId){
         Market market = getMarket(coin, mUser, mPortfolioId);
 
         Double result = amount;
@@ -49,9 +49,9 @@ public class ValueUtils {
         return result;
     }
 
-    public static String getCoinInFiat(String coin, Double amount, User mUser, String mPortfolioId){
+    public static String getCoinInFiat(Double amount, String coin, User mUser, String mPortfolioId){
         DecimalFormat formatter = new DecimalFormat("####0.00");
-        Double result = getFiatValue(coin, amount, mUser, mPortfolioId);
+        Double result = getFiatValue(amount, coin, mUser, mPortfolioId);
 
         return new StringBuilder()
                 .append(mUser.getBaseCurrency())
@@ -60,13 +60,14 @@ public class ValueUtils {
     }
 
 
-    public static Double getFiatValue(String coin, Double amount, User mUser, String mPortfolioId) {
+    public static Double getFiatValue(Double amount, String coin, User mUser, String mPortfolioId) {
         Map<String, Market> markets = getMarkets(mUser, mPortfolioId);
 
-        Double result = getBTCValue(coin, amount, mUser, mPortfolioId);
+        Double result = getBTCValue(amount, coin, mUser, mPortfolioId);
 
         return result * markets.get(Crypto.BTC.getCryptoName()).getLast();
     }
+
 
 //    public abstract String getCryptoValue();
 
