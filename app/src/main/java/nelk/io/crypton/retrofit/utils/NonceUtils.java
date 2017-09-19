@@ -1,4 +1,4 @@
-package nelk.io.crypton.utils;
+package nelk.io.crypton.retrofit.utils;
 
 import android.support.annotation.Nullable;
 import android.util.Base64;

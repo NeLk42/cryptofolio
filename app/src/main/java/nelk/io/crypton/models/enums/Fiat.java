@@ -2,18 +2,20 @@ package nelk.io.crypton.models.enums;
 
 public enum Fiat {
 
-    GBP("£"),
-    USD("$"),
-    EUR("€");
+    GBP("£", "Pound"),
+    USD("$", "Dollar"),
+    EUR("€", "Euro");
 
-    private String fiat;
+    private String symbol;
+    private String fiatName;
 
-    Fiat(String fiat){
-        this.fiat = fiat;
+    Fiat(String symbol, String fiatName){
+        this.fiatName = fiatName;
+        this.symbol = symbol;
     }
 
-    public String getFiat(){
-        return fiat;
+    public String getSymbol(){
+        return symbol;
     }
 
 }

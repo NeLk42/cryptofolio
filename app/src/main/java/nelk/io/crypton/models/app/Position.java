@@ -1,4 +1,4 @@
-package nelk.io.crypton.models.rex;
+package nelk.io.crypton.models.app;
 
 
 import java.text.SimpleDateFormat;

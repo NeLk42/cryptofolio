@@ -5,9 +5,8 @@ import java.text.DecimalFormat;
 import java.util.Map;
 
 import nelk.io.crypton.models.enums.Crypto;
-import nelk.io.crypton.models.rex.Balance;
-import nelk.io.crypton.models.rex.Market;
-import nelk.io.crypton.models.rex.User;
+import nelk.io.crypton.models.app.Market;
+import nelk.io.crypton.models.app.User;
 
 public class ValueUtils {
 

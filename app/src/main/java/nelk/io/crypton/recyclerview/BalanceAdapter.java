@@ -18,11 +18,11 @@ import java.util.Map;
 
 import nelk.io.crypton.R;
 import nelk.io.crypton.models.enums.Crypto;
-import nelk.io.crypton.models.rex.Balance;
-import nelk.io.crypton.models.rex.Broker;
-import nelk.io.crypton.models.rex.Market;
-import nelk.io.crypton.models.rex.Portfolio;
-import nelk.io.crypton.models.rex.User;
+import nelk.io.crypton.models.app.Balance;
+import nelk.io.crypton.models.app.Broker;
+import nelk.io.crypton.models.app.Market;
+import nelk.io.crypton.models.app.Portfolio;
+import nelk.io.crypton.models.app.User;
 import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 
 import static nelk.io.crypton.models.utils.Increase.percentageChange;

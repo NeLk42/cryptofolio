@@ -2,11 +2,8 @@ package nelk.io.crypton.retrofit.Bittrex;
 
 import android.net.Uri;
 
-import nelk.io.crypton.models.rex.Credentials;
-import nelk.io.crypton.utils.NonceUtils;
-import nelk.io.crypton.utils.Sha512Utils;
-
-import static nelk.io.crypton.utils.NonceUtils.encodeNonce;
+import nelk.io.crypton.models.app.Credentials;
+import nelk.io.crypton.retrofit.utils.Sha512Utils;
 
 class RexUtils {
 

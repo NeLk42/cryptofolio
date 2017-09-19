@@ -6,8 +6,8 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 
-import nelk.io.crypton.models.rex.Credentials;
-import nelk.io.crypton.models.rex.Portfolio;
+import nelk.io.crypton.models.app.Credentials;
+import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
@@ -17,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static nelk.io.crypton.retrofit.Bittrex.RexUtils.generateSignedHeader;
-import static nelk.io.crypton.utils.NonceUtils.generateNonce;
+import static nelk.io.crypton.retrofit.utils.NonceUtils.generateNonce;
 
 public class RexAccountService implements Callback<RexResponse> {
 

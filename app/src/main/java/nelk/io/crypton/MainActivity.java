@@ -6,10 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import nelk.io.crypton.models.enums.Fiat;
-import nelk.io.crypton.models.rex.Broker;
-import nelk.io.crypton.models.rex.Credentials;
-import nelk.io.crypton.models.rex.Portfolio;
-import nelk.io.crypton.models.rex.User;
+import nelk.io.crypton.models.app.Broker;
+import nelk.io.crypton.models.app.Credentials;
+import nelk.io.crypton.models.app.Portfolio;
+import nelk.io.crypton.models.app.User;
 import nelk.io.crypton.retrofit.Bittrex.RexConf;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.RexAccountService;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Data
     RexAccountService rexAccountService;
-    private User user = new User("user1", Fiat.USD.getFiat());
+    private User user = new User("user1", Fiat.USD.getSymbol());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
