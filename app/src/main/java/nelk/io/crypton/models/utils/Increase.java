@@ -28,7 +28,7 @@ public class Increase {
     }
 
     private static String assignSymbol(Double before, Double now){
-        if (before < now){
+        if (before > now){
             return "-";
         } else {
             return "+";
