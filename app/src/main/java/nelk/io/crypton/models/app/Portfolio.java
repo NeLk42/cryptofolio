@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import nelk.io.crypton.models.enums.Brokers;
-import nelk.io.crypton.models.utils.Currency;
 
-public class Portfolio implements Currency{
+public class Portfolio {
 
     // Portfolio
     private String name;
