@@ -44,12 +44,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeBalanceView() {
-        // In theory options for user should be
-        Broker poloniex = new Broker("Poloniex", "http://dummy/", "dummyBalance");
-        Broker bittrex = new Broker("Bittrex", "https://bittrex.com/api/v1.1/", "account/getbalances");
-
         // User decides to go for bittrex
-        Portfolio rexPortfolio = new Portfolio(bittrex);
+        Portfolio rexPortfolio = new Portfolio(Brokers.BITTREX);
 
         // User is prompted for a portfolio 'name'
         String portfolioName = "My Portfolio";

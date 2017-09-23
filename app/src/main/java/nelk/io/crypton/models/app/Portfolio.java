@@ -1,8 +1,11 @@
 package nelk.io.crypton.models.app;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import nelk.io.crypton.models.enums.Brokers;
 import nelk.io.crypton.models.utils.Currency;
 
 public class Portfolio implements Currency{
@@ -12,12 +15,17 @@ public class Portfolio implements Currency{
     private Broker broker;
     private Credentials credentials;
     private List<Balance> balances;
+    private Map<String, Market> markets;
     private List<? extends Position> positions;
     private List<? extends Transaction> deposits;
     private List<? extends Transaction> withdrawals;
 
-    public Portfolio(Broker broker){
-        this.broker = broker;
+    public Portfolio(String name, Brokers broker){
+        this.name = name;
+        this.markets = new HashMap<>();
+        this.broker = new Broker(broker.getName(),
+                                 broker.getBaseUrl(),
+                                 broker.getBalancesUrl());
     }
 
     // Base Currency
@@ -58,6 +66,14 @@ public class Portfolio implements Currency{
 
     public void setBalances(List<Balance> balances) {
         this.balances = balances;
+    }
+
+    public Map<String, Market> getMarkets() {
+        return markets;
+    }
+
+    public void setMarkets(Map<String, Market> markets) {
+        this.markets = markets;
     }
 
     public List<? extends Position> getPositions() {
