@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import nelk.io.crypton.models.app.User;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 
-import static nelk.io.crypton.activityhelpers.MainActivityHelper.initializeBalanceView;
-import static nelk.io.crypton.activityhelpers.MainActivityHelper.setUser;
+import static nelk.io.crypton.helpers.MainActivityHelper.initializeBalanceView;
+import static nelk.io.crypton.helpers.MainActivityHelper.setUser;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
