@@ -20,7 +20,7 @@ public class ValueUtils {
                 .append(formatter.format(result))
                 .append("k")
                 .append(" ")
-                .append(Cryptos.SAT.getCryptoName())
+                .append(Cryptos.SAT.getSymbol())
                 .toString();
     }
 
@@ -31,7 +31,7 @@ public class ValueUtils {
         return new StringBuilder()
                 .append(formatter.format(result))
                 .append(" ")
-                .append(Cryptos.BTC.getCryptoName())
+                .append(Cryptos.BTC.getSymbol())
                 .toString();
     }
 
@@ -39,7 +39,7 @@ public class ValueUtils {
         Market market = getMarket(coin, mUser, mPortfolioId);
 
         Double result = amount;
-        boolean isBTC = Cryptos.BTC.getCryptoName().equals(coin);
+        boolean isBTC = Cryptos.BTC.getSymbol().equals(coin);
 
         if (!isBTC){
             result = result * market.getLast();
@@ -64,7 +64,7 @@ public class ValueUtils {
 
         Double result = getBTCValue(amount, coin, mUser, mPortfolioId);
 
-        return result * markets.get(Cryptos.BTC.getCryptoName()).getLast();
+        return result * markets.get(Cryptos.BTC.getSymbol()).getLast();
     }
 
 

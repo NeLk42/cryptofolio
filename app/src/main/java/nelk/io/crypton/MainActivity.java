@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private BalanceAdapter mBalanceAdapter;
 
     // Data
-    private User user = new User("user1", Fiats.USD.getSymbol());
-//    private User user = new User("user1", Cryptos.BTC.getCryptoName());
+//    private User user = new User("user1", Fiats.USD);
+    private User user = new User("user1", Cryptos.BTC);
+//    private User user = new User("user1", Cryptos.SAT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

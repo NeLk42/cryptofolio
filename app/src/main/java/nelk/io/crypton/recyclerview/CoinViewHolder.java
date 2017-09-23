@@ -10,12 +10,12 @@ import nelk.io.crypton.R;
 
 class CoinViewHolder extends RecyclerView.ViewHolder{
 
-    //    ###################   ~   ##########################
-    //    # LTC          50 #   ~   # LTC             amount #
-    //    # $30       $1500 #   ~   # priceBought      spent #
-    //    # $40       $2000 #   ~   # priceNow         value #
-    //    # +25%      +$500 #   ~   # percentage    earnings #
-    //    ###################   ~   ##########################
+    //    ###################   ~   ###############################
+    //    # LTC          50 #   ~   # LTC                  amount #
+    //    # $30       $1500 #   ~   # priceBought      totalSpent #
+    //    # $40       $2000 #   ~   # priceNow           totalNow #
+    //    # +25%      +$500 #   ~   # pricePercIncrease  earnings #
+    //    ###################   ~   ###############################
 
     //    ###################   ~   ##########################
     //    # LTC          50 #   ~   # LTC             amount #

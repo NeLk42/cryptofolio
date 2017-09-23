@@ -3,6 +3,9 @@ package nelk.io.crypton.models.app;
 import java.util.HashMap;
 import java.util.Map;
 
+import nelk.io.crypton.models.enums.Cryptos;
+import nelk.io.crypton.models.enums.EnumCurrencies;
+
 public class User {
 
     // User
@@ -10,10 +13,13 @@ public class User {
     private Map<String, Portfolio> portfolios;
 
     // Currency
-    private String baseCurrency;
+    private EnumCurrencies baseCurrency;
+    private String baseCurrencyPosition;
 
-    public User(String name, String baseCurrency){
+    public User(String name, EnumCurrencies baseCurrency){
         this.name = name;
+        this.baseCurrencyPosition = (baseCurrency instanceof Cryptos) ? "end" : "start";
+
         this.baseCurrency = baseCurrency;
         this.portfolios = new HashMap<>();
     }
@@ -34,11 +40,11 @@ public class User {
         this.portfolios = portfolios;
     }
 
-    public String getBaseCurrency() {
+    public EnumCurrencies getBaseCurrency() {
         return baseCurrency;
     }
 
-    public void setBaseCurrency(String baseCurrency) {
+    public void setBaseCurrency(EnumCurrencies baseCurrency) {
         this.baseCurrency = baseCurrency;
     }
 

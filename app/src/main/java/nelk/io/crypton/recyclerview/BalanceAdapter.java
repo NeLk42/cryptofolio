@@ -20,7 +20,6 @@ import java.util.Map;
 import nelk.io.crypton.R;
 import nelk.io.crypton.models.enums.Cryptos;
 import nelk.io.crypton.models.app.Balance;
-import nelk.io.crypton.models.app.Broker;
 import nelk.io.crypton.models.app.Market;
 import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.models.app.User;
@@ -28,9 +27,7 @@ import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 
 import static nelk.io.crypton.models.utils.MathOperations.calculateBalanceTotalValue;
 import static nelk.io.crypton.models.utils.MathOperations.calculatePercentageChange;
-import static nelk.io.crypton.models.utils.MathOperations.calculateAbsoluteValueChange;
 import static nelk.io.crypton.models.utils.MathOperations.calculateValueChange;
-import static nelk.io.crypton.models.utils.gridItemsWrapper.toDoubleDecimal;
 import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapEarnings;
 import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapPercentage;
 import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapSymbol;
@@ -65,7 +62,6 @@ public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
         final Balance coin = balances.get(position);
         String coinName = coin.getCurrencyName();
         Double coinBalance = coin.getCurrencyBalance();
-
 
         List<Balance> balanceItems = getUserPortfolio().getBalances();
 
@@ -106,7 +102,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
             String gridItemPercentageChange = wrapPercentage(percentageChange);
             String gridItemTotalSpent = wrapWithFiat(totalSpent);
             String gridItemTotalNow = wrapWithFiat(totalNow);
-            String gridItemEarnings = wrapWithFiat(earnings);
+            String gridItemEarnings = wrapWithFiatAndSign(earnings);
 
             setGridItemLogo(holder.coinLogo, gridItemLogo);
             setGridItemText(holder.balancePriceBought, gridItemPriceBought);
@@ -116,6 +112,11 @@ public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
             setGridItemText(holder.balanceTotalNow, gridItemTotalNow);
             setGridItemText(holder.balanceEarnings, gridItemEarnings);
         }
+    }
+
+    @NonNull
+    private String wrapWithFiatAndSign(Double earnings) {
+        return wrapEarnings(earnings, mUser.getBaseCurrency());
     }
 
     private String wrapWithFiat(Double coinAmount) {
@@ -162,7 +163,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
     private Map<String, Market> getUserMarkets() { return getUserPortfolio().getMarkets(); }
 
     private Double getBTCNow() {
-        return getPortfolioMarket(Cryptos.BTC.getCryptoName()).getLast();
+        return getPortfolioMarket(Cryptos.BTC.getSymbol()).getLast();
     }
 
     private void setGridItemText(TextView textView, String coinParam) {
@@ -216,7 +217,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
         for (RexCoinData coinData : brokerMarketsList) {
             String coinId = coinData.getMarketName();
 
-            if (coinData.getMarketName().contains(Cryptos.BTC.getCryptoName())){
+            if (coinData.getMarketName().contains(Cryptos.BTC.getSymbol())){
                 if (marketsMap.get(coinId) == null) {
                     marketsMap.put(coinData.getMarketName(), new Market(coinData));
                 } else {

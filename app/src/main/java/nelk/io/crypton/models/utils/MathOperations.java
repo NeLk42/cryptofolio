@@ -10,11 +10,11 @@ public class MathOperations {
     }
 
     public static Double calculateAbsoluteValueChange(Double before, Double now){
-        return Math.abs(before - now);
+        return Math.abs(now - before);
     }
 
     public static Double calculateValueChange(Double before, Double now){
-        return before - now;
+        return now - before;
     }
 
     public static Double calculateBalanceTotalValue(Double costPerUnit, Double coinBalance){

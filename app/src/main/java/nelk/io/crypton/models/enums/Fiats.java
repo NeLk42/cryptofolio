@@ -1,6 +1,6 @@
 package nelk.io.crypton.models.enums;
 
-public enum Fiats {
+public enum Fiats implements EnumCurrencies{
 
     GBP("£", "Pound"),
     USD("$", "Dollar"),
@@ -17,5 +17,7 @@ public enum Fiats {
     public String getSymbol(){
         return symbol;
     }
+
+    public String getPosition() {  return "start"; }
 
 }
