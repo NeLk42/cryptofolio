@@ -1,6 +1,6 @@
 package nelk.io.crypton.models.enums;
 
-public enum Crypto {
+public enum Cryptos {
 
     SAT("SAT", "Satoshi"),
     BTC("BTC", "Bitcoin"),
@@ -10,7 +10,7 @@ public enum Crypto {
     private final String cryptoLongName;
     private final String cryptoName;
 
-    Crypto(String cryptoName, String cryptoLongName){
+    Cryptos(String cryptoName, String cryptoLongName){
         this.cryptoLongName = cryptoLongName;
         this.cryptoName = cryptoName;
     }

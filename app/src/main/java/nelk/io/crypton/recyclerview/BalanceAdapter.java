@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import nelk.io.crypton.R;
-import nelk.io.crypton.models.enums.Crypto;
+import nelk.io.crypton.models.enums.Cryptos;
 import nelk.io.crypton.models.app.Balance;
 import nelk.io.crypton.models.app.Broker;
 import nelk.io.crypton.models.app.Market;

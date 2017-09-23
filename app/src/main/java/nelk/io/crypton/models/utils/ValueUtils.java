@@ -4,7 +4,7 @@ package nelk.io.crypton.models.utils;
 import java.text.DecimalFormat;
 import java.util.Map;
 
-import nelk.io.crypton.models.enums.Crypto;
+import nelk.io.crypton.models.enums.Cryptos;
 import nelk.io.crypton.models.app.Market;
 import nelk.io.crypton.models.app.User;
 
@@ -20,7 +20,7 @@ public class ValueUtils {
                 .append(formatter.format(result))
                 .append("k")
                 .append(" ")
-                .append(Crypto.SAT.getCryptoName())
+                .append(Cryptos.SAT.getCryptoName())
                 .toString();
     }
 
@@ -31,7 +31,7 @@ public class ValueUtils {
         return new StringBuilder()
                 .append(formatter.format(result))
                 .append(" ")
-                .append(Crypto.BTC.getCryptoName())
+                .append(Cryptos.BTC.getCryptoName())
                 .toString();
     }
 
@@ -39,7 +39,7 @@ public class ValueUtils {
         Market market = getMarket(coin, mUser, mPortfolioId);
 
         Double result = amount;
-        boolean isBTC = Crypto.BTC.getCryptoName().equals(coin);
+        boolean isBTC = Cryptos.BTC.getCryptoName().equals(coin);
 
         if (!isBTC){
             result = result * market.getLast();
@@ -64,7 +64,7 @@ public class ValueUtils {
 
         Double result = getBTCValue(amount, coin, mUser, mPortfolioId);
 
-        return result * markets.get(Crypto.BTC.getCryptoName()).getLast();
+        return result * markets.get(Cryptos.BTC.getCryptoName()).getLast();
     }
 
 
