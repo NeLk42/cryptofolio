@@ -9,14 +9,22 @@ import nelk.io.crypton.retrofit.models.CoinData;
 public class Balance implements Parcelable {
 
     private String currencyName;
-    private Double balance;
+    private Double currencyBalance;
     private Double available;
     private Double pending;
     private String cryptoAddress;
 
+    private String logoUrl;
+    private Double priceBought;
+    private Double priceNow;
+    private Double percentageChange;
+    private Double totalSpent;
+    private Double totalNow;
+    private Double earnings;
+
     public Balance(CoinData coinData){
         this.currencyName = coinData.getCurrency();
-        this.balance = coinData.getBalance();
+        this.currencyBalance = coinData.getBalance();
         this.available = coinData.getAvailable();
         this.pending = coinData.getPending();
         this.cryptoAddress = coinData.getCryptoAddress();
@@ -30,12 +38,12 @@ public class Balance implements Parcelable {
         this.currencyName = currencyName;
     }
 
-    public Double getBalance() {
-        return balance;
+    public Double getCurrencyBalance() {
+        return currencyBalance;
     }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
+    public void setCurrencyBalance(Double currencyBalance) {
+        this.currencyBalance = currencyBalance;
     }
 
     public Double getAvailable() {
@@ -62,13 +70,75 @@ public class Balance implements Parcelable {
         this.cryptoAddress = cryptoAddress;
     }
 
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public Double getPriceBought() {
+        return priceBought;
+    }
+
+    public void setPriceBought(Double priceBought) {
+        this.priceBought = priceBought;
+    }
+
+    public Double getPriceNow() {
+        return priceNow;
+    }
+
+    public void setPriceNow(Double priceNow) {
+        this.priceNow = priceNow;
+    }
+
+    public Double getPercentageChange() {
+        return percentageChange;
+    }
+
+    public void setPercentageChange(Double percentageChange) {
+        this.percentageChange = percentageChange;
+    }
+
+    public Double getTotalSpent() {
+        return totalSpent;
+    }
+
+    public void setTotalSpent(Double totalSpent) {
+        this.totalSpent = totalSpent;
+    }
+
+    public Double getTotalNow() {
+        return totalNow;
+    }
+
+    public void setTotalNow(Double totalNow) {
+        this.totalNow = totalNow;
+    }
+
+    public Double getEarnings() {
+        return earnings;
+    }
+
+    public void setEarnings(Double earnings) {
+        this.earnings = earnings;
+    }
 
     protected Balance(Parcel in) {
         currencyName = in.readString();
-        balance = in.readByte() == 0x00 ? null : in.readDouble();
+        currencyBalance = in.readByte() == 0x00 ? null : in.readDouble();
         available = in.readByte() == 0x00 ? null : in.readDouble();
         pending = in.readByte() == 0x00 ? null : in.readDouble();
         cryptoAddress = in.readString();
+        logoUrl = in.readString();
+        priceBought = in.readByte() == 0x00 ? null : in.readDouble();
+        priceNow = in.readByte() == 0x00 ? null : in.readDouble();
+        percentageChange = in.readByte() == 0x00 ? null : in.readDouble();
+        totalSpent = in.readByte() == 0x00 ? null : in.readDouble();
+        totalNow = in.readByte() == 0x00 ? null : in.readDouble();
+        earnings = in.readByte() == 0x00 ? null : in.readDouble();
     }
 
     @Override
@@ -79,11 +149,11 @@ public class Balance implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(currencyName);
-        if (balance == null) {
+        if (currencyBalance == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
-            dest.writeDouble(balance);
+            dest.writeDouble(currencyBalance);
         }
         if (available == null) {
             dest.writeByte((byte) (0x00));
@@ -98,6 +168,43 @@ public class Balance implements Parcelable {
             dest.writeDouble(pending);
         }
         dest.writeString(cryptoAddress);
+        dest.writeString(logoUrl);
+        if (priceBought == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(priceBought);
+        }
+        if (priceNow == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(priceNow);
+        }
+        if (percentageChange == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(percentageChange);
+        }
+        if (totalSpent == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(totalSpent);
+        }
+        if (totalNow == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(totalNow);
+        }
+        if (earnings == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(earnings);
+        }
     }
 
     @SuppressWarnings("unused")

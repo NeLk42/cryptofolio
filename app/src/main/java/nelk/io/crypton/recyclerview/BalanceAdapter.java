@@ -1,6 +1,7 @@
 package nelk.io.crypton.recyclerview;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,13 +26,17 @@ import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.models.app.User;
 import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
 
-import static nelk.io.crypton.models.utils.Increase.percentageChange;
-import static nelk.io.crypton.models.utils.Increase.valueChange;
-import static nelk.io.crypton.models.utils.ValueUtils.getCoinInFiat;
-import static nelk.io.crypton.models.utils.ValueUtils.getFiatValue;
+import static nelk.io.crypton.models.utils.MathOperations.calculateBalanceTotalValue;
+import static nelk.io.crypton.models.utils.MathOperations.calculatePercentageChange;
+import static nelk.io.crypton.models.utils.MathOperations.calculateAbsoluteValueChange;
+import static nelk.io.crypton.models.utils.MathOperations.calculateValueChange;
+import static nelk.io.crypton.models.utils.gridItemsWrapper.toDoubleDecimal;
+import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapEarnings;
+import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapPercentage;
+import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapSymbol;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinViewHolder> {
+public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
     private static final String TAG = BalanceAdapter.class.getSimpleName();
 
     // Android OS
@@ -59,34 +64,70 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         List<Balance> balances = getUserPortfolio().getBalances();
         final Balance coin = balances.get(position);
         String coinName = coin.getCurrencyName();
-        Double coinBalance = coin.getBalance();
+        Double coinBalance = coin.getCurrencyBalance();
 
-        // Balance
-        setGridItemText(holder.coinName, coinName);
-        setGridItemText(holder.coinAmount, Double.toString(coin.getBalance()));
 
-        // Markets
-        Broker broker = getUserPortfolio().getBroker();
-        if (broker != null){
+        List<Balance> balanceItems = getUserPortfolio().getBalances();
 
-            Market market = broker.getMarkets().get(coinName);
+        final Balance item = balances.get(position);
+        // TODO: Sort Balances.
+        // TODO: Add Portfolio item (with Balance totals) at index = 0
 
-            if (market != null){
-                setGridItemText(holder.coinLongName, market.getMarketCoin().getLongName());
-                setGridItemLogo(holder.coinLogo, market.getMarketCoin().getLogoUrl());
-                setGridItemText(holder.coinValue,
-                        getCoinInFiat(
-                                coinBalance, coinName, mUser, mPortfolioId));
-                setGridItemText(holder.coinBaseCurrencyIncrease,
-                        valueChange(
-                                market.getPrevDay(), market.getLast(),
-                                getFiatValue(coinBalance, coinName, mUser, mPortfolioId),
-                                mUser.getBaseCurrency()));
-                setGridItemText(holder.coinPercentageIncrease,
-                        percentageChange(
-                                market.getPrevDay(), market.getLast()));
-            }
+        /* Balance data */
+        String name = item.getCurrencyName();
+        Double coinAmount = item.getCurrencyBalance();
+
+        setGridItemText(holder.balanceCoinName, name);
+        setGridItemText(holder.balanceCoinAmount, Double.toString(coinAmount));
+
+        /* Market data */
+        String logoUrl;
+        Double priceBought;
+        Double priceNow;
+        Double percentageChange;
+        Double totalSpent;
+        Double totalNow;
+        Double earnings;
+
+        if (hasMarketLoaded(name)){
+            Market itemMarket = getPortfolioMarket(item.getCurrencyName());
+
+            logoUrl = itemMarket.getMarketCoin().getLogoUrl();
+            priceBought = itemMarket.getPrevDay();
+            priceNow = itemMarket.getLast();
+            percentageChange = calculatePercentageChange(priceBought, priceNow);
+            totalSpent = calculateBalanceTotalValue(priceBought, coinAmount);
+            totalNow = calculateBalanceTotalValue(priceNow, coinAmount);
+            earnings = calculateValueChange(totalSpent, totalNow);
+
+            String gridItemLogo = logoUrl;
+            String gridItemPriceBought = wrapWithFiat(priceBought);
+            String gridItemPriceNow = wrapWithFiat(priceNow);
+            String gridItemPercentageChange = wrapPercentage(percentageChange);
+            String gridItemTotalSpent = wrapWithFiat(totalSpent);
+            String gridItemTotalNow = wrapWithFiat(totalNow);
+            String gridItemEarnings = wrapWithFiat(earnings);
+
+            setGridItemLogo(holder.coinLogo, gridItemLogo);
+            setGridItemText(holder.balancePriceBought, gridItemPriceBought);
+            setGridItemText(holder.balancePriceNow, gridItemPriceNow);
+            setGridItemText(holder.balancePercentageChange, gridItemPercentageChange);
+            setGridItemText(holder.balanceTotalSpent, gridItemTotalSpent);
+            setGridItemText(holder.balanceTotalNow, gridItemTotalNow);
+            setGridItemText(holder.balanceEarnings, gridItemEarnings);
         }
+    }
+
+    private String wrapWithFiat(Double coinAmount) {
+        return wrapSymbol(coinAmount, mUser.getBaseCurrency());
+    }
+
+    private boolean hasMarketLoaded(String itemName) {
+        return getUserPortfolio().getBroker() != null && getPortfolioMarket(itemName) != null;
+    }
+
+    private Market getPortfolioMarket(String currencyName) {
+        return getUserMarkets().get(currencyName);
     }
 
     @Override
@@ -108,36 +149,6 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         return numItems;
     }
 
-    class CoinViewHolder extends RecyclerView.ViewHolder{
-        // pullMarketsData
-        ImageView coinLogo;
-        TextView coinLongName;
-        TextView coinBaseCurrencyIncrease;
-        TextView coinPercentageIncrease;
-        TextView coinValue;
-
-        // getBalance
-        TextView coinName;
-        TextView coinAmount;
-
-        CoinViewHolder(View itemView) {
-            super(itemView);
-
-            // pullMarketsData
-            this.coinLogo = (ImageView) itemView.findViewById(R.id.coin_logo);
-            this.coinLongName = (TextView) itemView.findViewById(R.id.coin_name_long);
-            this.coinBaseCurrencyIncrease = (TextView) itemView.findViewById(R.id.coin_base_currency_increase);
-            this.coinPercentageIncrease = (TextView) itemView.findViewById(R.id.coin_percentage_increase);
-            this.coinValue = (TextView) itemView.findViewById(R.id.coin_value);
-
-            // getBalance
-            this.coinName = (TextView) itemView.findViewById(R.id.coin_name);
-            this.coinAmount = (TextView) itemView.findViewById(R.id.coin_amount);
-
-        }
-    }
-
-
     // Auxiliary methods
 
     private void setWorkingPortfolio(Portfolio portfolio) {
@@ -148,10 +159,10 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
         return mUser.getPortfolio(mPortfolioId);
     }
 
-    private Map<String, Market> getUserMarkets() { return getUserPortfolio().getBroker().getMarkets(); }
+    private Map<String, Market> getUserMarkets() { return getUserPortfolio().getMarkets(); }
 
     private Double getBTCNow() {
-        return getUserMarkets().get(Crypto.BTC.getCryptoName()).getLast();
+        return getPortfolioMarket(Cryptos.BTC.getCryptoName()).getLast();
     }
 
     private void setGridItemText(TextView textView, String coinParam) {
@@ -193,20 +204,19 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.CoinView
     public void updateBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerData){
         setWorkingPortfolio(portfolio);
         Portfolio userPortfolio = getUserPortfolio();
-        Broker broker = userPortfolio.getBroker();
-        broker.setMarkets(getBrokerMarkets(portfolio, brokerData));
+        userPortfolio.setMarkets(getBrokerMarkets(portfolio, brokerData));
 
         notifyDataSetChanged();
     }
 
     private Map<String, Market> getBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerMarketsList) {
-        Map<String, Market> marketsMap = portfolio.getBroker().getMarkets();
+        Map<String, Market> marketsMap = portfolio.getMarkets();
         boolean isCombinedMap = false;
 
         for (RexCoinData coinData : brokerMarketsList) {
             String coinId = coinData.getMarketName();
 
-            if (coinData.getMarketName().contains(Crypto.BTC.getCryptoName())){
+            if (coinData.getMarketName().contains(Cryptos.BTC.getCryptoName())){
                 if (marketsMap.get(coinId) == null) {
                     marketsMap.put(coinData.getMarketName(), new Market(coinData));
                 } else {

@@ -9,29 +9,45 @@ import android.widget.TextView;
 import nelk.io.crypton.R;
 
 class CoinViewHolder extends RecyclerView.ViewHolder{
-    // pullMarketsData
-    ImageView coinLogo;
-    TextView coinLongName;
-    TextView coinBaseCurrencyIncrease;
-    TextView coinPercentageIncrease;
-    TextView coinValue;
 
-    // getBalance
-    TextView coinName;
-    TextView coinAmount;
+    //    ###################   ~   ##########################
+    //    # LTC          50 #   ~   # LTC             amount #
+    //    # $30       $1500 #   ~   # priceBought      spent #
+    //    # $40       $2000 #   ~   # priceNow         value #
+    //    # +25%      +$500 #   ~   # percentage    earnings #
+    //    ###################   ~   ##########################
+
+    //    ###################   ~   ##########################
+    //    # LTC          50 #   ~   # LTC             amount #
+    //    # +25%      +$500 #   ~   # percentage    earnings #
+    //    ###################   ~   ##########################
+
+    ImageView coinLogo;
+
+    TextView balanceCoinName;
+    TextView balancePriceBought;
+    TextView balancePriceNow;
+    TextView balancePercentageChange;
+
+    TextView balanceCoinAmount;
+    TextView balanceTotalSpent;
+    TextView balanceTotalNow;
+    TextView balanceEarnings;
 
     CoinViewHolder(View itemView) {
         super(itemView);
 
         // pullMarketsData
         this.coinLogo = (ImageView) itemView.findViewById(R.id.coin_logo);
-        this.coinLongName = (TextView) itemView.findViewById(R.id.coin_name_long);
-        this.coinBaseCurrencyIncrease = (TextView) itemView.findViewById(R.id.coin_base_currency_increase);
-        this.coinPercentageIncrease = (TextView) itemView.findViewById(R.id.coin_percentage_increase);
-        this.coinValue = (TextView) itemView.findViewById(R.id.coin_value);
 
-        // getBalance
-        this.coinName = (TextView) itemView.findViewById(R.id.coin_name);
-        this.coinAmount = (TextView) itemView.findViewById(R.id.coin_amount);
+        this.balanceCoinName = (TextView) itemView.findViewById(R.id.coin_name);
+        this.balancePriceBought = (TextView) itemView.findViewById(R.id.price_bought);
+        this.balancePriceNow = (TextView) itemView.findViewById(R.id.price_now);
+        this.balancePercentageChange = (TextView) itemView.findViewById(R.id.percentage_change);
+
+        this.balanceCoinAmount = (TextView) itemView.findViewById(R.id.coin_amount);
+        this.balanceTotalSpent = (TextView) itemView.findViewById(R.id.total_spent);
+        this.balanceTotalNow = (TextView) itemView.findViewById(R.id.total_now);
+        this.balanceEarnings = (TextView) itemView.findViewById(R.id.earnings);
     }
 }

@@ -35,42 +35,46 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_weight="1"
+                    android:layout_weight="5"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/coin_name_long"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:textAllCaps="true"
-                        android:textSize="12sp"
-                        android:ellipsize="end"
-                        android:textColor="@color/textColorDetails"
-                        tools:text="@string/balance_coin_long_name"/>
 
                     <TextView
                         android:id="@+id/coin_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:fontFamily="sans-serif-medium"
                         android:textSize="16sp"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif-medium"
                         android:textColor="@color/textColorBold"
-                        android:ellipsize="end"
                         tools:text="@string/balance_coin_name"/>
 
                     <TextView
-                        android:id="@+id/coin_percentage_increase"
+                        android:visibility="gone"
+                        android:id="@+id/price_bought"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:fontFamily="sans-serif-medium"
                         android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
                         android:textColor="@color/textColorDetails"
-                        android:ellipsize="end"
-                        tools:text="@string/balance_percentage_increase"/>
+                        tools:text="@string/balance_price_bought"/>
+
+                    <TextView
+                        android:id="@+id/price_now"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textColorDetails"
+                        tools:text="@string/balance_price_now"/>
+
+                    <TextView
+                        android:id="@+id/percentage_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textColorDetails"
+                        tools:text="@string/balance_percentage_change"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -85,31 +89,43 @@
                         android:id="@+id/coin_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:textColor="@color/textColorDetails"
+                        android:layout_gravity="right"
+                        android:textSize="16sp"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textColorBold"
                         tools:text="@string/balance_coin_amount"/>
 
                     <TextView
-                        android:id="@+id/coin_value"
+                        android:id="@+id/total_spent"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:textSize="16sp"
-                        android:textColor="@color/textColorBold"
-                        tools:text="@string/balance_coin_value_in_base_currency"/>
+                        android:layout_gravity="right"
+                        android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textColorDetails"
+                        tools:text="@string/balance_total_spent"/>
 
                     <TextView
-                        android:id="@+id/coin_base_currency_increase"
+                        android:id="@+id/total_now"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:maxLines="1"
-                        android:fontFamily="sans-serif-medium"
-                        android:textAllCaps="true"
+                        android:layout_gravity="right"
                         android:textSize="12sp"
-                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
                         android:textColor="@color/textColorDetails"
-                        tools:text="@string/balance_base_currency_increase"/>
+                        tools:text="@string/balance_total_now"/>
+
+                    <TextView
+                        android:id="@+id/earnings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textColorDetails"
+                        tools:text="@string/balance_earnings"/>
                 </LinearLayout>
 
         </LinearLayout>

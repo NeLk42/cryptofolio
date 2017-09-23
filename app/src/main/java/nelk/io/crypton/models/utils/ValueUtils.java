@@ -74,7 +74,7 @@ public class ValueUtils {
     // Auxiliary methods
 
     private static Map<String, Market> getMarkets(User mUser, String mPortfolioId) {
-        return mUser.getPortfolio(mPortfolioId).getBroker().getMarkets();
+        return mUser.getPortfolio(mPortfolioId).getMarkets();
     }
 
     private static Market getMarket(String coin, User mUser, String mPortfolioId) {

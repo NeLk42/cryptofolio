@@ -12,11 +12,14 @@
     <string name="pfb_percentage_increase">+%?</string>
     <string name="pfb_base_currency_increase">+$?</string>
 
-    <!-- balance grid item-->
-    <string name="balance_coin_long_name">Litecoin</string>
+    <!-- currencyBalance grid item-->
     <string name="balance_coin_name">LTC</string>
-    <string name="balance_base_currency_increase">+$?</string>
-    <string name="balance_percentage_increase">+%?</string>
-    <string name="balance_coin_amount"># LTCs</string>
-    <string name="balance_coin_value_in_base_currency">$?</string>
+    <string name="balance_price_bought">$30</string>
+    <string name="balance_price_now">$50</string>
+    <string name="balance_percentage_change">+66.6%</string>
+
+    <string name="balance_coin_amount">50 LTCs</string>
+    <string name="balance_total_spent">$1500</string>
+    <string name="balance_total_now">$2500</string>
+    <string name="balance_earnings">+$1000</string>
 </resources>
