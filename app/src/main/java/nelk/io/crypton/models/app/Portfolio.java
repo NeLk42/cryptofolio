@@ -30,7 +30,6 @@ public class Portfolio implements Currency{
                                       portfolioCredentials.getPrivateKey());
     }
 
-    // Base Currency
     private String baseCurrency;
 
     public String getName() {

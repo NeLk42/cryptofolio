@@ -9,6 +9,7 @@ import nelk.io.crypton.models.app.Credentials;
 import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.models.app.User;
 import nelk.io.crypton.models.enums.Brokers;
+import nelk.io.crypton.models.enums.Cryptos;
 import nelk.io.crypton.models.enums.Fiats;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.RexAccountService;
@@ -23,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private BalanceAdapter mBalanceAdapter;
 
     // Data
-    RexAccountService rexAccountService;
     private User user = new User("user1", Fiats.USD.getSymbol());
+//    private User user = new User("user1", Cryptos.BTC.getCryptoName());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +48,22 @@ public class MainActivity extends AppCompatActivity {
         // TODO : Remove this!
         user.getPortfolios().clear();
 
-        // User is prompted for a portfolio 'name' and decides to use bittrex as Broker
+        // User is prompted for a portfolio 'name'
         String portfolioName = "My Portfolio";
+
+        // User is prompted for a broker
+        Brokers portfolioBroker = Brokers.BITTREX;
 
         // User is prompted for bittrex api keys
         Credentials portfolioCredentials = new Credentials(RexConf.API_KEY, RexConf.API_SECRET_KEY);
 
         // New portfolio is created and populated with data from Bittrex
-        createPortfolio(portfolioName, Brokers.BITTREX, portfolioCredentials);
+        createPortfolio(portfolioName, portfolioBroker, portfolioCredentials);
     }
 
-    private void createPortfolio(String portfolioName, Brokers bittrex, Credentials portfolioCredentials) {
+    private void createPortfolio(String name, Brokers broker, Credentials credentials) {
         // New portfolio is assigned previously captured name and credentials
-        Portfolio rexPortfolio = new Portfolio(portfolioName, bittrex, portfolioCredentials);
+        Portfolio rexPortfolio = new Portfolio(name, broker, credentials);
 
         // New portfolio is added to user object.
         user.updatePortfolio(rexPortfolio);
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeBrokerUserBalance(Portfolio rexPortfolio) {
-        rexAccountService = new RexAccountService(rexPortfolio, mBalanceAdapter);
+        RexAccountService rexAccountService = new RexAccountService(rexPortfolio, mBalanceAdapter);
         rexAccountService.updateAccountBalance();
     }
 
