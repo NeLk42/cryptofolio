@@ -5,15 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import nelk.io.crypton.models.app.Credentials;
-import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.models.app.User;
-import nelk.io.crypton.models.enums.Brokers;
-import nelk.io.crypton.models.enums.Cryptos;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
-import nelk.io.crypton.retrofit.bittrex.RexAccountService;
-import nelk.io.crypton.retrofit.bittrex.RexConf;
-import nelk.io.crypton.retrofit.bittrex.RexPublicService;
+
+import static nelk.io.crypton.activityhelpers.MainActivityHelper.initializeBalanceView;
+import static nelk.io.crypton.activityhelpers.MainActivityHelper.setUser;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -22,18 +18,18 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mBalanceRecyclerView;
     private BalanceAdapter mBalanceAdapter;
 
-    // Data
-//    private User user = new User("user1", Fiats.USD);
-    private User user = new User("user1", Cryptos.BTC);
-//    private User user = new User("user1", Cryptos.SAT);
+    // Data Store
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mUser= setUser();
+
         mBalanceRecyclerView = (RecyclerView) findViewById(R.id.rv_balances_grid);
-        mBalanceAdapter = new BalanceAdapter(this, user);
+        mBalanceAdapter = new BalanceAdapter(this, mUser);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
@@ -41,51 +37,6 @@ public class MainActivity extends AppCompatActivity {
         mBalanceRecyclerView.setAdapter(mBalanceAdapter);
         mBalanceRecyclerView.setHasFixedSize(true);
 
-        initializeBalanceView();
+        mUser = initializeBalanceView(mUser, mBalanceAdapter);
     }
-
-    private void initializeBalanceView() {
-        // TODO : Remove this!
-        user.getPortfolios().clear();
-
-        // User is prompted for a portfolio 'name'
-        String portfolioName = "My Portfolio";
-
-        // User is prompted for a broker
-        Brokers portfolioBroker = Brokers.BITTREX;
-
-        // User is prompted for bittrex api keys
-        Credentials portfolioCredentials = new Credentials(RexConf.API_KEY, RexConf.API_SECRET_KEY);
-
-        // New portfolio is created and populated with data from Bittrex
-        createPortfolio(portfolioName, portfolioBroker, portfolioCredentials);
-    }
-
-    private void createPortfolio(String name, Brokers broker, Credentials credentials) {
-        // New portfolio is assigned previously captured name and credentials
-        Portfolio rexPortfolio = new Portfolio(name, broker, credentials);
-
-        // New portfolio is added to user object.
-        user.updatePortfolio(rexPortfolio);
-
-        // Pull markets Information from Broker
-        initializeBrokerMarketsData(rexPortfolio);
-
-        // Pull user balance from Broker
-        initializeBrokerUserBalance(rexPortfolio);
-    }
-
-    private void initializeBrokerMarketsData(Portfolio rexPortfolio) {
-        // Once portfolio has been assigned against the user, a connection has to be made to
-        // pull information, first we load all the markets info.
-        RexPublicService rexPublicService = new RexPublicService(rexPortfolio, mBalanceAdapter);
-        rexPublicService.pullSummariesData();
-        rexPublicService.pullMarketsData();
-    }
-
-    private void initializeBrokerUserBalance(Portfolio rexPortfolio) {
-        RexAccountService rexAccountService = new RexAccountService(rexPortfolio, mBalanceAdapter);
-        rexAccountService.updateAccountBalance();
-    }
-
 }
