@@ -5,14 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import nelk.io.crypton.models.enums.Brokers;
-import nelk.io.crypton.models.enums.Fiats;
 import nelk.io.crypton.models.app.Credentials;
 import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.models.app.User;
-import nelk.io.crypton.retrofit.Bittrex.RexConf;
+import nelk.io.crypton.models.enums.Brokers;
+import nelk.io.crypton.models.enums.Fiats;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 import nelk.io.crypton.retrofit.Bittrex.RexAccountService;
+import nelk.io.crypton.retrofit.Bittrex.RexConf;
 import nelk.io.crypton.retrofit.Bittrex.RexPublicService;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,24 +44,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeBalanceView() {
-        // User decides to go for bittrex
-        Portfolio rexPortfolio = new Portfolio(Brokers.BITTREX);
+        // TODO : Remove this!
+        user.getPortfolios().clear();
 
-        // User is prompted for a portfolio 'name'
+        // User is prompted for a portfolio 'name' and decides to use bittrex as Broker
         String portfolioName = "My Portfolio";
 
         // User is prompted for bittrex api keys
         Credentials portfolioCredentials = new Credentials(RexConf.API_KEY, RexConf.API_SECRET_KEY);
 
         // New portfolio is created and populated with data from Bittrex
-        createPortfolio(rexPortfolio, portfolioName, portfolioCredentials);
-
+        createPortfolio(portfolioName, Brokers.BITTREX, portfolioCredentials);
     }
 
-    private void createPortfolio(Portfolio rexPortfolio, String portfolioName, Credentials portfolioCredentials) {
+    private void createPortfolio(String portfolioName, Brokers bittrex, Credentials portfolioCredentials) {
         // New portfolio is assigned previously captured name and credentials
-        rexPortfolio.setName(portfolioName);
-        rexPortfolio.setCredentials(portfolioCredentials);
+        Portfolio rexPortfolio = new Portfolio(portfolioName, bittrex, portfolioCredentials);
 
         // New portfolio is added to user object.
         user.updatePortfolio(rexPortfolio);

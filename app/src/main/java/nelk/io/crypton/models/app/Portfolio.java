@@ -20,12 +20,14 @@ public class Portfolio implements Currency{
     private List<? extends Transaction> deposits;
     private List<? extends Transaction> withdrawals;
 
-    public Portfolio(String name, Brokers broker){
+    public Portfolio(String name, Brokers broker, Credentials portfolioCredentials){
         this.name = name;
         this.markets = new HashMap<>();
         this.broker = new Broker(broker.getName(),
                                  broker.getBaseUrl(),
                                  broker.getBalancesUrl());
+        credentials = new Credentials(portfolioCredentials.getKey(),
+                                      portfolioCredentials.getPrivateKey());
     }
 
     // Base Currency
