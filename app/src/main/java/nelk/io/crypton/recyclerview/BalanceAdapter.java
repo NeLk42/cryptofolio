@@ -23,7 +23,7 @@ import nelk.io.crypton.models.app.Balance;
 import nelk.io.crypton.models.app.Market;
 import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.models.app.User;
-import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
+import nelk.io.crypton.retrofit.bittrex.models.RexCoinData;
 
 import static nelk.io.crypton.models.utils.MathOperations.calculateBalanceTotalValue;
 import static nelk.io.crypton.models.utils.MathOperations.calculatePercentageChange;

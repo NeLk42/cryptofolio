@@ -1,4 +1,4 @@
-package nelk.io.crypton.retrofit.Bittrex;
+package nelk.io.crypton.retrofit.bittrex;
 
 import android.net.Uri;
 

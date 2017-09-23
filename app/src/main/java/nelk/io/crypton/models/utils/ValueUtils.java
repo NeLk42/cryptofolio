@@ -10,6 +10,9 @@ import nelk.io.crypton.models.app.User;
 
 public class ValueUtils {
 
+
+    // TODO Needs refactor to be usable, currently using gridItemsWrapper.
+
     public static String getCoinInSATs(Double amount, String coin, User mUser, String mPortfolioId){
         DecimalFormat formatter = new DecimalFormat("####0.00");
         Double result = getBTCValue(amount, coin, mUser, mPortfolioId);

@@ -1,6 +1,8 @@
 package nelk.io.crypton.models.enums;
 
-public enum Fiats implements EnumCurrencies{
+import nelk.io.crypton.models.EnumCurrencies;
+
+public enum Fiats implements EnumCurrencies {
 
     GBP("£", "Pound"),
     USD("$", "Dollar"),

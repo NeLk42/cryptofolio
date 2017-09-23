@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nelk.io.crypton.models.enums.Cryptos;
-import nelk.io.crypton.models.enums.EnumCurrencies;
+import nelk.io.crypton.models.EnumCurrencies;
 
 public class User {
 

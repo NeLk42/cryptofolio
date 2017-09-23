@@ -3,7 +3,7 @@ package nelk.io.crypton.models.utils;
 import java.text.DecimalFormat;
 
 import nelk.io.crypton.models.enums.Cryptos;
-import nelk.io.crypton.models.enums.EnumCurrencies;
+import nelk.io.crypton.models.EnumCurrencies;
 
 import static nelk.io.crypton.models.utils.MathOperations.calculatePercentageChange;
 

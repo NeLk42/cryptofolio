@@ -10,11 +10,10 @@ import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.models.app.User;
 import nelk.io.crypton.models.enums.Brokers;
 import nelk.io.crypton.models.enums.Cryptos;
-import nelk.io.crypton.models.enums.Fiats;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
-import nelk.io.crypton.retrofit.Bittrex.RexAccountService;
-import nelk.io.crypton.retrofit.Bittrex.RexConf;
-import nelk.io.crypton.retrofit.Bittrex.RexPublicService;
+import nelk.io.crypton.retrofit.bittrex.RexAccountService;
+import nelk.io.crypton.retrofit.bittrex.RexConf;
+import nelk.io.crypton.retrofit.bittrex.RexPublicService;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();

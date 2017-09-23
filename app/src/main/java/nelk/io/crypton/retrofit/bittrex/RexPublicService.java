@@ -1,4 +1,4 @@
-package nelk.io.crypton.retrofit.Bittrex;
+package nelk.io.crypton.retrofit.bittrex;
 
 import android.util.Log;
 
@@ -7,8 +7,8 @@ import java.util.List;
 
 import nelk.io.crypton.models.app.Portfolio;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
-import nelk.io.crypton.retrofit.Bittrex.models.RexResponse;
-import nelk.io.crypton.retrofit.Bittrex.models.RexCoinData;
+import nelk.io.crypton.retrofit.bittrex.models.RexResponse;
+import nelk.io.crypton.retrofit.bittrex.models.RexCoinData;
 import nelk.io.crypton.retrofit.RexApi;
 import retrofit2.Call;
 import retrofit2.Callback;

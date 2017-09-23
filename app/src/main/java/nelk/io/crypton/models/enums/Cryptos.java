@@ -1,6 +1,8 @@
 package nelk.io.crypton.models.enums;
 
-public enum Cryptos implements EnumCurrencies{
+import nelk.io.crypton.models.EnumCurrencies;
+
+public enum Cryptos implements EnumCurrencies {
 
     SAT("SAT", "Satoshi"),
     BTC("BTC", "Bitcoin"),

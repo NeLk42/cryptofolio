@@ -1,4 +1,4 @@
-package nelk.io.crypton.retrofit.Bittrex.models;
+package nelk.io.crypton.retrofit.bittrex.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

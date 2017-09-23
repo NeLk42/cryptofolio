@@ -1,4 +1,4 @@
-package nelk.io.crypton.retrofit.Bittrex;
+package nelk.io.crypton.retrofit.bittrex;
 
 import nelk.io.crypton.retrofit.RexApi;
 import retrofit2.Retrofit;

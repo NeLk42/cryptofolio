@@ -1,4 +1,4 @@
-package nelk.io.crypton.models.enums;
+package nelk.io.crypton.models;
 
 
 public interface EnumCurrencies {
