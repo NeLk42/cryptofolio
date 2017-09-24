@@ -1,10 +1,13 @@
 package nelk.io.crypton;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import nelk.io.crypton.helpers.SwipeRefresher;
 import nelk.io.crypton.models.app.User;
 import nelk.io.crypton.recyclerview.BalanceAdapter;
 
@@ -15,8 +18,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     // Android OS
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView mBalanceRecyclerView;
     private BalanceAdapter mBalanceAdapter;
+    private SwipeRefresher swipeRefresher;
 
     // Data Store
     private User mUser;
@@ -38,5 +43,16 @@ public class MainActivity extends AppCompatActivity {
         mBalanceRecyclerView.setHasFixedSize(true);
 
         mUser = initializeBalanceView(mUser, mBalanceAdapter);
+
+        swipeRefresher = new SwipeRefresher();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.simpleSwipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mUser = swipeRefresher.refreshItems(swipeRefreshLayout, mUser, mBalanceAdapter);
+            }
+        });
     }
+
+
 }

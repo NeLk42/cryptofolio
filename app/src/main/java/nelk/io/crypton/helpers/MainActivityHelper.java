@@ -24,8 +24,6 @@ public class MainActivityHelper {
     }
 
     public static User initializeBalanceView(User user, BalanceAdapter mBalanceAdapter) {
-        user.getPortfolios().clear();
-
         // User is prompted for a portfolio 'name'
         String portfolioName = "My Portfolio";
 
@@ -36,7 +34,6 @@ public class MainActivityHelper {
         Credentials portfolioCredentials = new Credentials(RexConf.API_KEY, RexConf.API_SECRET_KEY);
 
         // New portfolio is created and populated with data from Bittrex
-
         return createPortfolio(user, mBalanceAdapter, portfolioName, portfolioBroker, portfolioCredentials);
     }
 
