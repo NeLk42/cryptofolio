@@ -36,10 +36,6 @@ public class User {
         return portfolios;
     }
 
-    public void setPortfolios(Map<String, Portfolio> portfolios) {
-        this.portfolios = portfolios;
-    }
-
     public EnumCurrencies getBaseCurrency() {
         return baseCurrency;
     }
@@ -50,17 +46,12 @@ public class User {
 
 
     // Methods
-
-    public void updatePortfolio(Portfolio portfolio) {
-
-        this.portfolios.put(portfolio.getName(), portfolio);
-
+    public Portfolio getPortfolio(String portfolioId) {
+        return this.portfolios.get(portfolioId);
     }
 
-    public Portfolio getPortfolio(String portfolioId) {
-
-        return this.portfolios.get(portfolioId);
-
+    public void updatePortfolio(Portfolio portfolio) {
+        this.portfolios.put(portfolio.getName(), portfolio);
     }
 
 }

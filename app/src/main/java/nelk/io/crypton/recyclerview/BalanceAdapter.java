@@ -23,9 +23,11 @@ import static nelk.io.crypton.models.utils.MathOperations.calculateValueChange;
 import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapEarnings;
 import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapPercentage;
 import static nelk.io.crypton.models.utils.gridItemsWrapper.wrapSymbol;
-import static nelk.io.crypton.recyclerview.helpers.BalanceAdapterHelper.adaptCoinDataToBalance;
-import static nelk.io.crypton.recyclerview.helpers.BalanceAdapterHelper.getBrokerMarkets;
 import static nelk.io.crypton.recyclerview.helpers.BalanceAdapterHelper.getNumberOfPortfolioItems;
+import static nelk.io.crypton.recyclerview.helpers.DataManagerPortfolioMarkets.getBrokerMarkets;
+import static nelk.io.crypton.recyclerview.helpers.DataManagerPortfolioMarkets.storeMarketData;
+import static nelk.io.crypton.recyclerview.helpers.DataManagerUserBalances.adaptCoinDataToBalance;
+import static nelk.io.crypton.recyclerview.helpers.DataManagerUserBalances.storeAccountBalanceData;
 import static nelk.io.crypton.recyclerview.helpers.GridItemHelper.setGridItemLogo;
 import static nelk.io.crypton.recyclerview.helpers.GridItemHelper.setGridItemText;
 
@@ -109,6 +111,55 @@ public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
         }
     }
 
+    private void setPortfolioId(Portfolio portfolio) {
+        this.mPortfolioId = portfolio.getName();
+    }
+
+    public void updatePortfolio(Portfolio portfolio) {
+        setPortfolioId(portfolio);
+        mUser.updatePortfolio(portfolio);
+    }
+
+    // Rex Account Service - Balance Data
+
+    public void updateBalances(Portfolio portfolio, List<RexCoinData> balanceList){
+        storeAccountBalanceData(this, portfolio, balanceList);
+//        storeBalances(portfolio, balanceList);
+    }
+
+    // Rex Markets Service - Coin Markets Data
+
+    public void updateBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerData){
+        storeMarketData(this, portfolio, brokerData);
+//        storeMarkets(portfolio, brokerData);
+    }
+
+
+
+
+
+
+
+
+    // To be Removed: Below
+
+    private void storeBalances(Portfolio outdatedPortfolio, List<RexCoinData> rexDataList) {
+        setPortfolioId(outdatedPortfolio);
+        Portfolio userPortfolio = getPortfolio();
+        userPortfolio.setBalances(adaptCoinDataToBalance(rexDataList));
+        mUser.updatePortfolio(userPortfolio);
+        notifyDataSetChanged();
+    }
+
+    private void storeMarkets(Portfolio outdatedPortfolio, List<RexCoinData> rexDataList) {
+        setPortfolioId(outdatedPortfolio);
+        Portfolio userPortfolio = getPortfolio();
+        userPortfolio.setMarkets(getBrokerMarkets(outdatedPortfolio, rexDataList));
+        notifyDataSetChanged();
+    }
+
+
+
     /* Formatting Methods */
 
     private boolean hasLoadedMarket(String itemName) {
@@ -130,10 +181,6 @@ public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
         return mUser.getPortfolio(mPortfolioId);
     }
 
-    private void setPortfolio(Portfolio portfolio) {
-        this.mPortfolioId = portfolio.getName();
-    }
-
     private Map<String, Market> getMarkets() {
         return getPortfolio().getMarkets();
     }
@@ -144,26 +191,6 @@ public class BalanceAdapter extends RecyclerView.Adapter<CoinViewHolder> {
 
     private Double getMarketBTC() {
         return getMarket(Cryptos.BTC.getSymbol()).getLast();
-    }
-
-
-    // Rex Account Service - Balance Data
-
-    public void updateBalances(Portfolio portfolio, List<RexCoinData> balanceList){
-        setPortfolio(portfolio);
-        Portfolio userPortfolio = getPortfolio();
-        userPortfolio.setBalances(adaptCoinDataToBalance(balanceList));
-        mUser.updatePortfolio(userPortfolio);
-        notifyDataSetChanged();
-    }
-
-    // Rex Markets Service - Coin Markets Data
-
-    public void updateBrokerMarkets(Portfolio portfolio, List<RexCoinData> brokerData){
-        setPortfolio(portfolio);
-        Portfolio userPortfolio = getPortfolio();
-        userPortfolio.setMarkets(getBrokerMarkets(portfolio, brokerData));
-        notifyDataSetChanged();
     }
 
 

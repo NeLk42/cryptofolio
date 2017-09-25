@@ -1,6 +1,7 @@
 package nelk.io.crypton.models.app;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class Portfolio {
     public Portfolio(String name, Brokers broker, Credentials portfolioCredentials){
         this.name = name;
         this.markets = new HashMap<>();
+        this.balances = new ArrayList<>();
         this.broker = new Broker(broker.getName(),
                                  broker.getBaseUrl(),
                                  broker.getBalancesUrl());
